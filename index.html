@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tamalove — Vincenzo & Deborah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(145deg, #fff1eb 0%, #ace0f9 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #432818;
+    }
+    .hub-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 4px solid #432818;
+      border-radius: 32px;
+      padding: 32px 24px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 14px 0 #432818, 0 24px 40px rgba(67,40,24,0.18);
+    }
+    h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.1rem;
+      color: #432818;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 0.95rem;
+      color: #6f4e37;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .route-badge {
+      display: inline-block;
+      background: #fef3c7;
+      border: 2.5px solid #432818;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 0 #432818;
+    }
+    .btn-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .app-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: #432818;
+      padding: 16px 20px;
+      border-radius: 22px;
+      border: 3.5px solid #432818;
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-align: left;
+    }
+    .app-link.vincenzo {
+      background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
+      box-shadow: 0 6px 0 #432818;
+    }
+    .app-link.deborah {
+      background: linear-gradient(135deg, #ffedd8 0%, #fcd5ce 100%);
+      box-shadow: 0 6px 0 #432818;
+    }
+    .app-link:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #432818;
+    }
+    .avatar-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid #432818;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      flex-shrink: 0;
+    }
+    .info h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 2px;
+    }
+    .info p {
+      font-size: 0.82rem;
+      font-weight: 700;
+      opacity: 0.85;
+    }
+    .footer-note {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: #6f4e37;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="hub-card">
+    <div class="route-badge">🇮🇹 Putignano ✈️ Ås 🇳🇴</div>
+    <h1>Tamalove 💕</h1>
+    <p class="subtitle">Scegli il tuo portachiavi NFC per entrare nella stanza del tuo partner</p>
+
+    <div class="btn-grid">
+      <a href="vincenzo.html" class="app-link vincenzo">
+        <div class="avatar-circle">🦥</div>
+        <div class="info">
+          <h2>App di Vincenzo</h2>
+          <p>Prenditi cura di Debby il Bradipo nella sua casa in Norvegia 🇳🇴</p>
+        </div>
+      </a>
+
+      <a href="deborah.html" class="app-link deborah">
+        <div class="avatar-circle">🐧</div>
+        <div class="info">
+          <h2>App di Deborah</h2>
+          <p>Prenditi cura di Vincenzo il Pinguino nella sua casa in Puglia 🇮🇹</p>
+        </div>
+      </a>
+    </div>
+
+    <p class="footer-note">☁️ Sincronizzato in tempo reale con Firebase Cloud (Tamalove)</p>
+  </div>
+</body>
+</html>
