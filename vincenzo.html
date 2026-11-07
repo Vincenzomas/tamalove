@@ -3,138 +3,1170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Tamalove — Vincenzo & Deborah</title>
+  <title>Tamalove — App di Vincenzo (Cura Debby 🦥)</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(145deg, #fff1eb 0%, #ace0f9 100%);
+      background: linear-gradient(180deg, #dff5ea 0%, #f7ede2 100%);
+      color: #432818;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: #432818;
+      overflow-x: hidden;
     }
-    .hub-card {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border: 4px solid #432818;
-      border-radius: 32px;
-      padding: 32px 24px;
-      max-width: 440px;
+    .app-shell {
       width: 100%;
-      text-align: center;
-      box-shadow: 0 14px 0 #432818, 0 24px 40px rgba(67,40,24,0.18);
-    }
-    h1 {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 2.1rem;
-      color: #432818;
-      margin-bottom: 6px;
-    }
-    .subtitle {
-      font-size: 0.95rem;
-      color: #6f4e37;
-      margin-bottom: 24px;
-      font-weight: 700;
-    }
-    .route-badge {
-      display: inline-block;
-      background: #fef3c7;
-      border: 2.5px solid #432818;
-      border-radius: 999px;
-      padding: 6px 16px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 22px;
-      box-shadow: 0 3px 0 #432818;
-    }
-    .btn-grid {
+      max-width: 480px;
+      padding: 10px 12px 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 10px;
     }
-    .app-link {
+    /* TOP HUD */
+    .hud-card {
+      background: #fffdf9;
+      border: 3.5px solid #432818;
+      border-radius: 22px;
+      padding: 10px 14px;
+      box-shadow: 0 5px 0 #432818;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hud-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .pet-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
       display: flex;
       align-items: center;
-      gap: 16px;
-      text-decoration: none;
+      gap: 6px;
+    }
+    .lvl-badge {
+      background: #ffcad4;
+      border: 2.5px solid #432818;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .sync-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 2px solid #432818;
+      background: #d8f3dc;
+    }
+    .xp-bar-wrap {
+      width: 100%;
+      height: 12px;
+      background: #f1e3d3;
+      border: 2.5px solid #432818;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9ebb, #ff6b8b);
+      width: 0%;
+      transition: width 0.35s ease;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .stat-box {
+      background: #fefae0;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      padding: 5px 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .stat-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+    .stat-progress {
+      height: 8px;
+      background: #e9edc9;
+      border: 2px solid #432818;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .stat-fill {
+      height: 100%;
+      width: 80%;
+      transition: width 0.3s ease;
+    }
+    /* ISOMETRIC ROOM STAGE */
+    .room-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      background: #fffdf9;
+      border: 4px solid #432818;
+      border-radius: 28px;
+      box-shadow: 0 8px 0 #432818;
+      overflow: hidden;
+    }
+    .room-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* INTERACTIVE HOTSPOT LABELS */
+    .hotspot-btn {
+      position: absolute;
+      background: #ffffff;
+      border: 2.5px solid #432818;
+      border-radius: 12px;
+      padding: 3px 8px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
       color: #432818;
-      padding: 16px 20px;
-      border-radius: 22px;
-      border: 3.5px solid #432818;
-      transition: transform 0.15s, box-shadow 0.15s;
-      text-align: left;
+      box-shadow: 0 3px 0 #432818;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      z-index: 15;
+      transition: transform 0.12s;
     }
-    .app-link.vincenzo {
-      background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
-      box-shadow: 0 6px 0 #432818;
+    .hotspot-btn:active { transform: scale(0.94); }
+    .badge-dot {
+      background: #ef233c;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0 5px;
+      font-size: 0.68rem;
+      border: 1.5px solid #432818;
     }
-    .app-link.deborah {
-      background: linear-gradient(135deg, #ffedd8 0%, #fcd5ce 100%);
-      box-shadow: 0 6px 0 #432818;
-    }
-    .app-link:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #432818;
-    }
-    .avatar-circle {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
+    /* SPEECH BUBBLE */
+    .speech-bubble {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
       background: #fff;
       border: 3px solid #432818;
+      border-radius: 18px;
+      padding: 6px 14px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: 0 4px 0 #432818;
+      z-index: 25;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+    }
+    .speech-bubble.show { opacity: 1; }
+
+    /* CARE CONTROLS */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .care-btn {
+      background: #fffdf9;
+      border: 3.5px solid #432818;
+      border-radius: 20px;
+      padding: 10px 6px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.88rem;
+      color: #432818;
+      box-shadow: 0 5px 0 #432818;
+      cursor: pointer;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .care-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #432818;
+    }
+    .care-btn.cuddle { background: #ffe5ec; }
+    .care-btn.food { background: #fff3b0; }
+    .care-btn.gift { background: #e0fbfc; }
+    .care-icon { font-size: 1.5rem; }
+
+    /* ADMIN BUTTON BAR */
+    .bottom-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .tool-btn {
+      flex: 1;
+      background: #f8edeb;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      padding: 8px 10px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.8rem;
+      color: #432818;
+      box-shadow: 0 3px 0 #432818;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* CHARACTER WALK ANIMATIONS */
+    @keyframes legSwingLeft {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(18deg); }
+      75% { transform: rotate(-18deg); }
+    }
+    @keyframes legSwingRight {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-18deg); }
+      75% { transform: rotate(18deg); }
+    }
+    @keyframes armSwingLeft {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-16deg); }
+      75% { transform: rotate(16deg); }
+    }
+    @keyframes armSwingRight {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(16deg); }
+      75% { transform: rotate(-16deg); }
+    }
+    .walking .leg-l { animation: legSwingLeft 0.45s infinite ease-in-out; transform-origin: 0px -10px; }
+    .walking .leg-r { animation: legSwingRight 0.45s infinite ease-in-out; transform-origin: 0px -10px; }
+    .walking .arm-l { animation: armSwingLeft 0.45s infinite ease-in-out; transform-origin: -20px -22px; }
+    .walking .arm-r { animation: armSwingRight 0.45s infinite ease-in-out; transform-origin: 20px -22px; }
+
+    /* MODALS */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(67, 40, 24, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
       align-items: center;
       justify-content: center;
-      font-size: 1.9rem;
-      flex-shrink: 0;
+      padding: 16px;
+      z-index: 100;
     }
-    .info h2 {
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #fffdf9;
+      border: 4px solid #432818;
+      border-radius: 26px;
+      width: 100%;
+      max-width: 430px;
+      max-height: 86vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 0 #432818;
+      overflow: hidden;
+    }
+    .modal-head {
+      background: #ffcad4;
+      border-bottom: 3.5px solid #432818;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.25rem;
-      margin-bottom: 2px;
+      font-size: 1.1rem;
     }
-    .info p {
-      font-size: 0.82rem;
+    .close-btn {
+      background: #fff;
+      border: 2.5px solid #432818;
+      border-radius: 10px;
+      width: 32px;
+      height: 32px;
       font-weight: 700;
-      opacity: 0.85;
+      cursor: pointer;
     }
-    .footer-note {
-      margin-top: 24px;
-      font-size: 0.78rem;
-      color: #6f4e37;
+    .modal-body {
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 6px;
+      background: #fefae0;
+      border: 2.5px solid #432818;
+      border-radius: 16px;
+    }
+    .chat-msg {
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 2px solid #432818;
+      font-size: 0.85rem;
+      max-width: 82%;
+    }
+    .chat-msg.me { align-self: flex-end; background: #d8f3dc; }
+    .chat-msg.partner { align-self: flex-start; background: #ffe5ec; }
+    .input-row {
+      display: flex;
+      gap: 6px;
+    }
+    .text-input {
+      flex: 1;
+      padding: 9px 12px;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      font-family: inherit;
       font-weight: 700;
+    }
+    .action-pill {
+      background: #b7e4c7;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #432818;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .col-item {
+      background: #fefae0;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .col-item.locked { opacity: 0.45; filter: grayscale(1); }
+    .col-item.five-star { background: #fff3b0; border-color: #d97706; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .polaroid {
+      background: #fff;
+      border: 2.5px solid #432818;
+      border-radius: 12px;
+      padding: 6px 6px 10px;
+      box-shadow: 0 3px 0 #432818;
+      text-align: center;
+    }
+    .polaroid img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1.5px solid #432818;
+    }
+    .polaroid p {
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 4px;
     }
   </style>
 </head>
 <body>
-  <div class="hub-card">
-    <div class="route-badge">🇮🇹 Putignano ✈️ Ås 🇳🇴</div>
-    <h1>Tamalove 💕</h1>
-    <p class="subtitle">Scegli il tuo portachiavi NFC per entrare nella stanza del tuo partner</p>
 
-    <div class="btn-grid">
-      <a href="vincenzo.html" class="app-link vincenzo">
-        <div class="avatar-circle">🦥</div>
-        <div class="info">
-          <h2>App di Vincenzo</h2>
-          <p>Prenditi cura di Debby il Bradipo nella sua casa in Norvegia 🇳🇴</p>
-        </div>
-      </a>
-
-      <a href="deborah.html" class="app-link deborah">
-        <div class="avatar-circle">🐧</div>
-        <div class="info">
-          <h2>App di Deborah</h2>
-          <p>Prenditi cura di Vincenzo il Pinguino nella sua casa in Puglia 🇮🇹</p>
-        </div>
-      </a>
+<div class="app-shell">
+  <!-- TOP HUD -->
+  <div class="hud-card">
+    <div class="hud-top">
+      <div class="pet-title">
+        <span>🦥 Debby (Ås 🇳🇴)</span>
+        <span class="lvl-badge" id="lvlBadge">Lv. 1</span>
+      </div>
+      <span class="sync-pill" id="syncStatus">☁️ Cloud Attivo</span>
     </div>
-
-    <p class="footer-note">☁️ Sincronizzato in tempo reale con Firebase Cloud (Tamalove)</p>
+    <div class="xp-bar-wrap">
+      <div class="xp-bar-fill" id="xpFill"></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-label"><span>💕 Affetto</span><span id="valLove">85%</span></div>
+        <div class="stat-progress"><div class="stat-fill" id="barLove" style="background:#ff758f;"></div></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label"><span>🥞 Crepe</span><span id="valFood">80%</span></div>
+        <div class="stat-progress"><div class="stat-fill" id="barFood" style="background:#f4a261;"></div></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label"><span>✨ Umori</span><span id="valMood">90%</span></div>
+        <div class="stat-progress"><div class="stat-fill" id="barMood" style="background:#52b788;"></div></div>
+      </div>
+    </div>
   </div>
+
+  <!-- ISOMETRIC 1-FLOOR NORDIC HOUSE (DEBBY'S ROOM) -->
+  <div class="room-stage" id="roomStage">
+    <div class="speech-bubble" id="speechBubble">Ciao amore mio! 💕</div>
+
+    <!-- High-Contrast Floating Buttons -->
+    <button class="hotspot-btn" style="top:17%; left:10%;" onclick="openModal('calendarModal')">
+      📅 <span id="calShort">Countdown</span>
+    </button>
+    <button class="hotspot-btn" style="top:54%; left:6%;" onclick="openModal('mailModal')">
+      📮 Posta <span class="badge-dot" id="mailBadge" style="display:none">!</span>
+    </button>
+    <button class="hotspot-btn" style="top:58%; right:6%;" onclick="openModal('albumModal')">
+      📸 Album
+    </button>
+    <button class="hotspot-btn" style="top:34%; right:6%;" onclick="openModal('plantsModal')">
+      🎁 Piante (<span id="packCountBadge">0</span>)
+    </button>
+
+    <svg class="room-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#bde0fe"/>
+          <stop offset="100%" stop-color="#e2ece9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Meadow background -->
+      <rect width="400" height="420" fill="#d8f3dc"/>
+
+      <!-- Pitched Roof (Cozy Peach/Terracotta like reference) -->
+      <polygon points="200,14 20,118 200,208 380,118" fill="#f4a261" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Left & Right Single-Floor Nordic Walls (Sage & Warm Birch) -->
+      <polygon points="26,120 200,32 200,224 26,310" fill="#e9f5ec" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="200,32 374,120 374,310 200,224" fill="#fefae0" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+
+      <!-- Pitched Roof Wooden Trim -->
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Isometric Wooden Parquet Floor -->
+      <polygon points="200,224 374,310 200,398 26,310" fill="#e6be8a" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Floor Planks lines -->
+      <line x1="113" y1="267" x2="287" y2="354" stroke="#c89b6e" stroke-width="1.8"/>
+      <line x1="70" y1="288" x2="244" y2="375" stroke="#c89b6e" stroke-width="1.8"/>
+      <line x1="156" y1="246" x2="330" y2="333" stroke="#c89b6e" stroke-width="1.8"/>
+      <line x1="287" y1="267" x2="113" y2="354" stroke="#c89b6e" stroke-width="1.8"/>
+      <line x1="330" y1="288" x2="156" y2="375" stroke="#c89b6e" stroke-width="1.8"/>
+
+      <!-- Fairy Lights along ceiling -->
+      <path d="M 198,38 Q 245,82 290,85 Q 332,115 368,122" fill="none" stroke="#432818" stroke-width="2"/>
+      <circle cx="220" cy="60" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+      <circle cx="255" cy="78" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+      <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+      <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+      <circle cx="358" cy="120" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+
+      <!-- Large Round Porthole Window on Left Wall (Live Weather of Ås) -->
+      <g transform="translate(118, 128) skewY(-26)">
+        <circle cx="0" cy="0" r="34" fill="url(#skyGrad)" stroke="#432818" stroke-width="3.5"/>
+        <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4"/>
+        <!-- Weather Icon inside window -->
+        <text id="weatherSvgIcon" x="0" y="6" text-anchor="middle" font-size="22">⛅</text>
+        <line x1="-32" y1="0" x2="32" y2="0" stroke="#d4a373" stroke-width="3.5"/>
+        <line x1="0" y1="-32" x2="0" y2="32" stroke="#d4a373" stroke-width="3.5"/>
+        <circle cx="0" cy="0" r="34" fill="none" stroke="#432818" stroke-width="3"/>
+      </g>
+      <!-- Weather Label under Round Window -->
+      <g transform="translate(118, 174)">
+        <rect x="-46" y="-10" width="92" height="18" rx="8" fill="#ffffff" stroke="#432818" stroke-width="2"/>
+        <text id="weatherText" x="0" y="3" text-anchor="middle" font-size="9.5" font-weight="700" fill="#432818">Ås: Meteo...</text>
+      </g>
+
+      <!-- Wall Calendar on Left Wall -->
+      <g transform="translate(60, 165) skewY(-26)" onclick="openModal('calendarModal')" style="cursor:pointer">
+        <rect x="-18" y="-22" width="36" height="42" rx="5" fill="#fff" stroke="#432818" stroke-width="2.5"/>
+        <rect x="-18" y="-22" width="36" height="12" rx="4" fill="#ef476f" stroke="#432818" stroke-width="2.5"/>
+        <text x="0" y="6" text-anchor="middle" font-size="12" font-weight="700" fill="#432818">11 MAG</text>
+        <text x="0" y="16" text-anchor="middle" font-size="8" font-weight="700" fill="#6f4e37">2027</text>
+      </g>
+
+      <!-- Corner Nordic Wood-Burning Stove (Hygge Fireplace) -->
+      <g transform="translate(200, 198)">
+        <polygon points="-24,12 0,0 24,12 0,24" fill="#adb5bd" stroke="#432818" stroke-width="2.5"/>
+        <rect x="-18" y="-34" width="36" height="44" rx="6" fill="#495057" stroke="#432818" stroke-width="3"/>
+        <rect x="-6" y="-82" width="12" height="48" fill="#343a40" stroke="#432818" stroke-width="2.5"/>
+        <path d="M -10,2 Q 0,-18 10,2 Z" fill="#ffb703" stroke="#432818" stroke-width="2"/>
+        <path d="M -5,2 Q 0,-10 5,2 Z" fill="#fb8500"/>
+      </g>
+
+      <!-- Left Back Wall: Nordic Mint/Cream Sofa -->
+      <g transform="translate(118, 238)">
+        <!-- Backrest -->
+        <polygon points="-48,6 10,-22 22,-16 -36,12" fill="#95d5b2" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <!-- Seat -->
+        <polygon points="-36,12 22,-16 42,-4 -16,24" fill="#d8f3dc" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <!-- Base -->
+        <polygon points="-36,12 -16,24 -16,34 -36,22" fill="#74c69d" stroke="#432818" stroke-width="2.5"/>
+        <polygon points="-16,24 42,-4 42,6 -16,34" fill="#b7e4c7" stroke="#432818" stroke-width="2.5"/>
+        <!-- Cushions -->
+        <circle cx="-12" cy="4" r="8" fill="#ffcad4" stroke="#432818" stroke-width="2"/>
+        <circle cx="8" cy="-6" r="8" fill="#fefae0" stroke="#432818" stroke-width="2"/>
+      </g>
+
+      <!-- Left Foreground Wall: Interactive Mailbox -->
+      <g transform="translate(56, 278)" onclick="openModal('mailModal')" style="cursor:pointer">
+        <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
+        <rect x="-18" y="-22" width="36" height="24" rx="10" fill="#ff758f" stroke="#432818" stroke-width="2.8"/>
+        <rect x="-10" y="-14" width="20" height="5" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
+      </g>
+
+      <!-- Right Wall Upper: DOUBLE WOODEN SHELF FOR 5-STAR PLANTS ONLY -->
+      <g transform="translate(290, 148) skewY(26)">
+        <!-- Upper Shelf Plank -->
+        <rect x="-58" y="-6" width="116" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
+        <line x1="-42" y1="2" x2="-42" y2="10" stroke="#432818" stroke-width="3"/>
+        <line x1="42" y1="2" x2="42" y2="10" stroke="#432818" stroke-width="3"/>
+        <!-- Lower Shelf Plank -->
+        <rect x="-58" y="24" width="116" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
+        <line x1="-42" y1="32" x2="-42" y2="40" stroke="#432818" stroke-width="3"/>
+        <line x1="42" y1="32" x2="42" y2="40" stroke="#432818" stroke-width="3"/>
+        <!-- Dynamic 5-Star Plants Group rendered by JS -->
+        <g id="shelfFiveStarGroup"></g>
+      </g>
+
+      <!-- Right Back Wall: Scandinavian Birch Bed with Teal Duvet -->
+      <g transform="translate(278, 242)">
+        <!-- Headboard -->
+        <polygon points="-12,-28 42,-2 42,14 -12,-12" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <!-- Mattress & Teal Blanket -->
+        <polygon points="-46,-2 -12,-18 42,8 8,24" fill="#a8dadc" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <polygon points="-46,-2 8,24 8,36 -46,10" fill="#457b9d" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <polygon points="8,24 42,8 42,20 8,36" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <!-- Pillow -->
+        <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
+      </g>
+
+      <!-- Right Foreground: Dedicated Side Table + Spiral Photo Album Book -->
+      <g transform="translate(334, 286)" onclick="openModal('albumModal')" style="cursor:pointer">
+        <!-- Wooden Side Table -->
+        <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
+        <rect x="-18" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
+        <rect x="13" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
+        <!-- Bound Photo Album Book with Polaroid Cover & Spiral -->
+        <g transform="translate(0, -4)">
+          <polygon points="-16,2 2,-6 18,2 0,10" fill="#fff" stroke="#432818" stroke-width="2"/>
+          <polygon points="-16,-2 2,-10 18,-2 0,6" fill="#ff9ebb" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Polaroid icon on cover -->
+          <polygon points="-4,-3 2,-6 8,-3 2,0" fill="#fff" stroke="#432818" stroke-width="1.5"/>
+          <!-- Spiral binding dots -->
+          <circle cx="-10" cy="-5" r="1.5" fill="#432818"/>
+          <circle cx="-5" cy="-7" r="1.5" fill="#432818"/>
+          <circle cx="0" cy="-9" r="1.5" fill="#432818"/>
+        </g>
+      </g>
+
+      <!-- Center Floor: Cozy Round Nordic Rug (Walkable Floor Zone) -->
+      <ellipse cx="200" cy="322" rx="64" ry="32" fill="#bde0fe" stroke="#432818" stroke-width="2.8"/>
+      <ellipse cx="200" cy="322" rx="48" ry="22" fill="#e2ece9" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
+
+      <!-- DEBBY THE SLOTH (Standing on 2 feet, NO cup, animated arms & legs, confined to front floor) -->
+      <g id="petCharacter" transform="translate(200, 326)">
+        <!-- Ground Shadow -->
+        <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
+
+        <!-- Left & Right Standing Legs with 3 Claws -->
+        <g class="leg-l">
+          <ellipse cx="-12" cy="14" rx="9" ry="11" fill="#b08968" stroke="#432818" stroke-width="3"/>
+          <ellipse cx="-12" cy="17" rx="5" ry="4" fill="#6c584c"/>
+          <path d="M -17,22 L -19,27 M -12,23 L -12,28 M -7,22 L -5,27" stroke="#2b2d42" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <g class="leg-r">
+          <ellipse cx="12" cy="14" rx="9" ry="11" fill="#b08968" stroke="#432818" stroke-width="3"/>
+          <ellipse cx="12" cy="17" rx="5" ry="4" fill="#6c584c"/>
+          <path d="M 7,22 L 5,27 M 12,23 L 12,28 M 17,22 L 19,27" stroke="#2b2d42" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Chubby Standing Body -->
+        <ellipse cx="0" cy="-6" rx="23" ry="24" fill="#b08968" stroke="#432818" stroke-width="3.2"/>
+        <!-- Soft Cream Belly Patch -->
+        <ellipse cx="0" cy="-4" rx="15" ry="16" fill="#f5ebe0"/>
+
+        <!-- Animated Left & Right Arms (Relaxed at sides, 3 claws) -->
+        <g class="arm-l">
+          <path d="M -20,-18 C -31,-8 -30,6 -21,10 C -16,11 -15,2 -18,-10 Z" fill="#b08968" stroke="#432818" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M -24,9 L -27,13 M -21,10 L -22,15 M -18,9 L -18,14" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <g class="arm-r">
+          <path d="M 20,-18 C 31,-8 30,6 21,10 C 16,11 15,2 18,-10 Z" fill="#b08968" stroke="#432818" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M 24,9 L 27,13 M 21,10 L 22,15 M 18,9 L 18,14" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Sloth Head with Top Hair Tuft (Matching Reference image_78b2e2.png) -->
+        <g transform="translate(0, -36)">
+          <path d="M -28,4 C -28,-18 -14,-25 -4,-26 C -2,-32 3,-35 4,-29 C 7,-33 11,-32 9,-26 C 21,-23 28,-14 28,4 C 28,19 16,25 0,25 C -16,25 -28,19 -28,4 Z" fill="#b08968" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
+          <!-- Forehead Light Spots -->
+          <circle cx="-12" cy="-16" r="2.2" fill="#e6ccb2"/>
+          <circle cx="-6" cy="-19" r="1.8" fill="#e6ccb2"/>
+          <!-- Heart-shaped Cream Face Mask -->
+          <path d="M 0,-10 C -10,-18 -22,-12 -22,2 C -22,14 -11,20 0,20 C 11,20 22,14 22,2 C 22,-12 10,-18 0,-10 Z" fill="#f5ebe0" stroke="#7f5539" stroke-width="1.5"/>
+          <!-- Angled Dark Brown Eye Patches -->
+          <ellipse cx="-11" cy="1" rx="9.5" ry="6" transform="rotate(-18 -11 1)" fill="#7f5539"/>
+          <ellipse cx="11" cy="1" rx="9.5" ry="6" transform="rotate(18 11 1)" fill="#7f5539"/>
+          <!-- Expressive Eyes with White Ring & Highlight -->
+          <circle cx="-9" cy="0" r="4.5" fill="#fff"/>
+          <circle cx="-9" cy="0" r="3.4" fill="#2b1911"/>
+          <circle cx="-10" cy="-1.2" r="1.2" fill="#fff"/>
+          <circle cx="9" cy="0" r="4.5" fill="#fff"/>
+          <circle cx="9" cy="0" r="3.4" fill="#2b1911"/>
+          <circle cx="8" cy="-1.2" r="1.2" fill="#fff"/>
+          <!-- Cute Dark Nose & Smile -->
+          <ellipse cx="0" cy="5.5" rx="4.5" ry="3.2" fill="#2b1911"/>
+          <ellipse cx="-1.2" cy="4.5" rx="1.4" ry="0.8" fill="#6c757d"/>
+          <path d="M -5,11 Q 0,15 5,11" fill="none" stroke="#432818" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Floating Heart Effect when cared -->
+        <text id="petFx" x="0" y="-68" text-anchor="middle" font-size="22" opacity="0">💖</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- CARE BUTTONS (VINCENZO CARING FOR DEBBY) -->
+  <div class="actions-grid">
+    <button class="care-btn cuddle" onclick="performCare('cuddle')">
+      <span class="care-icon">🤗</span>
+      <span>Coccole</span>
+    </button>
+    <button class="care-btn food" onclick="performCare('food')">
+      <span class="care-icon">🥞</span>
+      <span>Crepe Crema</span>
+    </button>
+    <button class="care-btn gift" onclick="performCare('gift')">
+      <span class="care-icon">💆‍♀️</span>
+      <span>Sephora / Massaggio</span>
+    </button>
+  </div>
+
+  <div class="bottom-tools">
+    <button class="tool-btn" onclick="openModal('plantsModal')">🌿 Collezione 60 Piante Kawaii</button>
+    <button class="tool-btn" onclick="openModal('adminModal')">⚙️ Pannello Amministratore</button>
+  </div>
+</div>
+
+<!-- MODAL 1: CALENDAR & COUNTDOWN -->
+<div class="modal-backdrop" id="calendarModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span>📅 Calendario & Countdown</span>
+      <button class="close-btn" onclick="closeModal('calendarModal')">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p>
+      <div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;">
+        <div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div>
+        <div style="font-family:'Fredoka',sans-serif; font-size:1.7rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div>
+        <div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: MAILBOX CHAT -->
+<div class="modal-backdrop" id="mailModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span>📮 Cassetta della Posta (Chat con Debby)</span>
+      <button class="close-btn" onclick="closeModal('mailModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="chat-list" id="chatList"></div>
+      <div class="input-row">
+        <input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino a Debby..." />
+        <button class="action-pill" onclick="sendChatMessage()">Invia 💌</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: SHARED PHOTO ALBUM -->
+<div class="modal-backdrop" id="albumModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span>📸 Album dei Ricordi Condiviso</span>
+      <button class="close-btn" onclick="closeModal('albumModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="input-row">
+        <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/>
+        <input type="text" id="photoCaption" class="text-input" placeholder="Didascalia del ricordo..." />
+        <button class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button>
+      </div>
+      <div class="photo-grid" id="photoGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: VINCENZO'S 60 KAWAII PLANTS COLLECTION -->
+<div class="modal-backdrop" id="plantsModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span>🌿 Le 60 Piante Kawaii di Vincenzo</span>
+      <button class="close-btn" onclick="closeModal('plantsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;">
+        <span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo (1 ogni 10 Lv): <strong id="packModalCount">0</strong></span>
+        <button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button>
+      </div>
+      <p style="font-size:0.76rem; font-weight:700; color:#6f4e37;">⭐ Le piante a <strong>5 Stelle (5★)</strong> vengono esposte automaticamente sulla mensola a muro!</p>
+      <div class="collection-grid" id="collectionGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 5: PASSWORD-PROTECTED ADMIN PANEL -->
+<div class="modal-backdrop" id="adminModal">
+  <div class="modal-box">
+    <div class="modal-head" style="background:#bde0fe;">
+      <span>⚙️ Pannello Amministratore</span>
+      <button class="close-btn" onclick="closeModal('adminModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="adminLockBox">
+        <p style="font-size:0.85rem; font-weight:700; margin-bottom:8px;">Inserisci la password amministratore per gestire aggiornamenti, backup e reset ufficiale:</p>
+        <div class="input-row">
+          <input type="password" id="adminPassInput" class="text-input" placeholder="Password..." />
+          <button class="action-pill" onclick="unlockAdmin()">Sblocca 🔓</button>
+        </div>
+      </div>
+
+      <div id="adminControlsBox" style="display:none; flex-direction:column; gap:12px;">
+        <div style="background:#fefae0; border:2.5px solid #432818; border-radius:14px; padding:10px;">
+          <div style="font-weight:700; font-size:0.85rem; margin-bottom:6px;">📅 Gestione Date Countdown (Senza perdere i salvataggi)</div>
+          <label style="font-size:0.75rem; font-weight:700;">Data Inizio Gioco:</label>
+          <input type="date" id="adminStartDate" class="text-input" style="width:100%; margin-bottom:6px;"/>
+          <label style="font-size:0.75rem; font-weight:700;">Data Fine Countdown:</label>
+          <input type="date" id="adminTargetDate" class="text-input" style="width:100%; margin-bottom:8px;"/>
+          <button class="action-pill" style="width:100%;" onclick="saveAdminDates()">💾 Salva Date nel Cloud</button>
+        </div>
+
+        <div style="background:#e0fbfc; border:2.5px solid #432818; border-radius:14px; padding:10px;">
+          <div style="font-weight:700; font-size:0.85rem; margin-bottom:6px;">🛡️ Backup Salvataggi (Aggiornamenti Sicuri)</div>
+          <div style="display:flex; gap:8px;">
+            <button class="action-pill" style="flex:1;" onclick="exportBackup()">⬇️ Esporta JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)"/>
+            <button class="action-pill" style="flex:1;" onclick="document.getElementById('importFile').click()">⬆️ Importa</button>
+          </div>
+        </div>
+
+        <div style="background:#ffe5ec; border:2.5px solid #432818; border-radius:14px; padding:10px;">
+          <div style="font-weight:700; font-size:0.85rem; color:#9d0208; margin-bottom:6px;">🚨 Reset Ufficiale Inizio Partita</div>
+          <p style="font-size:0.74rem; font-weight:700; margin-bottom:8px;">Azzera livelli, collezioni e chat su entrambi i telefoni e imposta l'inizio ufficiale a ORA:</p>
+          <button class="action-pill" style="width:100%; background:#ef233c; color:#fff;" onclick="triggerOfficialReset()">🔄 Resetta e Inizia Ufficialmente Ora</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE SDK & REAL-TIME LOGIC -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  // Configurazione Ufficiale Firebase "tamalove"
+  const GITHUB_FIREBASE_CONFIG = {
+    apiKey: "AIzaSyD_tUjI4aIwsoUIARXeXwtWzBUsAxQf118",
+    authDomain: "tamalove.firebaseapp.com",
+    projectId: "tamalove",
+    storageBucket: "tamalove.firebasestorage.app",
+    messagingSenderId: "431289196125",
+    appId: "1:431289196125:web:65c9d9cc44b755164777b4",
+    measurementId: "G-FJL9K3C20C"
+  };
+
+  // Catalogo 60 Piante Kawaii per Vincenzo (12 sono a 5 stelle)
+  const PLANTS_CATALOG = Array.from({ length: 60 }, (_, i) => {
+    const icons = ["🌱","🌵","🪴","🌷","🌸","🌺","🌻","🌼","🍀","🎋","🎍","🌿"];
+    const names = [
+      "Monstera Baby","Cactus Fiore","Bonsai Sakura","Peperomia","Aloe Kawaii","Echeveria Rosa",
+      "Ficus Lyrata","Calathea Orbifolia","Pothos Dorato","Sansevieria","Lavanda Dolce","Marimo Moss"
+    ];
+    const stars = (i % 5 === 4) ? 5 : ((i % 4) + 1);
+    return {
+      id: i + 1,
+      name: `${names[i % names.length]} #${i + 1}`,
+      icon: icons[i % icons.length],
+      stars
+    };
+  });
+
+  const STORAGE_KEY = "tamalove_shared_v1";
+  let state = loadLocalState();
+  let db = null;
+  let sharedDocRef = null;
+  let isApplyingRemote = false;
+
+  function getDefaultState() {
+    return {
+      startDate: new Date().toISOString().slice(0, 10),
+      targetDate: "2027-05-11",
+      lastResetAt: 0,
+      debby: { level: 1, xp: 0, love: 85, food: 80, mood: 90, lastAction: "" },
+      vincenzo: { level: 1, xp: 0, love: 85, food: 80, mood: 90, lastAction: "" },
+      vincenzoPlantsUnlocked: [],
+      vincenzoPacksClaimed: 0,
+      deborahSmiskiUnlocked: [],
+      deborahPacksClaimed: 0,
+      messages: [
+        { sender: "Deborah", text: "Benvenuto nella nostra casetta! 💕", ts: Date.now() }
+      ],
+      photos: []
+    };
+  }
+
+  function loadLocalState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return { ...getDefaultState(), ...JSON.parse(raw) };
+    } catch (e) {}
+    return getDefaultState();
+  }
+
+  function saveState(pushToCloud = true) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    renderAll();
+    if (pushToCloud && sharedDocRef && !isApplyingRemote) {
+      setDoc(sharedDocRef, state, { merge: true }).catch(() => {});
+    }
+  }
+
+  // Inizializza Firebase Cloud
+  async function initCloud() {
+    const badge = document.getElementById("syncStatus");
+    try {
+      const app = initializeApp(GITHUB_FIREBASE_CONFIG);
+      const auth = getAuth(app);
+      db = getFirestore(app);
+      await signInAnonymously(auth);
+      sharedDocRef = doc(db, "tamalove_rooms", "vincenzo_deborah_shared");
+      badge.textContent = "☁️ Cloud Online";
+      badge.style.background = "#d8f3dc";
+
+      onSnapshot(sharedDocRef, (snap) => {
+        if (snap.exists()) {
+          const remote = snap.data();
+          isApplyingRemote = true;
+          state = { ...getDefaultState(), ...remote };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          renderAll();
+          isApplyingRemote = false;
+        } else {
+          setDoc(sharedDocRef, state, { merge: true });
+        }
+      });
+    } catch (err) {
+      badge.textContent = "📱 Locale";
+      badge.style.background = "#fef3c7";
+    }
+  }
+
+  // Renderizza interfaccia, mensola 5 stelle e collezioni
+  function renderAll() {
+    const d = state.debby || { level: 1, xp: 0, love: 85, food: 80, mood: 90 };
+    document.getElementById("lvlBadge").textContent = `Lv. ${d.level}`;
+    document.getElementById("xpFill").style.width = `${Math.min(100, d.xp)}%`;
+    document.getElementById("valLove").textContent = `${d.love}%`;
+    document.getElementById("barLove").style.width = `${d.love}%`;
+    document.getElementById("valFood").textContent = `${d.food}%`;
+    document.getElementById("barFood").style.width = `${d.food}%`;
+    document.getElementById("valMood").textContent = `${d.mood}%`;
+    document.getElementById("barMood").style.width = `${d.mood}%`;
+
+    // Calcolo Pacchetti Regalo sbloccabili ogni 10 livelli
+    const totalEarnedPacks = Math.floor(d.level / 10);
+    const availablePacks = Math.max(0, totalEarnedPacks - (state.vincenzoPacksClaimed || 0));
+    document.getElementById("packCountBadge").textContent = availablePacks;
+    document.getElementById("packModalCount").textContent = availablePacks;
+
+    // Renderizza SOLO Piante a 5 Stelle sulla Mensola a muro
+    const shelfGroup = document.getElementById("shelfFiveStarGroup");
+    shelfGroup.innerHTML = "";
+    const unlockedIds = state.vincenzoPlantsUnlocked || [];
+    const fiveStarUnlocked = PLANTS_CATALOG.filter(p => unlockedIds.includes(p.id) && p.stars === 5);
+    fiveStarUnlocked.slice(0, 8).forEach((plant, idx) => {
+      const row = idx < 4 ? 0 : 1;
+      const col = idx % 4;
+      const xPos = -42 + col * 28;
+      const yPos = row === 0 ? -10 : 20;
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("transform", `translate(${xPos}, ${yPos})`);
+      g.innerHTML = `
+        <rect x="-7" y="-2" width="14" height="8" rx="2" fill="#e76f51" stroke="#432818" stroke-width="1.5"/>
+        <text x="0" y="-4" text-anchor="middle" font-size="14">${plant.icon}</text>
+      `;
+      shelfGroup.appendChild(g);
+    });
+
+    // Countdown all'11 Maggio 2027
+    const now = new Date();
+    document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
+    const target = new Date(state.targetDate || "2027-05-11");
+    const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+    document.getElementById("calShort").textContent = `-${diffDays}g`;
+    document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
+    document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
+
+    // Chat
+    const chatList = document.getElementById("chatList");
+    chatList.innerHTML = (state.messages || []).map(m => `
+      <div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}">
+        <strong>${m.sender}:</strong> ${m.text}
+      </div>
+    `).join("");
+    chatList.scrollTop = chatList.scrollHeight;
+
+    // Album Foto
+    const photoGrid = document.getElementById("photoGrid");
+    photoGrid.innerHTML = (state.photos || []).map(p => `
+      <div class="polaroid">
+        <img src="${p.url}" alt="Ricordo"/>
+        <p>${p.caption || "Ricordo insieme 💕"}</p>
+      </div>
+    `).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora. Carica la prima!</p>`;
+
+    // Griglia 60 Piante
+    const colGrid = document.getElementById("collectionGrid");
+    colGrid.innerHTML = PLANTS_CATALOG.map(p => {
+      const isUnlocked = unlockedIds.includes(p.id);
+      return `
+        <div class="col-item ${isUnlocked ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}">
+          <div style="font-size:1.5rem;">${isUnlocked ? p.icon : '🔒'}</div>
+          <div>${p.name}</div>
+          <div style="color:#d97706;">${"⭐".repeat(p.stars)}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // Meccaniche di Cura per Debby
+  window.performCare = function(type) {
+    const d = state.debby;
+    const fx = document.getElementById("petFx");
+    if (type === "cuddle") {
+      d.love = Math.min(100, d.love + 12);
+      d.mood = Math.min(100, d.mood + 8);
+      fx.textContent = "🤗💖";
+      showSpeech("Che coccole meravigliose amore mio! 🦥💕");
+    } else if (type === "food") {
+      d.food = Math.min(100, d.food + 16);
+      d.mood = Math.min(100, d.mood + 6);
+      fx.textContent = "🥞✨";
+      showSpeech("Mmmh! Crepe alla crema buonissima! 😋🥞");
+    } else if (type === "gift") {
+      d.mood = Math.min(100, d.mood + 18);
+      d.love = Math.min(100, d.love + 10);
+      fx.textContent = "🛍️💆‍♀️";
+      showSpeech("Buono Sephora e massaggio! Sei unico! 😍✨");
+    }
+
+    d.xp += 35;
+    if (d.xp >= 100) {
+      d.level += 1;
+      d.xp -= 100;
+      showSpeech(`Evviva! Debby è salita al Livello ${d.level}! 🎉`);
+    }
+
+    fx.style.opacity = 1;
+    setTimeout(() => { fx.style.opacity = 0; }, 1100);
+    saveState(true);
+  };
+
+  function showSpeech(text) {
+    const b = document.getElementById("speechBubble");
+    b.textContent = text;
+    b.classList.add("show");
+    clearTimeout(window._speechTimer);
+    window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200);
+  }
+
+  // Apertura Pacco Regalo (1 ogni 10 livelli)
+  window.openGiftPack = function() {
+    const totalEarned = Math.floor(state.debby.level / 10);
+    const avail = totalEarned - (state.vincenzoPacksClaimed || 0);
+    if (avail <= 0) {
+      alert("Raggiungi il prossimo multiplo di 10 livelli (Lv. 10, 20, 30...) per sbloccare un nuovo pacco regalo!");
+      return;
+    }
+    const unlocked = state.vincenzoPlantsUnlocked || [];
+    const lockedPool = PLANTS_CATALOG.filter(p => !unlocked.includes(p.id));
+    if (lockedPool.length === 0) {
+      alert("Hai già collezionato tutte le 60 Piante Kawaii!");
+      return;
+    }
+    const won = lockedPool[Math.floor(Math.random() * lockedPool.length)];
+    state.vincenzoPlantsUnlocked.push(won.id);
+    state.vincenzoPacksClaimed = (state.vincenzoPacksClaimed || 0) + 1;
+    saveState(true);
+    alert(`🎉 Hai trovato: ${won.icon} ${won.name} (${won.stars}★)!${won.stars === 5 ? "\n✨ Essendo una 5 Stelle è stata posizionata sulla mensola a muro!" : ""}`);
+  };
+
+  // Chat & Foto
+  window.sendChatMessage = function() {
+    const inp = document.getElementById("chatInput");
+    const txt = inp.value.trim();
+    if (!txt) return;
+    state.messages.push({ sender: "Vincenzo", text: txt, ts: Date.now() });
+    inp.value = "";
+    saveState(true);
+  };
+
+  window.handlePhotoUpload = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement("canvas");
+        const maxW = 480;
+        const scale = Math.min(1, maxW / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
+        const cap = document.getElementById("photoCaption").value.trim() || "Noi due 💕";
+        state.photos.unshift({ url: dataUrl, caption: cap, ts: Date.now() });
+        document.getElementById("photoCaption").value = "";
+        saveState(true);
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Pannello Amministratore (Password: admin123 o pocketcare2026)
+  window.unlockAdmin = function() {
+    const pass = document.getElementById("adminPassInput").value.trim();
+    if (pass === "admin123" || pass === "pocketcare2026") {
+      document.getElementById("adminLockBox").style.display = "none";
+      document.getElementById("adminControlsBox").style.display = "flex";
+      document.getElementById("adminStartDate").value = state.startDate || "2026-11-07";
+      document.getElementById("adminTargetDate").value = state.targetDate || "2027-05-11";
+    } else {
+      alert("Password errata! Usa admin123");
+    }
+  };
+
+  window.saveAdminDates = function() {
+    state.startDate = document.getElementById("adminStartDate").value;
+    state.targetDate = document.getElementById("adminTargetDate").value;
+    saveState(true);
+    alert("✅ Date aggiornate in Cloud senza toccare i salvataggi!");
+  };
+
+  window.exportBackup = function() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `tamalove_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+  };
+
+  window.importBackup = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        state = { ...getDefaultState(), ...imported };
+        saveState(true);
+        alert("✅ Backup ripristinato e sincronizzato sul Cloud!");
+      } catch (err) {
+        alert("File JSON non valido.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  let resetConfirmStep = 0;
+  window.triggerOfficialReset = function() {
+    if (resetConfirmStep === 0) {
+      resetConfirmStep = 1;
+      alert("⚠️ ATTENZIONE: Premi di nuovo il pulsante rosso entro 10 secondi per confermare il RESET TOTALE e far iniziare ufficialmente la partita da ORA.");
+      setTimeout(() => { resetConfirmStep = 0; }, 10000);
+      return;
+    }
+    resetConfirmStep = 0;
+    state = getDefaultState();
+    state.startDate = new Date().toISOString().slice(0, 10);
+    state.lastResetAt = Date.now();
+    saveState(true);
+    alert("🎉 Partita resettata e iniziata ufficialmente in questo istante su entrambi i telefoni!");
+  };
+
+  // Movimento Autonomo Esclusivamente sul Pavimento Anteriore Libero (Mai sopra i mobili)
+  const petEl = document.getElementById("petCharacter");
+  let petX = 200, petY = 326;
+  function roamFloorOnly() {
+    // Poligono sicuro della zona anteriore del pavimento (lontano da divano, letto, stufa e tavolino)
+    const safeTargets = [
+      { x: 200, y: 326 },
+      { x: 162, y: 318 },
+      { x: 236, y: 318 },
+      { x: 185, y: 342 },
+      { x: 218, y: 340 }
+    ];
+    const next = safeTargets[Math.floor(Math.random() * safeTargets.length)];
+    const dist = Math.hypot(next.x - petX, next.y - petY);
+    if (dist > 4) {
+      petEl.classList.add("walking");
+      petEl.style.transition = `transform ${Math.max(1.2, dist / 22)}s linear`;
+      petX = next.x;
+      petY = next.y;
+      petEl.setAttribute("transform", `translate(${petX}, ${petY})`);
+      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (dist / 22) * 1000));
+    }
+  }
+  setInterval(roamFloorOnly, 4200);
+
+  // Meteo Reale Live di Ås, Norvegia (59.66, 10.79)
+  async function fetchLiveWeather() {
+    try {
+      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.66&longitude=10.79&current_weather=true");
+      const data = await res.json();
+      const cw = data.current_weather;
+      const temp = Math.round(cw.temperature);
+      const code = cw.weathercode;
+      const icon = code === 0 ? "☀️" : (code < 4 ? "⛅" : (code >= 71 ? "❄️" : "🌧️"));
+      document.getElementById("weatherSvgIcon").textContent = icon;
+      document.getElementById("weatherText").textContent = `Ås 🇳🇴 ${temp}°C ${icon}`;
+    } catch (e) {
+      document.getElementById("weatherText").textContent = "Ås 🇳🇴 Fresco";
+    }
+  }
+
+  window.openModal = (id) => document.getElementById(id).classList.add("open");
+  window.closeModal = (id) => document.getElementById(id).classList.remove("open");
+
+  renderAll();
+  initCloud();
+  fetchLiveWeather();
+</script>
 </body>
 </html>
