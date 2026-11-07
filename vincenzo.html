@@ -131,7 +131,7 @@
       border: 2.2px solid #432818;
       border-radius: 12px;
       padding: 5px 10px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
     }
     .partner-mood-banner {
@@ -484,13 +484,13 @@
       </div>
     </div>
 
-    <!-- WEATHER UNDER STATS -->
+    <!-- WEATHER & LIVE DAY/NIGHT UNDER STATS -->
     <div class="sub-hud-bar">
       <span id="weatherHudText">⛅ Meteo Ås (Norvegia): caricamento...</span>
-      <span>🏡 Casa Nordica</span>
+      <span id="dayNightHudBadge">☀️ Giorno</span>
     </div>
 
-    <!-- HOW DEBBY FEELS BANNER (Updated automatically when Deborah chooses her mood) -->
+    <!-- HOW DEBBY FEELS BANNER -->
     <div class="partner-mood-banner">
       <span id="debbyMoodStatus">🦥 Il bradipo Debby si sente: <strong>Felice 😊</strong></span>
       <span id="sickCureHint" style="font-size:0.68rem; color:#9d0208;"></span>
@@ -522,7 +522,6 @@
   <div class="room-stage" id="roomStage">
     <div class="speech-bubble" id="speechBubble">Ciao amore mio! 💕</div>
 
-    <!-- Floating Buttons (Calendar button only says Calendario, countdown inside modal) -->
     <button class="hotspot-btn" style="top:16%; left:8%;" onclick="openModal('calendarModal')">
       📅 Calendario
     </button>
@@ -538,10 +537,14 @@
 
     <svg class="room-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
       <defs>
+        <!-- Dynamic Day/Night Sky Gradient inside the Porthole Window -->
         <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#bde0fe"/>
-          <stop offset="100%" stop-color="#e2ece9"/>
+          <stop id="skyStop1" offset="0%" stop-color="#72efdd"/>
+          <stop id="skyStop2" offset="100%" stop-color="#bde0fe"/>
         </linearGradient>
+        <clipPath id="portholeClip">
+          <circle cx="0" cy="0" r="30"/>
+        </clipPath>
       </defs>
 
       <!-- Meadow background -->
@@ -572,17 +575,40 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- Large Round Porthole Window on Left Wall -->
+      <!-- LIVE DAY/NIGHT & WEATHER PORTHOLE WINDOW ON LEFT WALL -->
       <g transform="translate(122, 132) skewY(-26)">
         <circle cx="0" cy="0" r="32" fill="url(#skyGrad)" stroke="#432818" stroke-width="3.5"/>
+        <!-- Dynamic Celestial & Weather Layer clipped inside window -->
+        <g clip-path="url(#portholeClip)">
+          <!-- Stars (Visible at night) -->
+          <g id="winStarsGroup" opacity="0" style="transition:opacity 0.6s">
+            <circle cx="-16" cy="-14" r="1.3" fill="#fff"/>
+            <circle cx="15" cy="-18" r="1.5" fill="#fff3b0"/>
+            <circle cx="-8" cy="-22" r="1" fill="#fff"/>
+            <circle cx="18" cy="-4" r="1.2" fill="#fff"/>
+            <circle cx="-18" cy="6" r="1.1" fill="#fff"/>
+          </g>
+          <!-- Sun (Visible during day) -->
+          <g id="winSunGroup" opacity="1" style="transition:opacity 0.6s">
+            <circle cx="-10" cy="-10" r="9" fill="#ffb703" stroke="#fb8500" stroke-width="1.5"/>
+          </g>
+          <!-- Crescent Moon (Visible at night) -->
+          <g id="winMoonGroup" opacity="0" style="transition:opacity 0.6s">
+            <path d="M -6,-16 A 9,9 0 1,0 6,-4 A 7,7 0 1,1 -6,-16 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1"/>
+          </g>
+          <!-- Distant Nordic Hills Silhouette -->
+          <path id="winHills" d="M -34,30 Q -14,12 4,24 Q 20,10 34,26 L 34,34 L -34,34 Z" fill="#52b788"/>
+          <!-- Dynamic Weather Overlay (Clouds / Rain / Snow) -->
+          <g id="winWeatherLayer"></g>
+        </g>
+        <!-- Wooden Window Frame Crossbars -->
         <circle cx="0" cy="0" r="28" fill="none" stroke="#d4a373" stroke-width="4"/>
-        <text id="weatherSvgIcon" x="0" y="7" text-anchor="middle" font-size="22">⛅</text>
         <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
         <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3"/>
       </g>
 
-      <!-- Wall Calendar on Left Wall (Padded text well inside the borders) -->
+      <!-- Wall Calendar on Left Wall -->
       <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')" style="cursor:pointer">
         <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
         <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#ef476f" stroke="#432818" stroke-width="2.5"/>
@@ -594,20 +620,14 @@
 
       <!-- LARGE NORDIC WOOD-BURNING STOVE GROUNDED ON THE FLOOR IN BACK CORNER -->
       <g transform="translate(200, 232)">
-        <!-- Floor Stone Hearth Pad resting directly on parquet floor -->
         <polygon points="-38,4 0,-15 38,4 0,23" fill="#adb5bd" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-38,4 0,23 0,28 -38,9" fill="#6c757d" stroke="#432818" stroke-width="2.2"/>
         <polygon points="38,4 0,23 0,28 38,9" fill="#8d99ae" stroke="#432818" stroke-width="2.2"/>
-        <!-- Sturdy Cast-Iron Legs resting on the hearth -->
         <rect x="-22" y="-4" width="6" height="12" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
         <rect x="16" y="-4" width="6" height="12" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
-        <!-- Large Cast-Iron Stove Body -->
         <rect x="-26" y="-64" width="52" height="64" rx="8" fill="#495057" stroke="#432818" stroke-width="3.2"/>
-        <!-- Top Warmer Plate -->
         <ellipse cx="0" cy="-64" rx="28" ry="8" fill="#343a40" stroke="#432818" stroke-width="2.8"/>
-        <!-- Chimney Pipe going up to roof -->
         <rect x="-8" y="-175" width="16" height="112" fill="#343a40" stroke="#432818" stroke-width="2.8"/>
-        <!-- Glowing Fireplace Glass Window -->
         <rect x="-16" y="-48" width="32" height="30" rx="5" fill="#2b1911" stroke="#432818" stroke-width="2.5"/>
         <path d="M -12,-20 Q -4,-44 0,-26 Q 6,-46 12,-20 Z" fill="#ffb703"/>
         <path d="M -7,-20 Q 0,-36 7,-20 Z" fill="#fb8500"/>
@@ -666,11 +686,10 @@
       <ellipse cx="200" cy="328" rx="64" ry="30" fill="#bde0fe" stroke="#432818" stroke-width="2.8"/>
       <ellipse cx="200" cy="328" rx="48" ry="20" fill="#e2ece9" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
 
-      <!-- DEBBY THE SLOTH (With inner flip group so she turns in the direction of movement) -->
+      <!-- DEBBY THE SLOTH -->
       <g id="petCharacter" transform="translate(200, 330)">
         <g id="petFlipGroup">
           <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
-          <!-- Standing Legs -->
           <g class="leg-l">
             <ellipse cx="-12" cy="14" rx="9" ry="11" fill="#b08968" stroke="#432818" stroke-width="3"/>
             <ellipse cx="-12" cy="17" rx="5" ry="4" fill="#6c584c"/>
@@ -681,10 +700,8 @@
             <ellipse cx="12" cy="17" rx="5" ry="4" fill="#6c584c"/>
             <path d="M 7,22 L 5,27 M 12,23 L 12,28 M 17,22 L 19,27" stroke="#2b2d42" stroke-width="2.5" stroke-linecap="round"/>
           </g>
-          <!-- Body -->
           <ellipse cx="0" cy="-6" rx="23" ry="24" fill="#b08968" stroke="#432818" stroke-width="3.2"/>
           <ellipse cx="0" cy="-4" rx="15" ry="16" fill="#f5ebe0"/>
-          <!-- Arms -->
           <g class="arm-l">
             <path d="M -20,-18 C -31,-8 -30,6 -21,10 C -16,11 -15,2 -18,-10 Z" fill="#b08968" stroke="#432818" stroke-width="3" stroke-linejoin="round"/>
             <path d="M -24,9 L -27,13 M -21,10 L -22,15 M -18,9 L -18,14" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round"/>
@@ -693,7 +710,6 @@
             <path d="M 20,-18 C 31,-8 30,6 21,10 C 16,11 15,2 18,-10 Z" fill="#b08968" stroke="#432818" stroke-width="3" stroke-linejoin="round"/>
             <path d="M 24,9 L 27,13 M 21,10 L 22,15 M 18,9 L 18,14" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round"/>
           </g>
-          <!-- Head slightly angled right by default so flipping left/right is super clear -->
           <g transform="translate(2, -36)">
             <path d="M -28,4 C -28,-18 -14,-25 -4,-26 C -2,-32 3,-35 4,-29 C 7,-33 11,-32 9,-26 C 21,-23 28,-14 28,4 C 28,19 16,25 0,25 C -16,25 -28,19 -28,4 Z" fill="#b08968" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
             <circle cx="-12" cy="-16" r="2.2" fill="#e6ccb2"/>
@@ -738,7 +754,7 @@
   </div>
 </div>
 
-<!-- MODAL 1: CALENDAR & COUNTDOWN (Countdown appears ONLY here) -->
+<!-- MODAL 1: CALENDAR & COUNTDOWN -->
 <div class="modal-backdrop" id="calendarModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -887,7 +903,6 @@
   const POT_COLORS = ["#e76f51","#2a9d8f","#e9c46a","#f4a261","#8ecae6","#ffafcc","#bde0fe","#cdb4db","#a3b18a","#dda15e"];
   const FOLIAGE_COLORS = ["#2d6a4f","#40916c","#52b788","#74c69d","#95d5b2","#ff758f","#ffb703","#a855f7","#38b000","#0077b6"];
 
-  // Generatore SVG specifico per ciascuna delle 60 piante
   function renderPlantSvg(id, size = 28) {
     const idx = id - 1;
     const potCol = POT_COLORS[idx % POT_COLORS.length];
@@ -895,49 +910,39 @@
     const shapeType = idx % 10;
     let foliage = "";
     if (shapeType === 0) {
-      // Monstera / Foglie larghe
       foliage = `<ellipse cx="-5" cy="-8" rx="6" ry="8" transform="rotate(-20 -5 -8)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>
                  <ellipse cx="5" cy="-9" rx="6" ry="8" transform="rotate(20 5 -9)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`;
     } else if (shapeType === 1) {
-      // Cactus Bunny Ears
       foliage = `<ellipse cx="0" cy="-7" rx="5" ry="8" fill="#52b788" stroke="#432818" stroke-width="1.5"/>
                  <ellipse cx="-5" cy="-14" rx="3" ry="5" transform="rotate(-25 -5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/>
                  <ellipse cx="5" cy="-14" rx="3" ry="5" transform="rotate(25 5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/>`;
     } else if (shapeType === 2) {
-      // Bonsai chioma tonda / Sakura
       foliage = `<path d="M -1,0 C -2,-6 2,-8 0,-12" stroke="#6f4e37" stroke-width="3" fill="none"/>
                  <circle cx="-4" cy="-12" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>
                  <circle cx="4" cy="-11" r="5.5" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`;
     } else if (shapeType === 3) {
-      // Sansevieria / punte alte
       foliage = `<path d="M -5,0 L -3,-16 L 0,0 Z" fill="#2d6a4f" stroke="#432818" stroke-width="1.4"/>
                  <path d="M -1,0 L 2,-18 L 5,0 Z" fill="#52b788" stroke="#432818" stroke-width="1.4"/>`;
     } else if (shapeType === 4) {
-      // Hoya Cuore / Foglia a cuore
       foliage = `<path d="M 0,-2 C -10,-8 -8,-18 0,-12 C 8,-18 10,-8 0,-2 Z" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`;
     } else if (shapeType === 5) {
-      // Rosetta Succulenta / Echeveria
       foliage = `<circle cx="0" cy="-6" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>
                  <circle cx="0" cy="-6" r="3.5" fill="#d8f3dc" stroke="#432818" stroke-width="1.2"/>`;
     } else if (shapeType === 6) {
-      // Pianta fiorita con bocciolo
       foliage = `<line x1="0" y1="0" x2="0" y2="-13" stroke="#2d6a4f" stroke-width="2.2"/>
                  <circle cx="0" cy="-14" r="5.5" fill="#ff758f" stroke="#432818" stroke-width="1.5"/>
                  <circle cx="0" cy="-14" r="2" fill="#ffb703"/>`;
     } else if (shapeType === 7) {
-      // Pilea dischetti
       foliage = `<line x1="-3" y1="0" x2="-6" y2="-11" stroke="#432818" stroke-width="1.5"/>
                  <line x1="3" y1="0" x2="6" y2="-12" stroke="#432818" stroke-width="1.5"/>
                  <circle cx="-6" cy="-11" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>
                  <circle cx="6" cy="-12" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>
                  <circle cx="0" cy="-15" r="4.2" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>`;
     } else if (shapeType === 8) {
-      // String of pearls ricadente
       foliage = `<circle cx="0" cy="-5" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>
                  <circle cx="-5" cy="2" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/>
                  <circle cx="-5" cy="6" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/>`;
     } else {
-      // Alberello agrumi / ulivo con frutti
       foliage = `<rect x="-1.5" y="-10" width="3" height="10" fill="#7f5539"/>
                  <circle cx="0" cy="-13" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>
                  <circle cx="-3" cy="-13" r="1.8" fill="#ffb703"/>
@@ -1041,7 +1046,6 @@
     return getDefaultState();
   }
 
-  // Controllo di Mezzanotte e Mezza (00:30): se una barra è < 50%, mostra l'avviso per quel giorno
   function evaluateMidnightHalfCheck() {
     const now = new Date();
     const today = todayStr();
@@ -1126,7 +1130,6 @@
     document.getElementById("valBoredom").textContent = `${d.boredom}%`;
     document.getElementById("barBoredom").style.width = `${d.boredom}%`;
 
-    // Stato d'animo scelto da Deborah mostrato su Vincenzo
     const feelingLabel = MOOD_LABELS[d.feeling] || "Felice 😊";
     document.getElementById("debbyMoodStatus").innerHTML = `🦥 Il bradipo Debby si sente: <strong>${feelingLabel}</strong>`;
     if (d.feeling === "malata" || d.feeling === "malato") {
@@ -1141,21 +1144,17 @@
       document.getElementById("sickCureHint").textContent = "";
     }
 
-    // Contatore invii stato di Vincenzo (max 2/giorno)
     const myCount = v.moodLogDate === today ? (v.moodLogCount || 0) : 0;
     document.getElementById("myMoodUses").textContent = `(${myCount}/2 oggi)`;
 
-    // Avviso di mancata cura dopo le 00:30
     const alertBox = document.getElementById("neglectAlert");
     alertBox.style.display = (d.neglectWarningDate === today) ? "block" : "none";
 
-    // Pacchetti Regalo
     const totalEarnedPacks = Math.floor(d.level / 10);
     const availablePacks = Math.max(0, totalEarnedPacks - (state.vincenzoPacksClaimed || 0));
     document.getElementById("packCountBadge").textContent = availablePacks;
     document.getElementById("packModalCount").textContent = availablePacks;
 
-    // Renderizza ESATTAMENTE le Piante a 5 Stelle sbloccate sulla mensola a muro
     const shelfGroup = document.getElementById("shelfFiveStarGroup");
     shelfGroup.innerHTML = "";
     const unlockedIds = state.vincenzoPlantsUnlocked || [];
@@ -1171,7 +1170,6 @@
       shelfGroup.appendChild(g);
     });
 
-    // Data sul calendario a muro (ben centrata) e Countdown solo nel Modal
     const now = new Date();
     const monthsShort = ["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"];
     document.getElementById("wallCalDay").textContent = `${String(now.getDate()).padStart(2, "0")} ${monthsShort[now.getMonth()]}`;
@@ -1183,7 +1181,6 @@
     document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
     document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
 
-    // Chat
     const chatList = document.getElementById("chatList");
     chatList.innerHTML = (state.messages || []).map(m => `
       <div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}">
@@ -1192,7 +1189,6 @@
     `).join("");
     chatList.scrollTop = chatList.scrollHeight;
 
-    // Album
     const photoGrid = document.getElementById("photoGrid");
     photoGrid.innerHTML = (state.photos || []).map(p => `
       <div class="polaroid">
@@ -1201,7 +1197,6 @@
       </div>
     `).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora. Carica la prima!</p>`;
 
-    // Collezione 60 Piante uniche
     const colGrid = document.getElementById("collectionGrid");
     colGrid.innerHTML = PLANTS_CATALOG.map(p => {
       const isUnlocked = unlockedIds.includes(p.id);
@@ -1217,7 +1212,6 @@
     }).join("");
   }
 
-  // Vincenzo invia come si sente oggi (max 2 volte al giorno) -> Modifica le barre del Pinguino Vincenzo sull'app di Deborah
   window.sendMyMood = function(moodKey) {
     const today = todayStr();
     const v = state.vincenzo;
@@ -1251,7 +1245,6 @@
     showSpeech(`Hai inviato a Debby che ti senti: ${MOOD_LABELS[moodKey]}!`);
   };
 
-  // Vincenzo cura il Bradipo Debby
   window.performCare = function(type) {
     const d = state.debby;
     const today = todayStr();
@@ -1281,7 +1274,6 @@
       showSpeech("Buono Sephora e massaggio! Addio noia! 😍✨");
     }
 
-    // Se Debby era malata e ha ricevuto il mix di tutte e 3 le cure, guarisce!
     if ((d.feeling === "malata" || d.feeling === "malato") && d.sickNeeds?.cuddle && d.sickNeeds?.food && d.sickNeeds?.gift) {
       d.love = Math.max(d.love, 75);
       d.food = Math.max(d.food, 75);
@@ -1294,7 +1286,6 @@
       d.feeling = "felice";
     }
 
-    // Limite massimo di 6 livelli al giorno
     if ((d.dailyLvlsGained || 0) < 6) {
       d.xp += 35;
       if (d.xp >= 100) {
@@ -1302,9 +1293,7 @@
         d.xp -= 100;
         d.dailyLvlsGained = (d.dailyLvlsGained || 0) + 1;
         showSpeech(`Evviva! Debby è salita al Livello ${d.level}! (${d.dailyLvlsGained}/6 oggi) 🎉`);
-        if (d.dailyLvlsGained >= 6) {
-          d.xp = 0;
-        }
+        if (d.dailyLvlsGained >= 6) d.xp = 0;
       }
     } else {
       d.xp = 0;
@@ -1440,7 +1429,7 @@
     alert("🎉 Partita resettata e iniziata ufficialmente!");
   };
 
-  // Movimento sul pavimento anteriore + ROTAZIONE DIREZIONALE (non cammina mai all'indietro!)
+  // Movimento sul pavimento + Rotazione direzionale
   const petEl = document.getElementById("petCharacter");
   const petFlipEl = document.getElementById("petFlipGroup");
   let petX = 200, petY = 330;
@@ -1456,7 +1445,6 @@
     const dx = next.x - petX;
     const dist = Math.hypot(dx, next.y - petY);
     if (dist > 4) {
-      // Gira la faccia del bradipo nella direzione in cui sta camminando
       if (dx < -2) {
         petFlipEl.setAttribute("transform", "scale(-1, 1)");
       } else if (dx > 2) {
@@ -1473,19 +1461,85 @@
   setInterval(roamFloorOnly, 4200);
   setInterval(() => saveState(false), 60000);
 
-  // Meteo Reale Live di Ås, Norvegia sotto le barre di stato
+  // Applica Giorno/Notte Reale + Condizioni Meteo Live dentro la finestra a oblò
+  function updateWindowScene(isDay, weatherCode, temp) {
+    const stop1 = document.getElementById("skyStop1");
+    const stop2 = document.getElementById("skyStop2");
+    const sunG = document.getElementById("winSunGroup");
+    const moonG = document.getElementById("winMoonGroup");
+    const starsG = document.getElementById("winStarsGroup");
+    const hills = document.getElementById("winHills");
+    const weatherLayer = document.getElementById("winWeatherLayer");
+    const dayNightBadge = document.getElementById("dayNightHudBadge");
+
+    if (isDay) {
+      stop1.setAttribute("stop-color", "#48cae4");
+      stop2.setAttribute("stop-color", "#caf0f8");
+      sunG.setAttribute("opacity", "1");
+      moonG.setAttribute("opacity", "0");
+      starsG.setAttribute("opacity", "0");
+      hills.setAttribute("fill", "#52b788");
+      dayNightBadge.textContent = "☀️ Giorno (Live)";
+    } else {
+      stop1.setAttribute("stop-color", "#0f172a");
+      stop2.setAttribute("stop-color", "#1e3a8a");
+      sunG.setAttribute("opacity", "0");
+      moonG.setAttribute("opacity", "1");
+      starsG.setAttribute("opacity", "1");
+      hills.setAttribute("fill", "#1b4332");
+      dayNightBadge.textContent = "🌙 Notte (Live)";
+    }
+
+    let overlaySvg = "";
+    let weatherDesc = "Sereno";
+    let hudIcon = isDay ? "☀️" : "🌙";
+
+    if (weatherCode >= 1 && weatherCode <= 3) {
+      weatherDesc = "Nuvoloso";
+      hudIcon = isDay ? "⛅" : "☁️";
+      const cloudCol = isDay ? "#ffffff" : "#94a3b8";
+      overlaySvg = `<g opacity="0.88">
+        <ellipse cx="6" cy="-4" rx="14" ry="7" fill="${cloudCol}"/>
+        <ellipse cx="-6" cy="2" rx="12" ry="6" fill="${cloudCol}"/>
+      </g>`;
+    } else if (weatherCode >= 45 && weatherCode <= 67) {
+      weatherDesc = "Pioggia";
+      hudIcon = "🌧️";
+      overlaySvg = `<g>
+        <ellipse cx="0" cy="-10" rx="18" ry="8" fill="#64748b"/>
+        <line x1="-10" y1="0" x2="-14" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+        <line x1="0" y1="0" x2="-4" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+        <line x1="10" y1="0" x2="6" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+      </g>`;
+    } else if (weatherCode >= 71) {
+      weatherDesc = "Neve";
+      hudIcon = "❄️";
+      overlaySvg = `<g>
+        <ellipse cx="0" cy="-12" rx="18" ry="7" fill="#94a3b8"/>
+        <circle cx="-10" cy="2" r="2.2" fill="#fff"/>
+        <circle cx="2" cy="6" r="2.2" fill="#fff"/>
+        <circle cx="11" cy="0" r="2.2" fill="#fff"/>
+        <circle cx="-4" cy="13" r="2" fill="#fff"/>
+      </g>`;
+    }
+
+    weatherLayer.innerHTML = overlaySvg;
+    document.getElementById("weatherHudText").textContent = `${hudIcon} Meteo Ås (Norvegia): ${temp}°C • ${weatherDesc}`;
+  }
+
   async function fetchLiveWeather() {
     try {
-      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.66&longitude=10.79&current_weather=true");
+      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.66&longitude=10.79&current=temperature_2m,is_day,weather_code&timezone=Europe%2FOslo");
       const data = await res.json();
-      const cw = data.current_weather;
-      const temp = Math.round(cw.temperature);
-      const code = cw.weathercode;
-      const icon = code === 0 ? "☀️" : (code < 4 ? "⛅" : (code >= 71 ? "❄️" : "🌧️"));
-      document.getElementById("weatherSvgIcon").textContent = icon;
-      document.getElementById("weatherHudText").textContent = `${icon} Meteo Ås (Norvegia): ${temp}°C`;
+      const cur = data.current;
+      const temp = Math.round(cur.temperature_2m);
+      const isDay = cur.is_day === 1;
+      const code = cur.weather_code;
+      updateWindowScene(isDay, code, temp);
     } catch (e) {
-      document.getElementById("weatherHudText").textContent = "⛅ Meteo Ås (Norvegia): Fresco";
+      const hour = new Date().getHours();
+      const isDay = hour >= 7 && hour < 19;
+      updateWindowScene(isDay, 1, 8);
     }
   }
 
@@ -1496,6 +1550,7 @@
   renderAll();
   initCloud();
   fetchLiveWeather();
+  setInterval(fetchLiveWeather, 300000);
 </script>
 </body>
 </html>
