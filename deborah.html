@@ -29,11 +29,11 @@
       background: #fffdf9;
       border: 3.5px solid #432818;
       border-radius: 22px;
-      padding: 10px 14px;
+      padding: 10px 12px;
       box-shadow: 0 5px 0 #432818;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
     .hud-top {
       display: flex;
@@ -43,7 +43,7 @@
     }
     .pet-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -52,22 +52,27 @@
       background: #bde0fe;
       border: 2.5px solid #432818;
       border-radius: 999px;
-      padding: 2px 10px;
+      padding: 2px 9px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
     }
     .sync-pill {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 999px;
       border: 2px solid #432818;
       background: #d8f3dc;
     }
+    .xp-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
     .xp-bar-wrap {
-      width: 100%;
-      height: 12px;
+      flex: 1;
+      height: 11px;
       background: #f1e3d3;
       border: 2.5px solid #432818;
       border-radius: 999px;
@@ -79,28 +84,34 @@
       width: 0%;
       transition: width 0.35s ease;
     }
+    .daily-lvl-cap {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #6f4e37;
+      white-space: nowrap;
+    }
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
     }
     .stat-box {
       background: #fefae0;
-      border: 2.5px solid #432818;
-      border-radius: 14px;
-      padding: 5px 8px;
-      font-size: 0.78rem;
+      border: 2.2px solid #432818;
+      border-radius: 12px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
       font-weight: 700;
     }
     .stat-label {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .stat-progress {
-      height: 8px;
+      height: 7px;
       background: #e9edc9;
-      border: 2px solid #432818;
+      border: 1.8px solid #432818;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -109,11 +120,82 @@
       width: 80%;
       transition: width 0.3s ease;
     }
+    /* WEATHER & PARTNER STATUS BAR UNDER STATS */
+    .sub-hud-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      background: #ffedd8;
+      border: 2.2px solid #432818;
+      border-radius: 12px;
+      padding: 5px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .partner-mood-banner {
+      background: #e0fbfc;
+      border: 2.2px solid #432818;
+      border-radius: 12px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .neglect-alert {
+      background: #ef233c;
+      color: #fff;
+      border: 2.5px solid #432818;
+      border-radius: 14px;
+      padding: 7px 10px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.8rem;
+      text-align: center;
+      display: none;
+    }
+
+    /* MOOD CHECK-IN CARD */
+    .mood-card {
+      background: #fffdf9;
+      border: 3px solid #432818;
+      border-radius: 18px;
+      padding: 8px 10px;
+      box-shadow: 0 4px 0 #432818;
+    }
+    .mood-card-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mood-btns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+    .mood-chip {
+      background: #fefae0;
+      border: 2px solid #432818;
+      border-radius: 10px;
+      padding: 5px 4px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.72rem;
+      color: #432818;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.1s;
+    }
+    .mood-chip:active { transform: scale(0.95); }
+
     /* ISOMETRIC ROOM STAGE */
     .room-stage {
       position: relative;
       width: 100%;
-      aspect-ratio: 1 / 1.05;
+      aspect-ratio: 1 / 1.02;
       background: #fffdf9;
       border: 4px solid #432818;
       border-radius: 28px;
@@ -140,7 +222,7 @@
     }
     .speech-bubble {
       position: absolute;
-      top: 14px;
+      top: 12px;
       left: 50%;
       transform: translateX(-50%);
       background: #fff;
@@ -148,7 +230,7 @@
       border-radius: 18px;
       padding: 6px 14px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 600;
       box-shadow: 0 4px 0 #432818;
       z-index: 25;
@@ -169,22 +251,22 @@
       background: #fffdf9;
       border: 3.5px solid #432818;
       border-radius: 20px;
-      padding: 10px 6px;
+      padding: 9px 6px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: #432818;
       box-shadow: 0 5px 0 #432818;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
     .care-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #432818; }
     .care-btn.cuddle { background: #ffe5ec; }
     .care-btn.food { background: #fff3b0; }
     .care-btn.gift { background: #e0fbfc; }
-    .care-icon { font-size: 1.5rem; }
+    .care-icon { font-size: 1.45rem; }
 
     .bottom-tools {
       display: flex;
@@ -199,14 +281,14 @@
       border-radius: 14px;
       padding: 8px 10px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #432818;
       box-shadow: 0 3px 0 #432818;
       cursor: pointer;
       text-align: center;
     }
 
-    /* PENGUIN WALK ANIMATION (Wings lowered at rest, waddle when walking) */
+    /* PENGUIN WALK ANIMATION */
     @keyframes footWaddleL {
       0%, 100% { transform: rotate(0deg); }
       25% { transform: rotate(18deg) translateY(-2px); }
@@ -263,7 +345,7 @@
       justify-content: space-between;
       align-items: center;
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
     .close-btn {
       background: #fff;
@@ -285,7 +367,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      max-height: 260px;
+      max-height: 250px;
       overflow-y: auto;
       padding: 6px;
       background: #fefae0;
@@ -296,7 +378,7 @@
       padding: 8px 12px;
       border-radius: 14px;
       border: 2px solid #432818;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       max-width: 82%;
     }
     .chat-msg.me { align-self: flex-end; background: #ffe5ec; }
@@ -329,12 +411,12 @@
       background: #fefae0;
       border: 2.5px solid #432818;
       border-radius: 14px;
-      padding: 8px 6px;
+      padding: 8px 4px;
       text-align: center;
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
-    .col-item.locked { opacity: 0.45; filter: grayscale(1); }
+    .col-item.locked { opacity: 0.42; filter: grayscale(1); }
     .col-item.five-star { background: #fff3b0; border-color: #d97706; }
     .photo-grid {
       display: grid;
@@ -356,7 +438,7 @@
       border-radius: 8px;
       border: 1.5px solid #432818;
     }
-    .polaroid p { font-size: 0.75rem; font-weight: 700; margin-top: 4px; }
+    .polaroid p { font-size: 0.74rem; font-weight: 700; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -371,9 +453,15 @@
       </div>
       <span class="sync-pill" id="syncStatus">☁️ Cloud Attivo</span>
     </div>
-    <div class="xp-bar-wrap">
-      <div class="xp-bar-fill" id="xpFill"></div>
+
+    <div class="xp-row">
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-fill" id="xpFill"></div>
+      </div>
+      <span class="daily-lvl-cap" id="dailyCapLabel">Oggi: 0/6 Lv</span>
     </div>
+
+    <!-- 4 STATS BARS: Affetto, M&M's, Felicità, Anti-Noia -->
     <div class="stats-row">
       <div class="stat-box">
         <div class="stat-label"><span>💕 Affetto</span><span id="valLove">85%</span></div>
@@ -384,19 +472,56 @@
         <div class="stat-progress"><div class="stat-fill" id="barFood" style="background:#ffb703;"></div></div>
       </div>
       <div class="stat-box">
-        <div class="stat-label"><span>🎮 Svago</span><span id="valMood">90%</span></div>
-        <div class="stat-progress"><div class="stat-fill" id="barMood" style="background:#00b4d8;"></div></div>
+        <div class="stat-label"><span>😊 Felicità</span><span id="valHappy">90%</span></div>
+        <div class="stat-progress"><div class="stat-fill" id="barHappy" style="background:#00b4d8;"></div></div>
       </div>
+      <div class="stat-box">
+        <div class="stat-label"><span>🎲 Anti-Noia</span><span id="valBoredom">85%</span></div>
+        <div class="stat-progress"><div class="stat-fill" id="barBoredom" style="background:#a855f7;"></div></div>
+      </div>
+    </div>
+
+    <!-- WEATHER UNDER STATS -->
+    <div class="sub-hud-bar">
+      <span id="weatherHudText">☀️ Meteo Putignano (Italia): caricamento...</span>
+      <span>🏡 Casa Pugliese</span>
+    </div>
+
+    <!-- HOW VINCENZO FEELS BANNER -->
+    <div class="partner-mood-banner">
+      <span id="vincenzoMoodStatus">🐧 Il pinguino Vincenzo si sente: <strong>Felice 😊</strong></span>
+      <span id="sickCureHint" style="font-size:0.68rem; color:#9d0208;"></span>
+    </div>
+
+    <!-- 00:30 NEGLECT ALERT -->
+    <div class="neglect-alert" id="neglectAlert">
+      ⚠️ Non ti sei presa cura del tuo pinguino ieri! (Almeno una barra era sotto il 50% a mezzanotte e mezza)
     </div>
   </div>
 
-  <!-- ISOMETRIC 1-FLOOR ITALIAN HOUSE (VINCENZO'S ROOM) -->
+  <!-- HOW DEBORAH FEELS TODAY (Sends to Vincenzo's App, max 2/day) -->
+  <div class="mood-card">
+    <div class="mood-card-title">
+      <span>🐧 Il pinguino Vincenzo vuole sapere come ti senti oggi:</span>
+      <span id="myMoodUses" style="font-size:0.7rem; color:#6f4e37;">(0/2 oggi)</span>
+    </div>
+    <div class="mood-btns">
+      <button class="mood-chip" onclick="sendMyMood('felice')">😊 Felice</button>
+      <button class="mood-chip" onclick="sendMyMood('triste')">😢 Triste</button>
+      <button class="mood-chip" onclick="sendMyMood('affamata')">🥞 Affamata</button>
+      <button class="mood-chip" onclick="sendMyMood('malata')">🤒 Malata</button>
+      <button class="mood-chip" onclick="sendMyMood('annoiata')">🥱 Annoiata</button>
+      <button class="mood-chip" onclick="sendMyMood('mancanza')">🥺 Mi manchi</button>
+    </div>
+  </div>
+
+  <!-- ISOMETRIC 1-FLOOR ITALIAN HOUSE -->
   <div class="room-stage">
     <div class="speech-bubble" id="speechBubble">Ciao piccola mia! 🐧💕</div>
 
-    <!-- High-Contrast Floating Buttons -->
-    <button class="hotspot-btn" style="top:17%; left:10%;" onclick="openModal('calendarModal')">
-      📅 <span id="calShort">Countdown</span>
+    <!-- Floating Buttons (Calendar button only says Calendario) -->
+    <button class="hotspot-btn" style="top:16%; left:8%;" onclick="openModal('calendarModal')">
+      📅 Calendario
     </button>
     <button class="hotspot-btn" style="top:54%; left:6%;" onclick="openModal('mailModal')">
       📮 Posta
@@ -404,7 +529,7 @@
     <button class="hotspot-btn" style="top:58%; right:6%;" onclick="openModal('albumModal')">
       📸 Album
     </button>
-    <button class="hotspot-btn" style="top:34%; right:6%;" onclick="openModal('smiskiModal')">
+    <button class="hotspot-btn" style="top:33%; right:6%;" onclick="openModal('smiskiModal')">
       🎁 Smiski (<span id="packCountBadge">0</span>)
     </button>
 
@@ -424,9 +549,9 @@
       <!-- Warm Garden Backdrop -->
       <rect width="400" height="420" fill="#ffe5d9"/>
 
-      <!-- Pitched Roof (Warm Terracotta) -->
+      <!-- Pitched Roof -->
       <polygon points="200,14 20,118 200,208 380,118" fill="#f4a261" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-      <!-- Left & Right Single-Floor Italian Walls (Warm Peach & Soft Lavender Cream) -->
+      <!-- Left & Right Single-Floor Italian Walls -->
       <polygon points="26,120 200,32 200,224 26,310" fill="#ffedd8" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <polygon points="200,32 374,120 374,310 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
 
@@ -448,68 +573,77 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- Large Round Porthole Window on Left Wall (Live Weather of Putignano) -->
-      <g transform="translate(118, 128) skewY(-26)">
-        <circle cx="0" cy="0" r="34" fill="url(#skyIt)" stroke="#432818" stroke-width="3.5"/>
-        <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4"/>
-        <text id="weatherSvgIcon" x="0" y="6" text-anchor="middle" font-size="22">☀️</text>
-        <line x1="-32" y1="0" x2="32" y2="0" stroke="#d4a373" stroke-width="3.5"/>
-        <line x1="0" y1="-32" x2="0" y2="32" stroke="#d4a373" stroke-width="3.5"/>
-        <circle cx="0" cy="0" r="34" fill="none" stroke="#432818" stroke-width="3"/>
-      </g>
-      <g transform="translate(118, 174)">
-        <rect x="-52" y="-10" width="104" height="18" rx="8" fill="#ffffff" stroke="#432818" stroke-width="2"/>
-        <text id="weatherText" x="0" y="3" text-anchor="middle" font-size="9.5" font-weight="700" fill="#432818">Putignano: Meteo...</text>
+      <!-- Large Round Porthole Window on Left Wall -->
+      <g transform="translate(122, 132) skewY(-26)">
+        <circle cx="0" cy="0" r="32" fill="url(#skyIt)" stroke="#432818" stroke-width="3.5"/>
+        <circle cx="0" cy="0" r="28" fill="none" stroke="#d4a373" stroke-width="4"/>
+        <text id="weatherSvgIcon" x="0" y="7" text-anchor="middle" font-size="22">☀️</text>
+        <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
+        <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
+        <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3"/>
       </g>
 
-      <!-- Wall Calendar -->
-      <g transform="translate(60, 165) skewY(-26)" onclick="openModal('calendarModal')" style="cursor:pointer">
-        <rect x="-18" y="-22" width="36" height="42" rx="5" fill="#fff" stroke="#432818" stroke-width="2.5"/>
-        <rect x="-18" y="-22" width="36" height="12" rx="4" fill="#00b4d8" stroke="#432818" stroke-width="2.5"/>
-        <text x="0" y="6" text-anchor="middle" font-size="12" font-weight="700" fill="#432818">11 MAG</text>
-        <text x="0" y="16" text-anchor="middle" font-size="8" font-weight="700" fill="#6f4e37">2027</text>
+      <!-- Wall Calendar (Well-padded text inside borders) -->
+      <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')" style="cursor:pointer">
+        <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
+        <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#00b4d8" stroke="#432818" stroke-width="2.5"/>
+        <circle cx="-12" cy="-19" r="2" fill="#fff"/>
+        <circle cx="12" cy="-19" r="2" fill="#fff"/>
+        <text id="wallCalDay" x="0" y="4" text-anchor="middle" font-size="11" font-weight="700" fill="#432818">07 NOV</text>
+        <text id="wallCalYear" x="0" y="17" text-anchor="middle" font-size="8.5" font-weight="700" fill="#6f4e37">2026</text>
       </g>
 
-      <!-- Corner Retro Light-Blue Fridge -->
-      <g transform="translate(198, 204)">
-        <rect x="-18" y="-38" width="36" height="54" rx="8" fill="#90e0ef" stroke="#432818" stroke-width="3"/>
-        <line x1="-18" y1="-16" x2="18" y2="-16" stroke="#432818" stroke-width="2.5"/>
-        <line x1="10" y1="-28" x2="10" y2="-20" stroke="#432818" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="10" y1="-8" x2="10" y2="4" stroke="#432818" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- LARGE RETRO ITALIAN SMEG-STYLE FRIDGE STANDING ON THE FLOOR IN BACK CORNER -->
+      <g transform="translate(200, 232)">
+        <!-- Floor Shadow & Rubber Feet resting directly on parquet floor -->
+        <ellipse cx="0" cy="10" rx="34" ry="12" fill="rgba(67,40,24,0.2)"/>
+        <rect x="-22" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
+        <rect x="14" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
+        <!-- 3D Side Depth Panel -->
+        <polygon points="26,-92 34,-86 34,2 26,6" fill="#48cae4" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+        <!-- Large Rounded Retro Fridge Body resting on feet -->
+        <rect x="-28" y="-94" width="54" height="100" rx="12" fill="#90e0ef" stroke="#432818" stroke-width="3.2"/>
+        <!-- Top Highlight -->
+        <path d="M -20,-88 Q 0,-92 18,-88" fill="none" stroke="#caf0f8" stroke-width="3" stroke-linecap="round"/>
+        <!-- Freezer / Fridge Divider Line -->
+        <line x1="-28" y1="-56" x2="26" y2="-56" stroke="#432818" stroke-width="3"/>
+        <!-- Chrome Vintage Handles -->
+        <rect x="10" y="-76" width="10" height="4" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
+        <rect x="10" y="-44" width="10" height="16" rx="3" fill="#fff" stroke="#432818" stroke-width="2"/>
+        <!-- Cute Magnets on Fridge Door -->
+        <circle cx="-12" cy="-72" r="4.5" fill="#ff758f" stroke="#432818" stroke-width="1.8"/>
+        <rect x="-16" y="-36" width="12" height="10" rx="2" fill="#fff3b0" stroke="#432818" stroke-width="1.8"/>
       </g>
 
       <!-- Left Back Wall: Italian Kitchen Counter + Red Moka & M&M's Bowl -->
-      <g transform="translate(122, 240)">
+      <g transform="translate(114, 248)">
         <polygon points="-44,8 12,-20 34,-8 -22,20" fill="#fff" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-44,8 -22,20 -22,40 -44,28" fill="#e76f51" stroke="#432818" stroke-width="2.8"/>
         <polygon points="-22,20 34,-8 34,12 -22,40" fill="#f4a261" stroke="#432818" stroke-width="2.8"/>
-        <!-- Red Moka Pot -->
         <rect x="-10" y="-12" width="10" height="14" rx="2" fill="#ef233c" stroke="#432818" stroke-width="2"/>
-        <!-- Bowl of M&M's -->
         <ellipse cx="10" cy="-6" rx="9" ry="5" fill="#ffb703" stroke="#432818" stroke-width="2"/>
       </g>
 
       <!-- Left Foreground: Mailbox -->
-      <g transform="translate(56, 278)" onclick="openModal('mailModal')" style="cursor:pointer">
+      <g transform="translate(54, 282)" onclick="openModal('mailModal')" style="cursor:pointer">
         <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
         <rect x="-18" y="-22" width="36" height="24" rx="10" fill="#00b4d8" stroke="#432818" stroke-width="2.8"/>
         <rect x="-10" y="-14" width="20" height="5" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
       </g>
 
-      <!-- Right Wall Upper: DOUBLE WOODEN SHELF FOR 5-STAR SMISKI ONLY -->
-      <g transform="translate(290, 148) skewY(26)">
-        <rect x="-58" y="-6" width="116" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
-        <line x1="-42" y1="2" x2="-42" y2="10" stroke="#432818" stroke-width="3"/>
-        <line x1="42" y1="2" x2="42" y2="10" stroke="#432818" stroke-width="3"/>
-        <rect x="-58" y="24" width="116" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
-        <line x1="-42" y1="32" x2="-42" y2="40" stroke="#432818" stroke-width="3"/>
-        <line x1="42" y1="32" x2="42" y2="40" stroke="#432818" stroke-width="3"/>
-        <!-- Dynamic 5-Star Smiski Group (round head, no ears) -->
+      <!-- Right Wall Upper: DOUBLE WOODEN SHELF FOR SPECIFIC 5-STAR SMISKI -->
+      <g transform="translate(294, 146) skewY(26)">
+        <rect x="-60" y="-6" width="120" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
+        <line x1="-44" y1="2" x2="-44" y2="10" stroke="#432818" stroke-width="3"/>
+        <line x1="44" y1="2" x2="44" y2="10" stroke="#432818" stroke-width="3"/>
+        <rect x="-60" y="26" width="120" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
+        <line x1="-44" y1="34" x2="-44" y2="42" stroke="#432818" stroke-width="3"/>
+        <line x1="44" y1="34" x2="44" y2="42" stroke="#432818" stroke-width="3"/>
         <g id="shelfFiveStarGroup"></g>
       </g>
 
-      <!-- Right Back Wall: Vincenzo's Cozy Bed + Gaming/Comics Desk -->
-      <g transform="translate(274, 242)">
+      <!-- Right Back Wall: Vincenzo's Cozy Bed -->
+      <g transform="translate(282, 248)">
         <polygon points="-12,-28 42,-2 42,14 -12,-12" fill="#bc6c25" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 -12,-18 42,8 8,24" fill="#90e0ef" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 8,24 8,36 -46,10" fill="#0077b6" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -517,8 +651,8 @@
         <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
       </g>
 
-      <!-- Right Foreground: Dedicated Side Table + Spiral Photo Album Book -->
-      <g transform="translate(334, 286)" onclick="openModal('albumModal')" style="cursor:pointer">
+      <!-- Right Foreground: Side Table + Photo Album Book -->
+      <g transform="translate(336, 288)" onclick="openModal('albumModal')" style="cursor:pointer">
         <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
         <rect x="-18" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
         <rect x="13" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
@@ -526,62 +660,51 @@
           <polygon points="-16,2 2,-6 18,2 0,10" fill="#fff" stroke="#432818" stroke-width="2"/>
           <polygon points="-16,-2 2,-10 18,-2 0,6" fill="#90e0ef" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
           <polygon points="-4,-3 2,-6 8,-3 2,0" fill="#fff" stroke="#432818" stroke-width="1.5"/>
-          <circle cx="-10" cy="-5" r="1.5" fill="#432818"/>
-          <circle cx="-5" cy="-7" r="1.5" fill="#432818"/>
-          <circle cx="0" cy="-9" r="1.5" fill="#432818"/>
         </g>
       </g>
 
-      <!-- Center Floor: Warm Rug (Walkable Floor Zone) -->
-      <ellipse cx="200" cy="322" rx="64" ry="32" fill="#ffcad4" stroke="#432818" stroke-width="2.8"/>
-      <ellipse cx="200" cy="322" rx="48" ry="22" fill="#ffe5ec" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
+      <!-- Center Floor: Warm Rug -->
+      <ellipse cx="200" cy="328" rx="64" ry="30" fill="#ffcad4" stroke="#432818" stroke-width="2.8"/>
+      <ellipse cx="200" cy="328" rx="48" ry="20" fill="#ffe5ec" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
 
-      <!-- VINCENZO THE CHIBI EMPEROR PENGUIN (Matching Reference image_78b342.png, Wings lowered at rest, no hat) -->
-      <g id="petCharacter" transform="translate(200, 326)">
-        <!-- Ground Shadow -->
-        <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
-
-        <!-- Back Wing (Lowered at rest) -->
-        <g class="wing-l">
-          <path d="M -14,-14 C -24,-6 -24,8 -17,12 C -12,12 -11,2 -14,-14 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
+      <!-- VINCENZO THE PENGUIN (With inner flip group so he turns when walking left or right!) -->
+      <g id="petCharacter" transform="translate(200, 330)">
+        <g id="petFlipGroup">
+          <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
+          <!-- Back Wing (Lowered at rest) -->
+          <g class="wing-l">
+            <path d="M -14,-14 C -24,-6 -24,8 -17,12 C -12,12 -11,2 -14,-14 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
+          </g>
+          <!-- Webbed Orange Feet -->
+          <g class="foot-l">
+            <path d="M -18,16 L -26,20 L -21,22 L -18,24 L -11,19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          </g>
+          <g class="foot-r">
+            <path d="M 6,18 L 0,23 L 6,24 L 11,25 L 15,20 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          </g>
+          <!-- Plump Chibi Penguin Body -->
+          <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
+          <!-- Cream & Warm Orange Chest -->
+          <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Cute Orange Beak facing Left by default -->
+          <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Shiny Eye -->
+          <circle cx="-10" cy="-26" r="3.4" fill="#2b1911"/>
+          <circle cx="-10.8" cy="-27" r="1.2" fill="#fff"/>
+          <!-- Golden Cheek Patch -->
+          <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
+          <!-- Front Wing (Lowered at rest) -->
+          <g class="wing-r">
+            <path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/>
+          </g>
         </g>
-
-        <!-- Webbed Orange Feet -->
-        <g class="foot-l">
-          <path d="M -18,16 L -26,20 L -21,22 L -18,24 L -11,19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-        </g>
-        <g class="foot-r">
-          <path d="M 6,18 L 0,23 L 6,24 L 11,25 L 15,20 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-        </g>
-
-        <!-- Plump 3/4 Chibi Emperor Penguin Body + Cute Tail -->
-        <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
-
-        <!-- Cream Belly with Warm Orange/Peach Upper Chest Gradient (Reference image_78b342.png) -->
-        <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-
-        <!-- Cute Orange Beak on Left Profile -->
-        <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-
-        <!-- Shiny Dark Eye with White Highlight -->
-        <circle cx="-10" cy="-26" r="3.4" fill="#2b1911"/>
-        <circle cx="-10.8" cy="-27" r="1.2" fill="#fff"/>
-
-        <!-- Golden-Orange Emperor Cheek Patch -->
-        <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
-
-        <!-- Front Flipper Wing (Relaxed & Lowered along the side when idle!) -->
-        <g class="wing-r">
-          <path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
-          <path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/>
-        </g>
-
         <text id="petFx" x="0" y="-54" text-anchor="middle" font-size="22" opacity="0">💖</text>
       </g>
     </svg>
   </div>
 
-  <!-- CARE BUTTONS (DEBORAH CARING FOR VINCENZO) -->
+  <!-- CARE BUTTONS -->
   <div class="actions-grid">
     <button class="care-btn cuddle" onclick="performCare('cuddle')">
       <span class="care-icon">🤗</span>
@@ -598,11 +721,11 @@
   </div>
 
   <div class="bottom-tools">
-    <button class="tool-btn" onclick="openModal('smiskiModal')">✨ Collezione 60 Smiski di Deborah</button>
+    <button class="tool-btn" onclick="openModal('smiskiModal')">✨ Collezione 60 Smiski Unici di Deborah</button>
   </div>
 </div>
 
-<!-- MODAL 1: CALENDAR & COUNTDOWN -->
+<!-- MODAL 1: CALENDAR & COUNTDOWN (Countdown appears ONLY here) -->
 <div class="modal-backdrop" id="calendarModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -613,7 +736,7 @@
       <p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p>
       <div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;">
         <div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div>
-        <div style="font-family:'Fredoka',sans-serif; font-size:1.7rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div>
+        <div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div>
         <div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div>
       </div>
     </div>
@@ -655,11 +778,11 @@
   </div>
 </div>
 
-<!-- MODAL 4: DEBORAH'S 60 SMISKI COLLECTION (NO EARS) -->
+<!-- MODAL 4: DEBORAH'S 60 UNIQUE SMISKI COLLECTION -->
 <div class="modal-backdrop" id="smiskiModal">
   <div class="modal-box">
     <div class="modal-head">
-      <span>✨ I 60 Smiski di Deborah (Glow)</span>
+      <span>✨ I 60 Smiski Unici di Deborah</span>
       <button class="close-btn" onclick="closeModal('smiskiModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -667,19 +790,17 @@
         <span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo (1 ogni 10 Lv): <strong id="packModalCount">0</strong></span>
         <button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button>
       </div>
-      <p style="font-size:0.76rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> vengono esposti automaticamente sulla mensola a muro!</p>
+      <p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Ogni Smiski a <strong>5 Stelle (5★)</strong> ha una posa e un oggetto unico e viene mostrato esattamente così sulla mensola!</p>
       <div class="collection-grid" id="collectionGrid"></div>
     </div>
   </div>
 </div>
 
-<!-- FIREBASE SDK & REAL-TIME LOGIC -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
   import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-  // Configurazione Ufficiale Firebase "tamalove"
   const GITHUB_FIREBASE_CONFIG = {
     apiKey: "AIzaSyD_tUjI4aIwsoUIARXeXwtWzBUsAxQf118",
     authDomain: "tamalove.firebaseapp.com",
@@ -690,33 +811,171 @@
     measurementId: "G-FJL9K3C20C"
   };
 
-  // Catalogo 60 Smiski (senza orecchie, testolina tonda verde glow)
-  const SMISKI_CATALOG = Array.from({ length: 60 }, (_, i) => {
-    const poses = [
-      "Smiski Yoga","Smiski Lettura","Smiski Sognatore","Smiski Pensatore","Smiski Abbraccio","Smiski Timido",
-      "Smiski Stella","Smiski Cuore","Smiski Musica","Smiski Relax","Smiski Pittore","Smiski Zen"
-    ];
-    const stars = (i % 5 === 4) ? 5 : ((i % 4) + 1);
-    return {
-      id: i + 1,
-      name: `${poses[i % poses.length]} #${i + 1}`,
-      stars
-    };
-  });
+  // 60 SMISKI COMPLETAMENTE DIVERSI (Senza orecchie, ognuno con posa e oggetto distintivo)
+  const UNIQUE_SMISKI_LIST = [
+    { name: "Smiski Yoga Lotus", prop: "🧘" },
+    { name: "Smiski Lettore", prop: "📖" },
+    { name: "Smiski Cuoricino", prop: "💖" },
+    { name: "Smiski Stella Glow", prop: "⭐" },
+    { name: "Smiski Chitarra", prop: "🎸" },
+    { name: "Smiski Pittore", prop: "🎨" },
+    { name: "Smiski Caffè Moka", prop: "☕" },
+    { name: "Smiski Skateboard", prop: "🛹" },
+    { name: "Smiski Fotografico", prop: "📷" },
+    { name: "Smiski Corona Reale", prop: "👑" },
+    { name: "Smiski Palloncino", prop: "🎈" },
+    { name: "Smiski Fiorellino", prop: "🌼" },
+    { name: "Smiski Dormiglione", prop: "💤" },
+    { name: "Smiski Chef Crepe", prop: "🥞" },
+    { name: "Smiski Gamer", prop: "🎮" },
+    { name: "Smiski Musica", prop: "🎧" },
+    { name: "Smiski Lanterna", prop: "🏮" },
+    { name: "Smiski Telescopio", prop: "🔭" },
+    { name: "Smiski Regalo", prop: "🎁" },
+    { name: "Smiski Cupido", prop: "💘" },
+    { name: "Smiski Bolla Sapone", prop: "🫧" },
+    { name: "Smiski Ombrellino", prop: "☂️" },
+    { name: "Smiski Sciatore", prop: "⛷️" },
+    { name: "Smiski Pescatore", prop: "🎣" },
+    { name: "Smiski Farfalla", prop: "🦋" },
+    { name: "Smiski Gelato", prop: "🍦" },
+    { name: "Smiski Pizza", prop: "🍕" },
+    { name: "Smiski Tamburo", prop: "🥁" },
+    { name: "Smiski Violino", prop: "🎻" },
+    { name: "Smiski Scrittore", prop: "✏️" },
+    { name: "Smiski Detective", prop: "🔍" },
+    { name: "Smiski Mago", prop: "🪄" },
+    { name: "Smiski Astronauta", prop: "🪐" },
+    { name: "Smiski Subacqueo", prop: "🤿" },
+    { name: "Smiski Surfista", prop: "🏄" },
+    { name: "Smiski Pesi Gym", prop: "🏋️" },
+    { name: "Smiski Hula Hoop", prop: "⭕" },
+    { name: "Smiski Candela", prop: "🕯️" },
+    { name: "Smiski Quadrifoglio", prop: "🍀" },
+    { name: "Smiski Arcobaleno", prop: "🌈" },
+    { name: "Smiski Aereo Carta", prop: "✈️" },
+    { name: "Smiski Bussola", prop: "🧭" },
+    { name: "Smiski Clessidra", prop: "⏳" },
+    { name: "Smiski Diamante", prop: "💎" },
+    { name: "Smiski Trofeo", prop: "🏆" },
+    { name: "Smiski Festa", prop: "🎉" },
+    { name: "Smiski Cioccolato", prop: "🍫" },
+    { name: "Smiski Fragola", prop: "🍓" },
+    { name: "Smiski Ciliegia", prop: "🍒" },
+    { name: "Smiski Funghetto", prop: "🍄" },
+    { name: "Smiski Conchiglia", prop: "🐚" },
+    { name: "Smiski Cristallo", prop: "🔮" },
+    { name: "Smiski Piuma", prop: "🪶" },
+    { name: "Smiski Chiave", prop: "🔑" },
+    { name: "Smiski Lettera", prop: "💌" },
+    { name: "Smiski Fiocco", prop: "🎀" },
+    { name: "Smiski Specchio", prop: "🪞" },
+    { name: "Smiski Spazzolino", prop: "🪥" },
+    { name: "Smiski Vaso", prop: "🪴" },
+    { name: "Smiski Luna Piena", prop: "🌙" }
+  ];
 
-  const STORAGE_KEY = "tamalove_shared_v1";
+  // Disegna ogni Smiski con testolina tonda liscia (SENZA orecchie), posa diversa e il suo oggetto specifico
+  function renderSmiskiSvg(id, size = 28) {
+    const idx = id - 1;
+    const item = UNIQUE_SMISKI_LIST[idx];
+    const poseType = idx % 6;
+    const bodyGreens = ["#b7efc5","#c7f9cc","#a3f7bf","#d8f3dc","#95d5b2","#b5e48c"];
+    const glowCol = bodyGreens[idx % bodyGreens.length];
+
+    let bodyPaths = "";
+    if (poseType === 0) {
+      // Seduto gambe incrociate
+      bodyPaths = `<rect x="-5" y="-1" width="10" height="8" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
+                   <ellipse cx="-5" cy="7" rx="4" ry="2.2" fill="${glowCol}" stroke="#432818" stroke-width="1.4"/>
+                   <ellipse cx="5" cy="7" rx="4" ry="2.2" fill="${glowCol}" stroke="#432818" stroke-width="1.4"/>`;
+    } else if (poseType === 1) {
+      // Braccia alzate esultante
+      bodyPaths = `<rect x="-4.5" y="-1" width="9" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
+                   <line x1="-5" y1="1" x2="-10" y2="-6" stroke="#432818" stroke-width="2.2" stroke-linecap="round"/>
+                   <line x1="5" y1="1" x2="10" y2="-6" stroke="#432818" stroke-width="2.2" stroke-linecap="round"/>`;
+    } else if (poseType === 2) {
+      // Posa Pensatore (mano sul mento)
+      bodyPaths = `<rect x="-4.5" y="-1" width="9" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
+                   <path d="M 4,2 Q 9,-2 2,-3" fill="none" stroke="#432818" stroke-width="2" stroke-linecap="round"/>`;
+    } else if (poseType === 3) {
+      // Sdraiato / Relax laterale
+      bodyPaths = `<ellipse cx="0" cy="4" rx="8" ry="4.5" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>`;
+    } else if (poseType === 4) {
+      // In punta di piedi / Ballerino
+      bodyPaths = `<rect x="-4" y="-1" width="8" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
+                   <line x1="-2" y1="8" x2="-4" y2="12" stroke="#432818" stroke-width="2" stroke-linecap="round"/>
+                   <line x1="2" y1="8" x2="4" y2="12" stroke="#432818" stroke-width="2" stroke-linecap="round"/>`;
+    } else {
+      // Abbraccia le ginocchia
+      bodyPaths = `<ellipse cx="0" cy="3" rx="6.5" ry="5.5" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
+                   <path d="M -5,3 Q 0,6 5,3" fill="none" stroke="#432818" stroke-width="1.5"/>`;
+    }
+
+    return `<svg width="${size}" height="${size}" viewBox="-16 -18 32 32" style="overflow:visible">
+      ${bodyPaths}
+      <!-- Testolina perfettamente tonda SENZA orecchie -->
+      <circle cx="0" cy="-7" r="6.5" fill="${glowCol}" stroke="#432818" stroke-width="1.6"/>
+      <circle cx="-2.2" cy="-7" r="1" fill="#432818"/>
+      <circle cx="2.2" cy="-7" r="1" fill="#432818"/>
+      <!-- Oggetto distintivo specifico di questo Smiski -->
+      <text x="9" y="2" text-anchor="middle" font-size="9">${item.prop}</text>
+    </svg>`;
+  }
+
+  const SMISKI_CATALOG = UNIQUE_SMISKI_LIST.map((item, i) => ({
+    id: i + 1,
+    name: item.name,
+    prop: item.prop,
+    stars: (i % 5 === 4) ? 5 : ((i % 4) + 1)
+  }));
+
+  const MOOD_LABELS = {
+    felice: "Felice 😊",
+    triste: "Triste 😢",
+    affamata: "Affamata 🥞",
+    affamato: "Affamato 🍫",
+    malata: "Malata 🤒",
+    malato: "Malato 🤒",
+    annoiata: "Annoiata 🥱",
+    annoiato: "Annoiato 🥱",
+    mancanza: "Sento la tua mancanza 🥺"
+  };
+
+  const STORAGE_KEY = "tamalove_shared_v2";
   let state = loadLocalState();
   let db = null;
   let sharedDocRef = null;
   let isApplyingRemote = false;
 
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
   function getDefaultState() {
+    const t = todayStr();
     return {
-      startDate: new Date().toISOString().slice(0, 10),
+      startDate: t,
       targetDate: "2027-05-11",
       lastResetAt: 0,
-      debby: { level: 1, xp: 0, love: 85, food: 80, mood: 90, lastAction: "" },
-      vincenzo: { level: 1, xp: 0, love: 85, food: 80, mood: 90, lastAction: "" },
+      debby: {
+        level: 1, xp: 0,
+        love: 85, food: 80, happy: 90, boredom: 85,
+        feeling: "felice",
+        sickNeeds: { cuddle: false, food: false, gift: false },
+        dailyLvlsDate: t, dailyLvlsGained: 0,
+        moodLogDate: t, moodLogCount: 0,
+        lastCheckDay: t, neglectWarningDate: ""
+      },
+      vincenzo: {
+        level: 1, xp: 0,
+        love: 85, food: 80, happy: 90, boredom: 85,
+        feeling: "felice",
+        sickNeeds: { cuddle: false, food: false, gift: false },
+        dailyLvlsDate: t, dailyLvlsGained: 0,
+        moodLogDate: t, moodLogCount: 0,
+        lastCheckDay: t, neglectWarningDate: ""
+      },
       vincenzoPlantsUnlocked: [],
       vincenzoPacksClaimed: 0,
       deborahSmiskiUnlocked: [],
@@ -728,15 +987,56 @@
     };
   }
 
+  function normalizePet(pet) {
+    const def = getDefaultState().vincenzo;
+    const merged = { ...def, ...(pet || {}) };
+    if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90;
+    if (typeof merged.boredom !== "number") merged.boredom = 85;
+    if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false };
+    return merged;
+  }
+
   function loadLocalState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return { ...getDefaultState(), ...JSON.parse(raw) };
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const def = getDefaultState();
+        return {
+          ...def,
+          ...parsed,
+          debby: normalizePet(parsed.debby),
+          vincenzo: normalizePet(parsed.vincenzo)
+        };
+      }
     } catch (e) {}
     return getDefaultState();
   }
 
+  function evaluateMidnightHalfCheck() {
+    const now = new Date();
+    const today = todayStr();
+    const v = state.vincenzo;
+    const isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
+
+    if (v.lastCheckDay !== today && isPastHalfMidnight) {
+      if (v.love < 50 || v.food < 50 || v.happy < 50 || v.boredom < 50) {
+        v.neglectWarningDate = today;
+      }
+      v.lastCheckDay = today;
+    }
+    if (v.dailyLvlsDate !== today) {
+      v.dailyLvlsDate = today;
+      v.dailyLvlsGained = 0;
+    }
+    if (state.debby.moodLogDate !== today) {
+      state.debby.moodLogDate = today;
+      state.debby.moodLogCount = 0;
+    }
+  }
+
   function saveState(pushToCloud = true) {
+    evaluateMidnightHalfCheck();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     renderAll();
     if (pushToCloud && sharedDocRef && !isApplyingRemote) {
@@ -759,7 +1059,13 @@
         if (snap.exists()) {
           const remote = snap.data();
           isApplyingRemote = true;
-          state = { ...getDefaultState(), ...remote };
+          state = {
+            ...getDefaultState(),
+            ...remote,
+            debby: normalizePet(remote.debby),
+            vincenzo: normalizePet(remote.vincenzo)
+          };
+          evaluateMidnightHalfCheck();
           localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           renderAll();
           isApplyingRemote = false;
@@ -774,48 +1080,72 @@
   }
 
   function renderAll() {
-    const v = state.vincenzo || { level: 1, xp: 0, love: 85, food: 80, mood: 90 };
+    const v = state.vincenzo;
+    const d = state.debby;
+    const today = todayStr();
+
     document.getElementById("lvlBadge").textContent = `Lv. ${v.level}`;
     document.getElementById("xpFill").style.width = `${Math.min(100, v.xp)}%`;
+    document.getElementById("dailyCapLabel").textContent = `Oggi: ${v.dailyLvlsGained || 0}/6 Lv`;
+
     document.getElementById("valLove").textContent = `${v.love}%`;
     document.getElementById("barLove").style.width = `${v.love}%`;
     document.getElementById("valFood").textContent = `${v.food}%`;
     document.getElementById("barFood").style.width = `${v.food}%`;
-    document.getElementById("valMood").textContent = `${v.mood}%`;
-    document.getElementById("barMood").style.width = `${v.mood}%`;
+    document.getElementById("valHappy").textContent = `${v.happy}%`;
+    document.getElementById("barHappy").style.width = `${v.happy}%`;
+    document.getElementById("valBoredom").textContent = `${v.boredom}%`;
+    document.getElementById("barBoredom").style.width = `${v.boredom}%`;
+
+    const feelingLabel = MOOD_LABELS[v.feeling] || "Felice 😊";
+    document.getElementById("vincenzoMoodStatus").innerHTML = `🐧 Il pinguino Vincenzo si sente: <strong>${feelingLabel}</strong>`;
+    if (v.feeling === "malato" || v.feeling === "malata") {
+      const sn = v.sickNeeds || {};
+      const missing = [
+        !sn.cuddle ? "Coccole" : null,
+        !sn.food ? "M&M's" : null,
+        !sn.gift ? "Fumetto/Gioco" : null
+      ].filter(Boolean);
+      document.getElementById("sickCureHint").textContent = missing.length ? `Serve mix: ${missing.join(" + ")}` : "";
+    } else {
+      document.getElementById("sickCureHint").textContent = "";
+    }
+
+    const myCount = d.moodLogDate === today ? (d.moodLogCount || 0) : 0;
+    document.getElementById("myMoodUses").textContent = `(${myCount}/2 oggi)`;
+
+    const alertBox = document.getElementById("neglectAlert");
+    alertBox.style.display = (v.neglectWarningDate === today) ? "block" : "none";
 
     const totalEarnedPacks = Math.floor(v.level / 10);
     const availablePacks = Math.max(0, totalEarnedPacks - (state.deborahPacksClaimed || 0));
     document.getElementById("packCountBadge").textContent = availablePacks;
     document.getElementById("packModalCount").textContent = availablePacks;
 
-    // Renderizza SOLO gli Smiski a 5 Stelle sulla Mensola a muro (Senza orecchie!)
+    // Renderizza ESATTAMENTE gli Smiski a 5 Stelle sbloccati sulla mensola a muro
     const shelfGroup = document.getElementById("shelfFiveStarGroup");
     shelfGroup.innerHTML = "";
     const unlockedIds = state.deborahSmiskiUnlocked || [];
     const fiveStarUnlocked = SMISKI_CATALOG.filter(s => unlockedIds.includes(s.id) && s.stars === 5);
-    fiveStarUnlocked.slice(0, 8).forEach((smiski, idx) => {
-      const row = idx < 4 ? 0 : 1;
-      const col = idx % 4;
-      const xPos = -42 + col * 28;
-      const yPos = row === 0 ? -12 : 18;
+    fiveStarUnlocked.slice(0, 12).forEach((smiski, idx) => {
+      const row = idx < 6 ? 0 : 1;
+      const col = idx % 6;
+      const xPos = -48 + col * 19;
+      const yPos = row === 0 ? -10 : 22;
       const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("transform", `translate(${xPos}, ${yPos})`);
-      // Disegno Smiski glow verde pastello con testolina rotonda liscia (senza orecchie)
-      g.innerHTML = `
-        <rect x="-5" y="0" width="10" height="9" rx="3" fill="#b7efc5" stroke="#432818" stroke-width="1.6"/>
-        <circle cx="0" cy="-6" r="6.5" fill="#c7f9cc" stroke="#432818" stroke-width="1.6"/>
-        <circle cx="-2" cy="-6" r="1" fill="#432818"/>
-        <circle cx="2" cy="-6" r="1" fill="#432818"/>
-      `;
+      g.setAttribute("transform", `translate(${xPos}, ${yPos}) scale(0.75)`);
+      g.innerHTML = renderSmiskiSvg(smiski.id, 24);
       shelfGroup.appendChild(g);
     });
 
     const now = new Date();
+    const monthsShort = ["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"];
+    document.getElementById("wallCalDay").textContent = `${String(now.getDate()).padStart(2, "0")} ${monthsShort[now.getMonth()]}`;
+    document.getElementById("wallCalYear").textContent = `${now.getFullYear()}`;
+
     document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
     const target = new Date(state.targetDate || "2027-05-11");
     const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
-    document.getElementById("calShort").textContent = `-${diffDays}g`;
     document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
     document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
 
@@ -840,43 +1170,106 @@
       const isUnlocked = unlockedIds.includes(s.id);
       return `
         <div class="col-item ${isUnlocked ? '' : 'locked'} ${s.stars === 5 ? 'five-star' : ''}">
-          <div style="height:28px;display:flex;align-items:center;justify-content:center;">
-            ${isUnlocked
-              ? `<svg width="24" height="26" viewBox="-12 -16 24 28"><rect x="-5" y="0" width="10" height="9" rx="3" fill="#b7efc5" stroke="#432818" stroke-width="1.8"/><circle cx="0" cy="-6" r="6.5" fill="#c7f9cc" stroke="#432818" stroke-width="1.8"/><circle cx="-2" cy="-6" r="1.1" fill="#432818"/><circle cx="2" cy="-6" r="1.1" fill="#432818"/></svg>`
-              : `🔒`}
+          <div style="height:32px;display:flex;align-items:center;justify-content:center;">
+            ${isUnlocked ? renderSmiskiSvg(s.id, 30) : '🔒'}
           </div>
-          <div>${s.name}</div>
+          <div>#${s.id} ${s.name}</div>
           <div style="color:#d97706;">${"⭐".repeat(s.stars)}</div>
         </div>
       `;
     }).join("");
   }
 
+  // Deborah invia come si sente oggi (max 2 volte al giorno) -> Modifica le barre del Bradipo Debby sull'app di Vincenzo!
+  window.sendMyMood = function(moodKey) {
+    const today = todayStr();
+    const d = state.debby;
+    if (d.moodLogDate !== today) {
+      d.moodLogDate = today;
+      d.moodLogCount = 0;
+    }
+    if (d.moodLogCount >= 2) {
+      alert("Puoi inserire il tuo stato d'animo al massimo 2 volte al giorno!");
+      return;
+    }
+    d.moodLogCount += 1;
+    d.feeling = moodKey;
+    d.sickNeeds = { cuddle: false, food: false, gift: false };
+
+    if (moodKey === "felice") {
+      d.happy = Math.min(100, d.happy + 15);
+    } else if (moodKey === "triste") {
+      d.happy = Math.max(0, d.happy - 55);
+    } else if (moodKey === "affamata") {
+      d.food = 0;
+    } else if (moodKey === "mancanza") {
+      d.love = 0;
+    } else if (moodKey === "annoiata") {
+      d.boredom = 0;
+    } else if (moodKey === "malata") {
+      d.love = 0; d.food = 0; d.happy = 0; d.boredom = 0;
+    }
+
+    saveState(true);
+    showSpeech(`Hai inviato a Vincenzo che ti senti: ${MOOD_LABELS[moodKey]}!`);
+  };
+
+  // Deborah cura il Pinguino Vincenzo
   window.performCare = function(type) {
     const v = state.vincenzo;
+    const today = todayStr();
+    if (v.dailyLvlsDate !== today) {
+      v.dailyLvlsDate = today;
+      v.dailyLvlsGained = 0;
+    }
     const fx = document.getElementById("petFx");
+
     if (type === "cuddle") {
-      v.love = Math.min(100, v.love + 12);
-      v.mood = Math.min(100, v.mood + 8);
+      v.love = Math.min(100, v.love + 25);
+      v.happy = Math.min(100, v.happy + 14);
+      if (v.sickNeeds) v.sickNeeds.cuddle = true;
       fx.textContent = "🤗💖";
       showSpeech("Coccole dalla mia Debby! Ti amo! 🐧💕");
     } else if (type === "food") {
-      v.food = Math.min(100, v.food + 16);
-      v.mood = Math.min(100, v.mood + 6);
+      v.food = Math.min(100, v.food + 30);
+      v.happy = Math.min(100, v.happy + 14);
+      if (v.sickNeeds) v.sickNeeds.food = true;
       fx.textContent = "🍫✨";
       showSpeech("M&M's croccanti! I miei preferiti! 😋🍫");
     } else if (type === "gift") {
-      v.mood = Math.min(100, v.mood + 18);
-      v.love = Math.min(100, v.love + 10);
+      v.boredom = Math.min(100, v.boredom + 32);
+      v.happy = Math.min(100, v.happy + 18);
+      if (v.sickNeeds) v.sickNeeds.gift = true;
       fx.textContent = "🎮📚";
-      showSpeech("Nuovo fumetto e videogioco! Sei la migliore! 🤩🎮");
+      showSpeech("Nuovo fumetto e videogioco! Addio noia! 🤩🎮");
     }
 
-    v.xp += 35;
-    if (v.xp >= 100) {
-      v.level += 1;
-      v.xp -= 100;
-      showSpeech(`Evviva! Vincenzo è salito al Livello ${v.level}! 🎉`);
+    if ((v.feeling === "malato" || v.feeling === "malata") && v.sickNeeds?.cuddle && v.sickNeeds?.food && v.sickNeeds?.gift) {
+      v.love = Math.max(v.love, 75);
+      v.food = Math.max(v.food, 75);
+      v.happy = Math.max(v.happy, 80);
+      v.boredom = Math.max(v.boredom, 75);
+      v.feeling = "felice";
+      v.sickNeeds = { cuddle: false, food: false, gift: false };
+      showSpeech("Grazie al tuo mix di cure sono guarito! 🥰✨");
+    } else if (v.love >= 70 && v.food >= 70 && v.happy >= 70 && v.boredom >= 70) {
+      v.feeling = "felice";
+    }
+
+    // Massimo 6 livelli al giorno
+    if ((v.dailyLvlsGained || 0) < 6) {
+      v.xp += 35;
+      if (v.xp >= 100) {
+        v.level += 1;
+        v.xp -= 100;
+        v.dailyLvlsGained = (v.dailyLvlsGained || 0) + 1;
+        showSpeech(`Evviva! Vincenzo è salito al Livello ${v.level}! (${v.dailyLvlsGained}/6 oggi) 🎉`);
+        if (v.dailyLvlsGained >= 6) {
+          v.xp = 0;
+        }
+      }
+    } else {
+      v.xp = 0;
     }
 
     fx.style.opacity = 1;
@@ -909,7 +1302,7 @@
     state.deborahSmiskiUnlocked.push(won.id);
     state.deborahPacksClaimed = (state.deborahPacksClaimed || 0) + 1;
     saveState(true);
-    alert(`🎉 Hai trovato: ✨ ${won.name} (${won.stars}★)!${won.stars === 5 ? "\n✨ Essendo un 5 Stelle è stato posizionato sulla mensola a muro!" : ""}`);
+    alert(`🎉 Hai trovato lo Smiski #${won.id}: ${won.name} ${won.prop} (${won.stars}★)!${won.stars === 5 ? "\n✨ Essendo un 5 Stelle, questo specifico Smiski è ora esposto sulla mensola a muro!" : ""}`);
   };
 
   window.sendChatMessage = function() {
@@ -945,20 +1338,28 @@
     reader.readAsDataURL(file);
   };
 
-  // Movimento Autonomo Esclusivamente sul Pavimento Anteriore Libero
+  // Movimento sul pavimento anteriore + ROTAZIONE DIREZIONALE (il pinguino si gira sempre dal lato verso cui cammina!)
   const petEl = document.getElementById("petCharacter");
-  let petX = 200, petY = 326;
+  const petFlipEl = document.getElementById("petFlipGroup");
+  let petX = 200, petY = 330;
   function roamFloorOnly() {
     const safeTargets = [
-      { x: 200, y: 326 },
-      { x: 162, y: 318 },
-      { x: 236, y: 318 },
-      { x: 185, y: 342 },
-      { x: 218, y: 340 }
+      { x: 200, y: 330 },
+      { x: 158, y: 322 },
+      { x: 242, y: 322 },
+      { x: 180, y: 344 },
+      { x: 222, y: 344 }
     ];
     const next = safeTargets[Math.floor(Math.random() * safeTargets.length)];
-    const dist = Math.hypot(next.x - petX, next.y - petY);
+    const dx = next.x - petX;
+    const dist = Math.hypot(dx, next.y - petY);
     if (dist > 4) {
+      // Di default il becco del pinguino guarda a sinistra (-x). Se cammina a destra (+x), applichiamo scale(-1, 1)
+      if (dx > 2) {
+        petFlipEl.setAttribute("transform", "scale(-1, 1)");
+      } else if (dx < -2) {
+        petFlipEl.setAttribute("transform", "scale(1, 1)");
+      }
       petEl.classList.add("walking");
       petEl.style.transition = `transform ${Math.max(1.2, dist / 22)}s linear`;
       petX = next.x;
@@ -968,8 +1369,9 @@
     }
   }
   setInterval(roamFloorOnly, 4200);
+  setInterval(() => saveState(false), 60000);
 
-  // Meteo Reale Live di Putignano, Italia (40.85, 17.12)
+  // Meteo Reale Live di Putignano, Italia sotto le barre di stato
   async function fetchLiveWeather() {
     try {
       const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.85&longitude=17.12&current_weather=true");
@@ -979,15 +1381,16 @@
       const code = cw.weathercode;
       const icon = code === 0 ? "☀️" : (code < 4 ? "⛅" : (code >= 71 ? "❄️" : "🌧️"));
       document.getElementById("weatherSvgIcon").textContent = icon;
-      document.getElementById("weatherText").textContent = `Putignano 🇮🇹 ${temp}°C ${icon}`;
+      document.getElementById("weatherHudText").textContent = `${icon} Meteo Putignano (Italia): ${temp}°C`;
     } catch (e) {
-      document.getElementById("weatherText").textContent = "Putignano 🇮🇹 Sole";
+      document.getElementById("weatherHudText").textContent = "☀️ Meteo Putignano (Italia): Sereno";
     }
   }
 
   window.openModal = (id) => document.getElementById(id).classList.add("open");
   window.closeModal = (id) => document.getElementById(id).classList.remove("open");
 
+  evaluateMidnightHalfCheck();
   renderAll();
   initCloud();
   fetchLiveWeather();
