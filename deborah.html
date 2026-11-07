@@ -130,7 +130,7 @@
       border: 2.2px solid #432818;
       border-radius: 12px;
       padding: 5px 10px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
     }
     .partner-mood-banner {
@@ -461,7 +461,7 @@
       <span class="daily-lvl-cap" id="dailyCapLabel">Oggi: 0/6 Lv</span>
     </div>
 
-    <!-- 4 STATS BARS: Affetto, M&M's, Felicità, Anti-Noia -->
+    <!-- 4 STATS BARS -->
     <div class="stats-row">
       <div class="stat-box">
         <div class="stat-label"><span>💕 Affetto</span><span id="valLove">85%</span></div>
@@ -481,10 +481,10 @@
       </div>
     </div>
 
-    <!-- WEATHER UNDER STATS -->
+    <!-- WEATHER & LIVE DAY/NIGHT UNDER STATS -->
     <div class="sub-hud-bar">
       <span id="weatherHudText">☀️ Meteo Putignano (Italia): caricamento...</span>
-      <span>🏡 Casa Pugliese</span>
+      <span id="dayNightHudBadge">☀️ Giorno</span>
     </div>
 
     <!-- HOW VINCENZO FEELS BANNER -->
@@ -499,7 +499,7 @@
     </div>
   </div>
 
-  <!-- HOW DEBORAH FEELS TODAY (Sends to Vincenzo's App, max 2/day) -->
+  <!-- HOW DEBORAH FEELS TODAY -->
   <div class="mood-card">
     <div class="mood-card-title">
       <span>🐧 Il pinguino Vincenzo vuole sapere come ti senti oggi:</span>
@@ -519,7 +519,6 @@
   <div class="room-stage">
     <div class="speech-bubble" id="speechBubble">Ciao piccola mia! 🐧💕</div>
 
-    <!-- Floating Buttons (Calendar button only says Calendario) -->
     <button class="hotspot-btn" style="top:16%; left:8%;" onclick="openModal('calendarModal')">
       📅 Calendario
     </button>
@@ -536,9 +535,12 @@
     <svg class="room-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="skyIt" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#90e0ef"/>
-          <stop offset="100%" stop-color="#fff3b0"/>
+          <stop id="skyStop1" offset="0%" stop-color="#90e0ef"/>
+          <stop id="skyStop2" offset="100%" stop-color="#fff3b0"/>
         </linearGradient>
+        <clipPath id="portholeClip">
+          <circle cx="0" cy="0" r="30"/>
+        </clipPath>
         <radialGradient id="penguinChestGlow" cx="35%" cy="35%" r="55%">
           <stop offset="0%" stop-color="#ff9f1c"/>
           <stop offset="45%" stop-color="#ffbf69"/>
@@ -573,17 +575,38 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- Large Round Porthole Window on Left Wall -->
+      <!-- LIVE DAY/NIGHT & WEATHER PORTHOLE WINDOW ON LEFT WALL -->
       <g transform="translate(122, 132) skewY(-26)">
         <circle cx="0" cy="0" r="32" fill="url(#skyIt)" stroke="#432818" stroke-width="3.5"/>
+        <g clip-path="url(#portholeClip)">
+          <!-- Stars (Night) -->
+          <g id="winStarsGroup" opacity="0" style="transition:opacity 0.6s">
+            <circle cx="-16" cy="-14" r="1.3" fill="#fff"/>
+            <circle cx="15" cy="-18" r="1.5" fill="#fff3b0"/>
+            <circle cx="-8" cy="-22" r="1" fill="#fff"/>
+            <circle cx="18" cy="-4" r="1.2" fill="#fff"/>
+            <circle cx="-18" cy="6" r="1.1" fill="#fff"/>
+          </g>
+          <!-- Sun (Day) -->
+          <g id="winSunGroup" opacity="1" style="transition:opacity 0.6s">
+            <circle cx="-10" cy="-10" r="9" fill="#ffb703" stroke="#fb8500" stroke-width="1.5"/>
+          </g>
+          <!-- Crescent Moon (Night) -->
+          <g id="winMoonGroup" opacity="0" style="transition:opacity 0.6s">
+            <path d="M -6,-16 A 9,9 0 1,0 6,-4 A 7,7 0 1,1 -6,-16 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1"/>
+          </g>
+          <!-- Distant Pugliese Olive Hills Silhouette -->
+          <path id="winHills" d="M -34,30 Q -14,14 4,24 Q 20,12 34,26 L 34,34 L -34,34 Z" fill="#74c69d"/>
+          <!-- Dynamic Weather Overlay -->
+          <g id="winWeatherLayer"></g>
+        </g>
         <circle cx="0" cy="0" r="28" fill="none" stroke="#d4a373" stroke-width="4"/>
-        <text id="weatherSvgIcon" x="0" y="7" text-anchor="middle" font-size="22">☀️</text>
         <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
         <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3"/>
       </g>
 
-      <!-- Wall Calendar (Well-padded text inside borders) -->
+      <!-- Wall Calendar -->
       <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')" style="cursor:pointer">
         <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
         <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#00b4d8" stroke="#432818" stroke-width="2.5"/>
@@ -595,27 +618,20 @@
 
       <!-- LARGE RETRO ITALIAN SMEG-STYLE FRIDGE STANDING ON THE FLOOR IN BACK CORNER -->
       <g transform="translate(200, 232)">
-        <!-- Floor Shadow & Rubber Feet resting directly on parquet floor -->
         <ellipse cx="0" cy="10" rx="34" ry="12" fill="rgba(67,40,24,0.2)"/>
         <rect x="-22" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
         <rect x="14" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
-        <!-- 3D Side Depth Panel -->
         <polygon points="26,-92 34,-86 34,2 26,6" fill="#48cae4" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-        <!-- Large Rounded Retro Fridge Body resting on feet -->
         <rect x="-28" y="-94" width="54" height="100" rx="12" fill="#90e0ef" stroke="#432818" stroke-width="3.2"/>
-        <!-- Top Highlight -->
         <path d="M -20,-88 Q 0,-92 18,-88" fill="none" stroke="#caf0f8" stroke-width="3" stroke-linecap="round"/>
-        <!-- Freezer / Fridge Divider Line -->
         <line x1="-28" y1="-56" x2="26" y2="-56" stroke="#432818" stroke-width="3"/>
-        <!-- Chrome Vintage Handles -->
         <rect x="10" y="-76" width="10" height="4" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
         <rect x="10" y="-44" width="10" height="16" rx="3" fill="#fff" stroke="#432818" stroke-width="2"/>
-        <!-- Cute Magnets on Fridge Door -->
         <circle cx="-12" cy="-72" r="4.5" fill="#ff758f" stroke="#432818" stroke-width="1.8"/>
         <rect x="-16" y="-36" width="12" height="10" rx="2" fill="#fff3b0" stroke="#432818" stroke-width="1.8"/>
       </g>
 
-      <!-- Left Back Wall: Italian Kitchen Counter + Red Moka & M&M's Bowl -->
+      <!-- Left Back Wall: Italian Kitchen Counter -->
       <g transform="translate(114, 248)">
         <polygon points="-44,8 12,-20 34,-8 -22,20" fill="#fff" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-44,8 -22,20 -22,40 -44,28" fill="#e76f51" stroke="#432818" stroke-width="2.8"/>
@@ -631,7 +647,7 @@
         <rect x="-10" y="-14" width="20" height="5" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
       </g>
 
-      <!-- Right Wall Upper: DOUBLE WOODEN SHELF FOR SPECIFIC 5-STAR SMISKI -->
+      <!-- Right Wall Upper: DOUBLE WOODEN SHELF FOR SPECIFIC FULL-BODY 5-STAR SMISKI -->
       <g transform="translate(294, 146) skewY(26)">
         <rect x="-60" y="-6" width="120" height="8" rx="3" fill="#d4a373" stroke="#432818" stroke-width="2.5"/>
         <line x1="-44" y1="2" x2="-44" y2="10" stroke="#432818" stroke-width="3"/>
@@ -667,33 +683,25 @@
       <ellipse cx="200" cy="328" rx="64" ry="30" fill="#ffcad4" stroke="#432818" stroke-width="2.8"/>
       <ellipse cx="200" cy="328" rx="48" ry="20" fill="#ffe5ec" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
 
-      <!-- VINCENZO THE PENGUIN (With inner flip group so he turns when walking left or right!) -->
+      <!-- VINCENZO THE PENGUIN -->
       <g id="petCharacter" transform="translate(200, 330)">
         <g id="petFlipGroup">
           <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
-          <!-- Back Wing (Lowered at rest) -->
           <g class="wing-l">
             <path d="M -14,-14 C -24,-6 -24,8 -17,12 C -12,12 -11,2 -14,-14 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
           </g>
-          <!-- Webbed Orange Feet -->
           <g class="foot-l">
             <path d="M -18,16 L -26,20 L -21,22 L -18,24 L -11,19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
           </g>
           <g class="foot-r">
             <path d="M 6,18 L 0,23 L 6,24 L 11,25 L 15,20 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
           </g>
-          <!-- Plump Chibi Penguin Body -->
           <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
-          <!-- Cream & Warm Orange Chest -->
           <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <!-- Cute Orange Beak facing Left by default -->
           <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <!-- Shiny Eye -->
           <circle cx="-10" cy="-26" r="3.4" fill="#2b1911"/>
           <circle cx="-10.8" cy="-27" r="1.2" fill="#fff"/>
-          <!-- Golden Cheek Patch -->
           <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
-          <!-- Front Wing (Lowered at rest) -->
           <g class="wing-r">
             <path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/>
             <path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/>
@@ -721,11 +729,11 @@
   </div>
 
   <div class="bottom-tools">
-    <button class="tool-btn" onclick="openModal('smiskiModal')">✨ Collezione 60 Smiski Unici di Deborah</button>
+    <button class="tool-btn" onclick="openModal('smiskiModal')">✨ Collezione 60 Smiski a Figura Intera</button>
   </div>
 </div>
 
-<!-- MODAL 1: CALENDAR & COUNTDOWN (Countdown appears ONLY here) -->
+<!-- MODAL 1: CALENDAR & COUNTDOWN -->
 <div class="modal-backdrop" id="calendarModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -778,11 +786,11 @@
   </div>
 </div>
 
-<!-- MODAL 4: DEBORAH'S 60 UNIQUE SMISKI COLLECTION -->
+<!-- MODAL 4: DEBORAH'S 60 FULL-BODY SMISKI COLLECTION -->
 <div class="modal-backdrop" id="smiskiModal">
   <div class="modal-box">
     <div class="modal-head">
-      <span>✨ I 60 Smiski Unici di Deborah</span>
+      <span>✨ I 60 Smiski di Deborah (Full-Body)</span>
       <button class="close-btn" onclick="closeModal('smiskiModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -790,7 +798,7 @@
         <span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo (1 ogni 10 Lv): <strong id="packModalCount">0</strong></span>
         <button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button>
       </div>
-      <p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Ogni Smiski a <strong>5 Stelle (5★)</strong> ha una posa e un oggetto unico e viene mostrato esattamente così sulla mensola!</p>
+      <p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Ogni Smiski è a <strong>figura intera</strong> come nelle foto reali e i <strong>5 Stelle (5★)</strong> appaiono esattamente così sulla mensola!</p>
       <div class="collection-grid" id="collectionGrid"></div>
     </div>
   </div>
@@ -811,115 +819,218 @@
     measurementId: "G-FJL9K3C20C"
   };
 
-  // 60 SMISKI COMPLETAMENTE DIVERSI (Senza orecchie, ognuno con posa e oggetto distintivo)
+  // 60 SMISKI A FIGURA INTERA ISPIRATI ALLE FOTO REALI (Colore giallo-verde glow #dfee97, bocca a linietta, accessori verdi #6a994e)
   const UNIQUE_SMISKI_LIST = [
-    { name: "Smiski Yoga Lotus", prop: "🧘" },
-    { name: "Smiski Lettore", prop: "📖" },
-    { name: "Smiski Cuoricino", prop: "💖" },
-    { name: "Smiski Stella Glow", prop: "⭐" },
-    { name: "Smiski Chitarra", prop: "🎸" },
-    { name: "Smiski Pittore", prop: "🎨" },
-    { name: "Smiski Caffè Moka", prop: "☕" },
-    { name: "Smiski Skateboard", prop: "🛹" },
-    { name: "Smiski Fotografico", prop: "📷" },
-    { name: "Smiski Corona Reale", prop: "👑" },
-    { name: "Smiski Palloncino", prop: "🎈" },
-    { name: "Smiski Fiorellino", prop: "🌼" },
-    { name: "Smiski Dormiglione", prop: "💤" },
-    { name: "Smiski Chef Crepe", prop: "🥞" },
-    { name: "Smiski Gamer", prop: "🎮" },
-    { name: "Smiski Musica", prop: "🎧" },
-    { name: "Smiski Lanterna", prop: "🏮" },
-    { name: "Smiski Telescopio", prop: "🔭" },
-    { name: "Smiski Regalo", prop: "🎁" },
-    { name: "Smiski Cupido", prop: "💘" },
-    { name: "Smiski Bolla Sapone", prop: "🫧" },
-    { name: "Smiski Ombrellino", prop: "☂️" },
-    { name: "Smiski Sciatore", prop: "⛷️" },
-    { name: "Smiski Pescatore", prop: "🎣" },
-    { name: "Smiski Farfalla", prop: "🦋" },
-    { name: "Smiski Gelato", prop: "🍦" },
-    { name: "Smiski Pizza", prop: "🍕" },
-    { name: "Smiski Tamburo", prop: "🥁" },
-    { name: "Smiski Violino", prop: "🎻" },
-    { name: "Smiski Scrittore", prop: "✏️" },
-    { name: "Smiski Detective", prop: "🔍" },
-    { name: "Smiski Mago", prop: "🪄" },
-    { name: "Smiski Astronauta", prop: "🪐" },
-    { name: "Smiski Subacqueo", prop: "🤿" },
-    { name: "Smiski Surfista", prop: "🏄" },
-    { name: "Smiski Pesi Gym", prop: "🏋️" },
+    { name: "Smiski Curioso (Mutandina Verde)", prop: "" },
+    { name: "Smiski Lampada da Terra", prop: "" },
+    { name: "Smiski Trasloco 3 Scatole", prop: "" },
+    { name: "Smiski Sdraiato Scatola Fragile", prop: "" },
+    { name: "Smiski Pensatore Seduto", prop: "💭" },
+    { name: "Smiski Abbraccia Ginocchia", prop: "🌿" },
+    { name: "Smiski Yoga Loto", prop: "🧘" },
+    { name: "Smiski Пeso Bilanciere", prop: "🏋️" },
+    { name: "Smiski Lettore Libro Verde", prop: "📗" },
+    { name: "Smiski Dormiglione Cuscino", prop: "💤" },
     { name: "Smiski Hula Hoop", prop: "⭕" },
-    { name: "Smiski Candela", prop: "🕯️" },
-    { name: "Smiski Quadrifoglio", prop: "🍀" },
+    { name: "Smiski Skateboarder", prop: "🛹" },
+    { name: "Smiski Pittore Rullo", prop: "🖌️" },
+    { name: "Smiski Piantina in Testa", prop: "🌱" },
+    { name: "Smiski Gatto Sulla Spalla", prop: "🐱" },
+    { name: "Smiski Tamburello", prop: "🥁" },
+    { name: "Smiski Flauto Dolce", prop: "🪈" },
+    { name: "Smiski Chitarra Acustica", prop: "🎸" },
+    { name: "Smiski Cuffie Musica", prop: "🎧" },
+    { name: "Smiski Aereoplanino Carta", prop: "✈️" },
+    { name: "Smiski Scatola Segreta", prop: "📦" },
+    { name: "Smiski Spazzolino Denti", prop: "🪥" },
+    { name: "Smiski Specchietto", prop: "🪞" },
+    { name: "Smiski Sapone Bolle", prop: "🫧" },
+    { name: "Smiski Asciugamano Turbante", prop: "🧖" },
+    { name: "Smiski Paperella Bagno", prop: "🦆" },
+    { name: "Smiski Caffè Mattutino", prop: "☕" },
+    { name: "Smiski Laptop Lavoro", prop: "💻" },
+    { name: "Smiski Telefono Chiama", prop: "📞" },
+    { name: "Smiski Matita Gigante", prop: "✏️" },
+    { name: "Smiski Idea Lampadina", prop: "💡" },
+    { name: "Smiski Orologio Sveglia", prop: "⏰" },
+    { name: "Smiski Chiave Magica", prop: "🔑" },
+    { name: "Smiski Lente Detective", prop: "🔍" },
+    { name: "Smiski Zainetto Gita", prop: "🎒" },
+    { name: "Smiski Fotocamera", prop: "📷" },
+    { name: "Smiski Binocolo", prop: "🔭" },
+    { name: "Smiski Ombrello Verde", prop: "☂️" },
+    { name: "Smiski Lanterna Notturna", prop: "🏮" },
+    { name: "Smiski Candela Calda", prop: "🕯️" },
+    { name: "Smiski Stella Cadente", prop: "⭐" },
+    { name: "Smiski Mezzaluna", prop: "🌙" },
+    { name: "Smiski Sole Raggiante", prop: "☀️" },
     { name: "Smiski Arcobaleno", prop: "🌈" },
-    { name: "Smiski Aereo Carta", prop: "✈️" },
-    { name: "Smiski Bussola", prop: "🧭" },
-    { name: "Smiski Clessidra", prop: "⏳" },
-    { name: "Smiski Diamante", prop: "💎" },
-    { name: "Smiski Trofeo", prop: "🏆" },
-    { name: "Smiski Festa", prop: "🎉" },
-    { name: "Smiski Cioccolato", prop: "🍫" },
-    { name: "Smiski Fragola", prop: "🍓" },
-    { name: "Smiski Ciliegia", prop: "🍒" },
-    { name: "Smiski Funghetto", prop: "🍄" },
-    { name: "Smiski Conchiglia", prop: "🐚" },
-    { name: "Smiski Cristallo", prop: "🔮" },
-    { name: "Smiski Piuma", prop: "🪶" },
-    { name: "Smiski Chiave", prop: "🔑" },
-    { name: "Smiski Lettera", prop: "💌" },
-    { name: "Smiski Fiocco", prop: "🎀" },
-    { name: "Smiski Specchio", prop: "🪞" },
-    { name: "Smiski Spazzolino", prop: "🪥" },
-    { name: "Smiski Vaso", prop: "🪴" },
-    { name: "Smiski Luna Piena", prop: "🌙" }
+    { name: "Smiski Fiorellino", prop: "🌼" },
+    { name: "Smiski Quadrifoglio", prop: "🍀" },
+    { name: "Smiski Funghetto Bosco", prop: "🍄" },
+    { name: "Smiski Cactus Vaso", prop: "🌵" },
+    { name: "Smiski Farfalla Sul Naso", prop: "🦋" },
+    { name: "Smiski Conchiglia Mare", prop: "🐚" },
+    { name: "Smiski Salvagente", prop: "🛟" },
+    { name: "Smiski Tavola Surf", prop: "🏄" },
+    { name: "Smiski Pescatore", prop: "🎣" },
+    { name: "Smiski Sciatore", prop: "⛷️" },
+    { name: "Smiski Regalo Sorpresa", prop: "🎁" },
+    { name: "Smiski Palloncino", prop: "🎈" },
+    { name: "Smiski Corona Re", prop: "👑" },
+    { name: "Smiski Trofeo Vittoria", prop: "🏆" },
+    { name: "Smiski Lettera d'Amore", prop: "💌" },
+    { name: "Smiski Cuore Custode", prop: "💚" }
   ];
 
-  // Disegna ogni Smiski con testolina tonda liscia (SENZA orecchie), posa diversa e il suo oggetto specifico
-  function renderSmiskiSvg(id, size = 28) {
+  // Disegna i 60 Smiski a FIGURA INTERA fedeli alle foto inviate (Colore #dfee97, ombra #c5d86d, mutandina/oggetti #6a994e)
+  function renderSmiskiSvg(id, size = 34) {
     const idx = id - 1;
     const item = UNIQUE_SMISKI_LIST[idx];
-    const poseType = idx % 6;
-    const bodyGreens = ["#b7efc5","#c7f9cc","#a3f7bf","#d8f3dc","#95d5b2","#b5e48c"];
-    const glowCol = bodyGreens[idx % bodyGreens.length];
+    const poseType = idx % 8;
+    const bodyCol = "#dfee97";
+    const shadeCol = "#bdd269";
+    const darkGreen = "#1b4332";
+    const propGreen = "#6a994e";
+    const propDark = "#4a7c59";
 
-    let bodyPaths = "";
+    let figure = "";
+
     if (poseType === 0) {
-      // Seduto gambe incrociate
-      bodyPaths = `<rect x="-5" y="-1" width="10" height="8" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
-                   <ellipse cx="-5" cy="7" rx="4" ry="2.2" fill="${glowCol}" stroke="#432818" stroke-width="1.4"/>
-                   <ellipse cx="5" cy="7" rx="4" ry="2.2" fill="${glowCol}" stroke="#432818" stroke-width="1.4"/>`;
+      // FOTO 1: Smiski in piedi incurvato in avanti con mutandina/pannolino verde
+      figure = `
+        <!-- Gambe intere piegate -->
+        <path d="M -4,4 L -5,12 C -5,14 -1,14 -1,12 L 0,5 Z" fill="${shadeCol}"/>
+        <path d="M 1,4 L 0,13 C 0,15 5,15 5,13 L 4,4 Z" fill="${bodyCol}"/>
+        <!-- Mutandina Verde -->
+        <path d="M -6,1 C -6,6 5,6 5,1 L 4,-1 L -5,-1 Z" fill="${propGreen}"/>
+        <!-- Torso incurvato in avanti -->
+        <path d="M -5,0 C -6,-8 4,-10 5,-1 Z" fill="${bodyCol}"/>
+        <!-- Braccio lungo il fianco -->
+        <path d="M -1,-7 C -3,-2 -3,3 0,3 C 2,3 2,-2 1,-7 Z" fill="${shadeCol}"/>
+        <!-- Testa grande rotonda inclinata -->
+        <circle cx="3" cy="-13" r="7.5" fill="${bodyCol}"/>
+        <circle cx="1" cy="-12" r="1.1" fill="${darkGreen}"/>
+        <circle cx="6" cy="-11" r="1.1" fill="${darkGreen}"/>
+        <line x1="2" y1="-8.5" x2="5" y2="-8" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     } else if (poseType === 1) {
-      // Braccia alzate esultante
-      bodyPaths = `<rect x="-4.5" y="-1" width="9" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
-                   <line x1="-5" y1="1" x2="-10" y2="-6" stroke="#432818" stroke-width="2.2" stroke-linecap="round"/>
-                   <line x1="5" y1="1" x2="10" y2="-6" stroke="#432818" stroke-width="2.2" stroke-linecap="round"/>`;
+      // FOTO 2 (Sinistra): Smiski in piedi a figura intera che tiene la lampada da terra verde
+      figure = `
+        <!-- Gambe in piedi -->
+        <rect x="-5" y="4" width="4" height="10" rx="2" fill="${bodyCol}"/>
+        <rect x="0" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/>
+        <!-- Torso intero -->
+        <rect x="-5.5" y="-6" width="10" height="11" rx="4" fill="${bodyCol}"/>
+        <!-- Lampada da terra verde inclinata -->
+        <line x1="-11" y1="-15" x2="4" y2="12" stroke="${propDark}" stroke-width="1.8"/>
+        <line x1="0" y1="14" x2="8" y2="10" stroke="${propGreen}" stroke-width="2.2" stroke-linecap="round"/>
+        <polygon points="-16,-12 -6,-17 -9,-22 -18,-18" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/>
+        <!-- Braccia che afferrano l'asta della lampada -->
+        <path d="M -4,-4 Q -9,-3 -6,0" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 3,-3 Q 0,3 -2,4" fill="none" stroke="${shadeCol}" stroke-width="3" stroke-linecap="round"/>
+        <!-- Testa rotonda -->
+        <circle cx="0" cy="-13" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-3" cy="-14" r="1" fill="${darkGreen}"/>
+        <circle cx="2" cy="-13" r="1" fill="${darkGreen}"/>
+        <line x1="-2" y1="-10" x2="1" y2="-9.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     } else if (poseType === 2) {
-      // Posa Pensatore (mano sul mento)
-      bodyPaths = `<rect x="-4.5" y="-1" width="9" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
-                   <path d="M 4,2 Q 9,-2 2,-3" fill="none" stroke="#432818" stroke-width="2" stroke-linecap="round"/>`;
+      // FOTO 2 (Centro): Smiski in corsa a figura intera che porta 3 scatoloni verdi impilati
+      figure = `
+        <!-- Gambe in corsa -->
+        <path d="M -2,4 L -6,13" stroke="${bodyCol}" stroke-width="4" stroke-linecap="round"/>
+        <path d="M 2,4 L 7,10 L 9,7" fill="none" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/>
+        <!-- Torso -->
+        <rect x="-3" y="-6" width="8" height="11" rx="3.5" fill="${bodyCol}"/>
+        <!-- Pila di 3 Scatoloni Verdi -->
+        <rect x="-12" y="-3" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/>
+        <rect x="-12" y="-10" width="8" height="7" fill="#80ed99" stroke="${propDark}" stroke-width="1"/>
+        <rect x="-12" y="-17" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/>
+        <!-- Braccio che regge le scatole -->
+        <path d="M 2,-2 Q -4,0 -7,-1" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/>
+        <!-- Testa piegata all'indietro -->
+        <circle cx="3" cy="-13" r="7" fill="${bodyCol}"/>
+        <circle cx="1" cy="-15" r="1" fill="${darkGreen}"/>
+        <circle cx="5" cy="-13" r="1" fill="${darkGreen}"/>
+        <line x1="1" y1="-11" x2="4" y2="-10" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     } else if (poseType === 3) {
-      // Sdraiato / Relax laterale
-      bodyPaths = `<ellipse cx="0" cy="4" rx="8" ry="4.5" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>`;
+      // FOTO 2 (Destra): Smiski sdraiato a pancia in giù con gambette alzate e scatola FRAGILE verde
+      figure = `
+        <!-- Corpo sdraiato e gambette sollevate dietro -->
+        <ellipse cx="3" cy="6" rx="7" ry="4" fill="${bodyCol}"/>
+        <path d="M 8,5 L 13,0" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/>
+        <path d="M 6,7 L 10,2" stroke="${bodyCol}" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Scatola Verde FRAGILE -->
+        <polygon points="-13,3 -2,0 4,3 -7,6" fill="#80ed99" stroke="${propDark}" stroke-width="0.9"/>
+        <polygon points="-13,3 -7,6 -7,14 -13,11" fill="${propGreen}" stroke="${propDark}" stroke-width="0.9"/>
+        <polygon points="-7,6 4,3 4,11 -7,14" fill="${propDark}" stroke="${propDark}" stroke-width="0.9"/>
+        <!-- Braccine appoggiate sulla scatola -->
+        <circle cx="2" cy="6" r="2.2" fill="${bodyCol}"/>
+        <!-- Testa grande appoggiata -->
+        <circle cx="0" cy="-3" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-2.5" cy="-3" r="1" fill="${darkGreen}"/>
+        <circle cx="2.5" cy="-2" r="1" fill="${darkGreen}"/>
+        <line x1="-1.5" y1="0.8" x2="1.5" y2="1.2" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     } else if (poseType === 4) {
-      // In punta di piedi / Ballerino
-      bodyPaths = `<rect x="-4" y="-1" width="8" height="9" rx="3" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
-                   <line x1="-2" y1="8" x2="-4" y2="12" stroke="#432818" stroke-width="2" stroke-linecap="round"/>
-                   <line x1="2" y1="8" x2="4" y2="12" stroke="#432818" stroke-width="2" stroke-linecap="round"/>`;
+      // Smiski seduto a figura intera che abbraccia le ginocchia
+      figure = `
+        <!-- Gambe piegate al petto e piedi -->
+        <ellipse cx="-3" cy="6" rx="4" ry="6" fill="${shadeCol}"/>
+        <ellipse cx="3" cy="6" rx="4" ry="6" fill="${bodyCol}"/>
+        <ellipse cx="-3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/>
+        <ellipse cx="3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/>
+        <!-- Braccia che avvolgono le ginocchia -->
+        <path d="M -6,2 Q 0,7 6,2" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/>
+        <!-- Testa -->
+        <circle cx="0" cy="-6" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-2.8" cy="-6" r="1" fill="${darkGreen}"/>
+        <circle cx="2.8" cy="-6" r="1" fill="${darkGreen}"/>
+        <line x1="-1.8" y1="-2.5" x2="1.8" y2="-2.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
+    } else if (poseType === 5) {
+      // Smiski seduto in posa Pensatore con gambe intere
+      figure = `
+        <rect x="-4" y="-3" width="8" height="10" rx="3.5" fill="${bodyCol}"/>
+        <path d="M -3,6 L -6,13 M 3,6 L 6,13" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/>
+        <path d="M 3,0 Q 8,-3 2,-6" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/>
+        <circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/>
+        <line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
+    } else if (poseType === 6) {
+      // Smiski a figura intera con braccia alzate che regge il suo accessorio
+      figure = `
+        <rect x="-4.5" y="4" width="4" height="9" rx="2" fill="${bodyCol}"/>
+        <rect x="0.5" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/>
+        <rect x="-5" y="-5" width="10" height="10" rx="4" fill="${bodyCol}"/>
+        <path d="M -5,-2 L -10,-9 M 5,-2 L 10,-9" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="0" cy="-12" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-2.8" cy="-12" r="1" fill="${darkGreen}"/>
+        <circle cx="2.8" cy="-12" r="1" fill="${darkGreen}"/>
+        <line x1="-1.8" y1="-8.5" x2="1.8" y2="-8.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     } else {
-      // Abbraccia le ginocchia
-      bodyPaths = `<ellipse cx="0" cy="3" rx="6.5" ry="5.5" fill="${glowCol}" stroke="#432818" stroke-width="1.5"/>
-                   <path d="M -5,3 Q 0,6 5,3" fill="none" stroke="#432818" stroke-width="1.5"/>`;
+      // Smiski seduto a gambe incrociate (Yoga / Relax) a figura intera
+      figure = `
+        <rect x="-4.5" y="-4" width="9" height="10" rx="4" fill="${bodyCol}"/>
+        <ellipse cx="-5" cy="8" rx="5" ry="2.5" fill="${shadeCol}"/>
+        <ellipse cx="5" cy="8" rx="5" ry="2.5" fill="${bodyCol}"/>
+        <path d="M -4,0 L -8,5 M 4,0 L 8,5" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/>
+        <circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/>
+        <circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/>
+        <line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>
+      `;
     }
 
-    return `<svg width="${size}" height="${size}" viewBox="-16 -18 32 32" style="overflow:visible">
-      ${bodyPaths}
-      <!-- Testolina perfettamente tonda SENZA orecchie -->
-      <circle cx="0" cy="-7" r="6.5" fill="${glowCol}" stroke="#432818" stroke-width="1.6"/>
-      <circle cx="-2.2" cy="-7" r="1" fill="#432818"/>
-      <circle cx="2.2" cy="-7" r="1" fill="#432818"/>
-      <!-- Oggetto distintivo specifico di questo Smiski -->
-      <text x="9" y="2" text-anchor="middle" font-size="9">${item.prop}</text>
+    return `<svg width="${size}" height="${size}" viewBox="-18 -24 36 40" style="overflow:visible">
+      <ellipse cx="0" cy="14" rx="9" ry="2.5" fill="rgba(67,40,24,0.16)"/>
+      ${figure}
+      ${item.prop ? `<text x="10" y="10" text-anchor="middle" font-size="9">${item.prop}</text>` : ""}
     </svg>`;
   }
 
@@ -1122,7 +1233,7 @@
     document.getElementById("packCountBadge").textContent = availablePacks;
     document.getElementById("packModalCount").textContent = availablePacks;
 
-    // Renderizza ESATTAMENTE gli Smiski a 5 Stelle sbloccati sulla mensola a muro
+    // Renderizza ESATTAMENTE gli Smiski a 5 Stelle a figura intera sulla mensola a muro
     const shelfGroup = document.getElementById("shelfFiveStarGroup");
     shelfGroup.innerHTML = "";
     const unlockedIds = state.deborahSmiskiUnlocked || [];
@@ -1131,10 +1242,10 @@
       const row = idx < 6 ? 0 : 1;
       const col = idx % 6;
       const xPos = -48 + col * 19;
-      const yPos = row === 0 ? -10 : 22;
+      const yPos = row === 0 ? -12 : 20;
       const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("transform", `translate(${xPos}, ${yPos}) scale(0.75)`);
-      g.innerHTML = renderSmiskiSvg(smiski.id, 24);
+      g.setAttribute("transform", `translate(${xPos}, ${yPos}) scale(0.68)`);
+      g.innerHTML = renderSmiskiSvg(smiski.id, 28);
       shelfGroup.appendChild(g);
     });
 
@@ -1170,8 +1281,8 @@
       const isUnlocked = unlockedIds.includes(s.id);
       return `
         <div class="col-item ${isUnlocked ? '' : 'locked'} ${s.stars === 5 ? 'five-star' : ''}">
-          <div style="height:32px;display:flex;align-items:center;justify-content:center;">
-            ${isUnlocked ? renderSmiskiSvg(s.id, 30) : '🔒'}
+          <div style="height:40px;display:flex;align-items:center;justify-content:center;">
+            ${isUnlocked ? renderSmiskiSvg(s.id, 36) : '🔒'}
           </div>
           <div>#${s.id} ${s.name}</div>
           <div style="color:#d97706;">${"⭐".repeat(s.stars)}</div>
@@ -1180,7 +1291,6 @@
     }).join("");
   }
 
-  // Deborah invia come si sente oggi (max 2 volte al giorno) -> Modifica le barre del Bradipo Debby sull'app di Vincenzo!
   window.sendMyMood = function(moodKey) {
     const today = todayStr();
     const d = state.debby;
@@ -1214,7 +1324,6 @@
     showSpeech(`Hai inviato a Vincenzo che ti senti: ${MOOD_LABELS[moodKey]}!`);
   };
 
-  // Deborah cura il Pinguino Vincenzo
   window.performCare = function(type) {
     const v = state.vincenzo;
     const today = todayStr();
@@ -1256,7 +1365,6 @@
       v.feeling = "felice";
     }
 
-    // Massimo 6 livelli al giorno
     if ((v.dailyLvlsGained || 0) < 6) {
       v.xp += 35;
       if (v.xp >= 100) {
@@ -1264,9 +1372,7 @@
         v.xp -= 100;
         v.dailyLvlsGained = (v.dailyLvlsGained || 0) + 1;
         showSpeech(`Evviva! Vincenzo è salito al Livello ${v.level}! (${v.dailyLvlsGained}/6 oggi) 🎉`);
-        if (v.dailyLvlsGained >= 6) {
-          v.xp = 0;
-        }
+        if (v.dailyLvlsGained >= 6) v.xp = 0;
       }
     } else {
       v.xp = 0;
@@ -1302,7 +1408,7 @@
     state.deborahSmiskiUnlocked.push(won.id);
     state.deborahPacksClaimed = (state.deborahPacksClaimed || 0) + 1;
     saveState(true);
-    alert(`🎉 Hai trovato lo Smiski #${won.id}: ${won.name} ${won.prop} (${won.stars}★)!${won.stars === 5 ? "\n✨ Essendo un 5 Stelle, questo specifico Smiski è ora esposto sulla mensola a muro!" : ""}`);
+    alert(`🎉 Hai trovato lo Smiski #${won.id}: ${won.name} (${won.stars}★)!${won.stars === 5 ? "\n✨ Essendo un 5 Stelle, questo specifico Smiski a figura intera è ora esposto sulla mensola a muro!" : ""}`);
   };
 
   window.sendChatMessage = function() {
@@ -1338,7 +1444,7 @@
     reader.readAsDataURL(file);
   };
 
-  // Movimento sul pavimento anteriore + ROTAZIONE DIREZIONALE (il pinguino si gira sempre dal lato verso cui cammina!)
+  // Movimento sul pavimento + Rotazione direzionale
   const petEl = document.getElementById("petCharacter");
   const petFlipEl = document.getElementById("petFlipGroup");
   let petX = 200, petY = 330;
@@ -1354,7 +1460,6 @@
     const dx = next.x - petX;
     const dist = Math.hypot(dx, next.y - petY);
     if (dist > 4) {
-      // Di default il becco del pinguino guarda a sinistra (-x). Se cammina a destra (+x), applichiamo scale(-1, 1)
       if (dx > 2) {
         petFlipEl.setAttribute("transform", "scale(-1, 1)");
       } else if (dx < -2) {
@@ -1371,19 +1476,85 @@
   setInterval(roamFloorOnly, 4200);
   setInterval(() => saveState(false), 60000);
 
-  // Meteo Reale Live di Putignano, Italia sotto le barre di stato
+  // Applica Giorno/Notte Reale + Condizioni Meteo Live dentro la finestra a oblò
+  function updateWindowScene(isDay, weatherCode, temp) {
+    const stop1 = document.getElementById("skyStop1");
+    const stop2 = document.getElementById("skyStop2");
+    const sunG = document.getElementById("winSunGroup");
+    const moonG = document.getElementById("winMoonGroup");
+    const starsG = document.getElementById("winStarsGroup");
+    const hills = document.getElementById("winHills");
+    const weatherLayer = document.getElementById("winWeatherLayer");
+    const dayNightBadge = document.getElementById("dayNightHudBadge");
+
+    if (isDay) {
+      stop1.setAttribute("stop-color", "#48cae4");
+      stop2.setAttribute("stop-color", "#fff3b0");
+      sunG.setAttribute("opacity", "1");
+      moonG.setAttribute("opacity", "0");
+      starsG.setAttribute("opacity", "0");
+      hills.setAttribute("fill", "#74c69d");
+      dayNightBadge.textContent = "☀️ Giorno (Live)";
+    } else {
+      stop1.setAttribute("stop-color", "#0f172a");
+      stop2.setAttribute("stop-color", "#1e3a8a");
+      sunG.setAttribute("opacity", "0");
+      moonG.setAttribute("opacity", "1");
+      starsG.setAttribute("opacity", "1");
+      hills.setAttribute("fill", "#1b4332");
+      dayNightBadge.textContent = "🌙 Notte (Live)";
+    }
+
+    let overlaySvg = "";
+    let weatherDesc = "Sereno";
+    let hudIcon = isDay ? "☀️" : "🌙";
+
+    if (weatherCode >= 1 && weatherCode <= 3) {
+      weatherDesc = "Nuvoloso";
+      hudIcon = isDay ? "⛅" : "☁️";
+      const cloudCol = isDay ? "#ffffff" : "#94a3b8";
+      overlaySvg = `<g opacity="0.88">
+        <ellipse cx="6" cy="-4" rx="14" ry="7" fill="${cloudCol}"/>
+        <ellipse cx="-6" cy="2" rx="12" ry="6" fill="${cloudCol}"/>
+      </g>`;
+    } else if (weatherCode >= 45 && weatherCode <= 67) {
+      weatherDesc = "Pioggia";
+      hudIcon = "🌧️";
+      overlaySvg = `<g>
+        <ellipse cx="0" cy="-10" rx="18" ry="8" fill="#64748b"/>
+        <line x1="-10" y1="0" x2="-14" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+        <line x1="0" y1="0" x2="-4" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+        <line x1="10" y1="0" x2="6" y2="14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+      </g>`;
+    } else if (weatherCode >= 71) {
+      weatherDesc = "Neve";
+      hudIcon = "❄️";
+      overlaySvg = `<g>
+        <ellipse cx="0" cy="-12" rx="18" ry="7" fill="#94a3b8"/>
+        <circle cx="-10" cy="2" r="2.2" fill="#fff"/>
+        <circle cx="2" cy="6" r="2.2" fill="#fff"/>
+        <circle cx="11" cy="0" r="2.2" fill="#fff"/>
+        <circle cx="-4" cy="13" r="2" fill="#fff"/>
+      </g>`;
+    }
+
+    weatherLayer.innerHTML = overlaySvg;
+    document.getElementById("weatherHudText").textContent = `${hudIcon} Meteo Putignano (Italia): ${temp}°C • ${weatherDesc}`;
+  }
+
   async function fetchLiveWeather() {
     try {
-      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.85&longitude=17.12&current_weather=true");
+      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.85&longitude=17.12&current=temperature_2m,is_day,weather_code&timezone=Europe%2FRome");
       const data = await res.json();
-      const cw = data.current_weather;
-      const temp = Math.round(cw.temperature);
-      const code = cw.weathercode;
-      const icon = code === 0 ? "☀️" : (code < 4 ? "⛅" : (code >= 71 ? "❄️" : "🌧️"));
-      document.getElementById("weatherSvgIcon").textContent = icon;
-      document.getElementById("weatherHudText").textContent = `${icon} Meteo Putignano (Italia): ${temp}°C`;
+      const cur = data.current;
+      const temp = Math.round(cur.temperature_2m);
+      const isDay = cur.is_day === 1;
+      const code = cur.weather_code;
+      updateWindowScene(isDay, code, temp);
     } catch (e) {
-      document.getElementById("weatherHudText").textContent = "☀️ Meteo Putignano (Italia): Sereno";
+      const hour = new Date().getHours();
+      const isDay = hour >= 7 && hour < 19;
+      updateWindowScene(isDay, 0, 16);
     }
   }
 
@@ -1394,6 +1565,7 @@
   renderAll();
   initCloud();
   fetchLiveWeather();
+  setInterval(fetchLiveWeather, 300000);
 </script>
 </body>
 </html>
