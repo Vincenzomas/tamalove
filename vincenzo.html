@@ -35,7 +35,7 @@
     .mood-chip { background: #fefae0; border: 2px solid #432818; border-radius: 10px; padding: 5px 4px; font-family: 'Fredoka', sans-serif; font-size: 0.72rem; color: #432818; cursor: pointer; text-align: center; transition: transform 0.1s; }
     .mood-chip:active { transform: scale(0.95); }
 
-    /* STAGE SENZA BORDI BIANCHI */
+    /* STAGE */
     .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #48cae4; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
     
@@ -43,10 +43,10 @@
     @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3.5px); } }
     .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.4s ease-in-out infinite; transition: filter 0.2s; }
     .interactive-prop:hover { filter: drop-shadow(0px 0px 6px rgba(255,255,255,0.85)) brightness(1.08); }
-    .interactive-prop:active { filter: brightness(0.95); }
+    .interactive-prop:active { filter: brightness(0.92); }
     
     /* STELLA DEI DESIDERI */
-    @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.88; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
+    @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
     .magic-star { cursor: pointer; pointer-events: all; animation: starTwinkle 2s infinite ease-in-out; display: none; }
 
     .speech-bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid #432818; border-radius: 18px; padding: 6px 14px; font-family: 'Fredoka', sans-serif; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 0 #432818; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap; }
@@ -152,64 +152,61 @@
     </div>
   </div>
 
-  <!-- STANZA E PAESAGGIO ESTERNO UNIFICATO (SENZA RIGHE BIANCHE LATERALI) -->
+  <!-- STANZA E PAESAGGIO ESTERNO UNIFICATO (SENZA POLIGONO ARANCIONE DIETRO LA FINESTRA!) -->
   <div class="room-stage" id="roomStage">
     <div class="speech-bubble" id="speechBubble">Ciao amore mio! 💕</div>
 
     <svg class="room-svg" viewBox="0 0 400 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="mainSky" x1="0" y1="0" x2="0" y2="1">
-          <stop id="bgStop1" offset="0%" stop-color="#48cae4"/>
-          <stop id="bgStop2" offset="100%" stop-color="#caf0f8"/>
+          <stop id="bgStop1" offset="0%" stop-color="#38bdf8"/>
+          <stop id="bgStop2" offset="100%" stop-color="#bae6fd"/>
         </linearGradient>
       </defs>
 
-      <!-- 1. UNICO CIELO ESTERNO (Oversized per coprire il 100% senza mai lasciare righe bianche) -->
+      <!-- 1. CIELO ESTERNO GLOBALE (Visibile sia intorno alla casa che attraverso il buco dell'oblò!) -->
       <rect x="-40" y="-40" width="480" height="500" fill="url(#mainSky)"/>
       
-      <!-- 2. UNICO SISTEMA SOLARE / NOTTURNO COERENTE A SINISTRA (Visibile sia fuori che attraverso il foro dell'oblò!) -->
+      <!-- 2. ELEMENTI CELESTI ESTERNI POSIZIONATI IN MODO CHE SI VEDANO SIA FUORI DAL TETTO CHE DENTRO L'OBLÒ -->
       <g id="globalSkyElements">
         <g id="bgStars" opacity="0" style="transition:opacity 0.6s">
           <circle cx="38" cy="42" r="1.5" fill="#fff"/>
           <circle cx="95" cy="28" r="1.8" fill="#fff3b0"/>
-          <circle cx="110" cy="115" r="1.4" fill="#fff"/>
-          <circle cx="138" cy="122" r="1.2" fill="#fff3b0"/>
+          <circle cx="112" cy="118" r="1.5" fill="#fff"/>
+          <circle cx="134" cy="126" r="1.4" fill="#fff3b0"/>
+          <circle cx="118" cy="144" r="1.3" fill="#fff"/>
           <circle cx="290" cy="34" r="1.5" fill="#fff"/>
           <circle cx="348" cy="60" r="1.8" fill="#fff"/>
         </g>
 
-        <!-- UNICO SOLE A SINISTRA (Appare sopra il tetto sinistro E attraverso la finestra a oblò) -->
+        <!-- UNICO SOLE A SINISTRA (Centrato a x=104, y=94: metà spunta sopra il tetto sinistro e metà si vede dentro l'oblò!) -->
         <g id="bgSun" opacity="1" style="transition:opacity 0.6s">
-          <circle cx="92" cy="82" r="44" fill="rgba(255, 183, 3, 0.25)"/>
-          <circle cx="92" cy="82" r="30" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
+          <circle cx="104" cy="94" r="46" fill="rgba(255, 183, 3, 0.24)"/>
+          <circle cx="104" cy="94" r="32" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
         </g>
 
-        <!-- UNICA LUNA A SINISTRA -->
+        <!-- UNICA LUNA A SINISTRA (Visibile sia sopra il tetto che attraverso l'oblò) -->
         <g id="bgMoon" opacity="0" style="transition:opacity 0.6s">
-          <circle cx="96" cy="84" r="36" fill="rgba(254, 250, 224, 0.16)"/>
-          <path d="M 82,62 A 24,24 0 1,0 116,96 A 18,18 0 1,1 82,62 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
+          <circle cx="106" cy="96" r="38" fill="rgba(254, 250, 224, 0.18)"/>
+          <path d="M 92,72 A 26,26 0 1,0 128,110 A 20,20 0 1,1 92,72 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- 3. COLLINE ESTERNE CONTINUATE ANCHE DIETRO LA FINESTRA -->
-      <path id="bgLandscape" d="M -30,152 Q 85,118 190,152 T 430,142 L 430,450 L -30,450 Z" fill="#52b788"/>
+      <!-- 3. COLLINE ESTERNE CHE PASSANO ANCHE DIETRO LA PARTE BASSA DELL'OBLÒ -->
+      <path id="bgLandscape" d="M -30,155 Q 110,122 210,156 T 430,142 L 430,450 L -30,450 Z" fill="#52b788"/>
       
-      <!-- 4. METEO ESTERNO UNIFICato (Nuvole / Pioggia / Neve che passano sia fuori che dietro l'oblò) -->
+      <!-- 4. METEO ESTERNO UNIFICATO (Nuvole / Pioggia / Neve visibili fuori e dentro l'oblò) -->
       <g id="bgWeatherLayer"></g>
 
-      <!-- 5. STRUTTURA DELLA CASA CON VERO FORO TRASPARENTE NELLA PARETE SINISTRA -->
-      <!-- Tetto -->
-      <polygon points="200,14 20,118 200,208 380,118" fill="#f4a261" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-      
-      <!-- Parete Sinistra con FORO REALE (fill-rule="evenodd") in corrispondenza dell'oblò (centro 122,132) -->
+      <!-- 5. PARETE SINISTRA CON VERO FORO TRASPARENTE PER L'OBLÒ (Nessun poligono arancione dietro!) -->
       <path d="M 26,120 L 200,32 L 200,224 L 26,310 Z M 122,100 C 104,109 90,131 90,148 C 90,165 104,173 122,164 C 140,155 154,133 154,116 C 154,99 140,91 122,100 Z" fill="#e9f5ec" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
 
       <!-- Parete Destra -->
       <polygon points="200,32 374,120 374,310 200,224" fill="#fefae0" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       
-      <!-- Cornice Tetto -->
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Trave del Tetto a Spiovente (Solo lungo il bordo superiore, senza riempimento arancione dietro le pareti!) -->
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       
       <!-- Pavimento in Parquet -->
       <polygon points="200,224 374,310 200,398 26,310" fill="#e6be8a" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
@@ -226,16 +223,17 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- CORNICE IN LEGNO DELL'OBLÒ (Senza sfondo opaco: mostra il vero esterno dietro la casa!) -->
+      <!-- CORNICE IN LEGNO DELL'OBLÒ (Vetro trasparente che mostra il cielo vero dietro la parete!) -->
       <g transform="translate(122, 132) skewY(-26)">
+        <circle cx="0" cy="0" r="31" fill="rgba(255,255,255,0.12)"/>
         <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4.5"/>
         <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
         <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3.2"/>
       </g>
 
-      <!-- STELLA GRANDE DEI DESIDERI ALL'ESTERNO (Appare di notte nel cielo sopra il tetto sinistro) -->
-      <g transform="translate(56, 48)" onclick="openModal('nightWishModal')">
+      <!-- STELLA GRANDE DEI DESIDERI ALL'ESTERNO (Appare di notte nel cielo sopra il tetto) -->
+      <g transform="translate(52, 46)" onclick="openModal('nightWishModal')">
         <g id="magicStarBtn" class="magic-star">
           <circle cx="0" cy="0" r="32" fill="rgba(0,0,0,0)" />
           <path d="M 0,-16 L 4.5,-5 L 16,-5 L 6.5,2 L 10,14 L 0,7 L -10,14 L -6.5,2 L -16,-5 L -4.5,-5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8"/>
@@ -405,16 +403,10 @@
 
 <div class="modal-backdrop" id="adminModal"><div class="modal-box"><div class="modal-head" style="background:#bde0fe;"><span>⚙️ Pannello Admin</span><button class="close-btn" onclick="closeModal('adminModal')">✕</button></div><div class="modal-body"><div id="adminLockBox"><p style="font-size:0.85rem; font-weight:700; margin-bottom:8px;">Password amministratore:</p><div class="input-row"><input type="password" id="adminPassInput" class="text-input" placeholder="Password..." /><button class="action-pill" onclick="unlockAdmin()">Sblocca 🔓</button></div></div><div id="adminControlsBox" style="display:none; flex-direction:column; gap:12px;"><div style="background:#d8f3dc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="font-weight:700; font-size:0.86rem; margin-bottom:8px;">⭐ Livelli & XP</div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🦥 Debby</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminDebbyLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminDebbyXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('debby', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('debby', 10)">+10 Lv</button></div></div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🐧 Vincenzo</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminVincenzoLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminVincenzoXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 10)">+10 Lv</button></div></div><div style="display:flex; gap:6px;"><button class="action-pill" style="flex:1; background:#52b788; color:#fff;" onclick="saveAdminLevels()">💾 Salva</button><button class="action-pill" style="flex:1; background:#ffb703;" onclick="resetDailyLevelCap()">🔓 Azzera Limiti</button></div></div><div style="background:#fefae0; border:2.5px solid #432818; border-radius:14px; padding:10px;"><label style="font-size:0.75rem; font-weight:700;">Data Inizio:</label><input type="date" id="adminStartDate" class="text-input" style="width:100%; margin-bottom:6px;"/><label style="font-size:0.75rem; font-weight:700;">Data Fine:</label><input type="date" id="adminTargetDate" class="text-input" style="width:100%; margin-bottom:8px;"/><button class="action-pill" style="width:100%;" onclick="saveAdminDates()">💾 Salva Date</button></div><div style="background:#e0fbfc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="display:flex; gap:8px;"><button class="action-pill" style="flex:1;" onclick="exportBackup()">⬇️ Esporta Backup</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)"/><button class="action-pill" style="flex:1;" onclick="document.getElementById('importFile').click()">⬆️ Importa</button></div></div><div style="background:#ffe5ec; border:2.5px solid #432818; border-radius:14px; padding:10px;"><button class="action-pill" style="width:100%; background:#ef233c; color:#fff;" onclick="triggerOfficialReset()">🔄 Resetta Inizio a Ora</button></div></div></div></div></div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-  // REGISTRA SUBITO OPEN/CLOSE MODAL COSI FUNZIONANO SEMPRE AL 100%
-  window.openModal = (id) => { const el = document.getElementById(id); if (el) el.classList.add("open"); };
-  window.closeModal = (id) => { const el = document.getElementById(id); if (el) el.classList.remove("open"); };
-
-  const GITHUB_FIREBASE_CONFIG = { apiKey: "AIzaSyD_tUjI4aIwsoUIARXeXwtWzBUsAxQf118", authDomain: "tamalove.firebaseapp.com", projectId: "tamalove", storageBucket: "tamalove.firebasestorage.app", messagingSenderId: "431289196125", appId: "1:431289196125:web:65c9d9cc44b755164777b4", measurementId: "G-FJL9K3C20C" };
+<!-- MOTORE PRINCIPALE IMMEDIATO (Indipendente dalla rete, garantisce che clic e camminata funzionino sempre!) -->
+<script>
+  window.openModal = function(id) { var el = document.getElementById(id); if (el) el.classList.add("open"); };
+  window.closeModal = function(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); };
 
   const UNIQUE_PLANT_NAMES = ["Monstera Deliciosa", "Ficus Lyrata Bambino", "Pothos Neon", "Sansevieria Cylindrica", "Bonsai Ginseng", "Aloe Vera Baby", "Echeveria Perla", "Cactus Orecchie Bunny", "Calathea Orbifolia", "Marimo Moss Ball", "Bonsai Ciliegio Sakura", "Orchidea Phalaenopsis", "Peperomia Watermelon", "Pilea Peperomioides", "String of Pearls", "String of Hearts", "Anthurium Clarinervium", "Philodendron Pink Princess", "Alocasia Polly", "Bonsai Acero Rosso", "Kokedama Felce", "Haworthia Zebra", "Lithops Pietra Viva", "Crassula Ovata Jade", "Hoya Kerrii Cuore", "Tradescantia Nanouk", "Begonia Maculata", "Maranta Leuconeura", "Zamioculcas Raven", "Spathiphyllum Chopin", "Guzmania Bromelia", "Tillandsia Ionantha", "Dionaea Pigliamosche", "Nepenthes Alata", "Sarracenia Purpurea", "Pachira Aquatica", "Beaucarnea Nolina", "Chamaedorea Elegans", "Areca Palma Mini", "Cycas Revoluta", "Lavanda Provenzale", "Rosmarino Bonsai", "Piantina Fragola Bosco", "Limone Nano Sorrento", "Ulivo Pugliese Bonsai", "Fico d'India Mini", "Agave Victoriae", "Sedum Burrito", "Sempervivum Tectorum", "Kalanchoe Blossfeldiana", "Schlumbergera Cactus", "Epiphyllum Anguliger", "Rhipsalis Cassutha", "Asparagus Plumosus", "Adiantum Capillus", "Asplenium Nidus", "Fittonia Rosa", "Hypoestes Splash", "Oxalis Triangularis", "Bonsai Pino Giapponese"];
   const POT_COLORS = ["#e76f51","#2a9d8f","#e9c46a","#f4a261","#8ecae6","#ffafcc","#bde0fe","#cdb4db","#a3b18a","#dda15e"];
@@ -429,41 +421,42 @@
   const PLANTS_CATALOG = UNIQUE_PLANT_NAMES.map((name, i) => ({ id: i + 1, name, stars: (i % 5 === 4) ? 5 : ((i % 4) + 1) }));
   const MOOD_LABELS = { felice: "Felice 😊", triste: "Triste 😢", affamata: "Affamata 🥞", affamato: "Affamato 🍫", malata: "Malata 🤒", malato: "Malato 🤒", annoiata: "Annoiata 🥱", annoiato: "Annoiato 🥱", mancanza: "Sento la tua mancanza 🥺" };
   const STORAGE_KEY = "tamalove_shared_v2";
-  let state = loadLocalState(), db = null, sharedDocRef = null, isApplyingRemote = false, isNorwayNight = false, isItalyNight = false;
+  let isNorwayNight = false, isItalyNight = false;
 
   function todayStr() { return new Date().toISOString().slice(0, 10); }
-  function getDefaultState() { const t = todayStr(); return { startDate: t, targetDate: "2027-05-11", lastResetAt: 0, debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0, deborahSmiskiUnlocked: [], deborahPacksClaimed: 0, messages: [{ sender: "Deborah", text: "Benvenuto nella nostra casetta! 💕", ts: Date.now() }], photos: [], wishes: [] }; }
-  function normalizePet(pet) { const def = getDefaultState().debby; const merged = { ...def, ...(pet || {}) }; if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90; if (typeof merged.boredom !== "number") merged.boredom = 85; if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false }; return merged; }
-  function loadLocalState() { try { const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("tamalove_shared_v3"); if (raw) { const parsed = JSON.parse(raw); const def = getDefaultState(); return { ...def, ...parsed, wishes: parsed.wishes || [], debby: normalizePet(parsed.debby), vincenzo: normalizePet(parsed.vincenzo) }; } } catch (e) {} return getDefaultState(); }
+  window.getDefaultState = function() { const t = todayStr(); return { startDate: t, targetDate: "2027-05-11", lastResetAt: 0, debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0, deborahSmiskiUnlocked: [], deborahPacksClaimed: 0, messages: [{ sender: "Deborah", text: "Benvenuto nella nostra casetta! 💕", ts: Date.now() }], photos: [], wishes: [] }; };
+  window.normalizePet = function(pet) { const def = window.getDefaultState().debby; const merged = { ...def, ...(pet || {}) }; if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90; if (typeof merged.boredom !== "number") merged.boredom = 85; if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false }; return merged; };
   
-  function evaluateMidnightHalfCheck() {
-    const now = new Date(), today = todayStr(), d = state.debby, isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
+  function loadLocalState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("tamalove_shared_v3");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const def = window.getDefaultState();
+        return { ...def, ...parsed, wishes: parsed.wishes || [], debby: window.normalizePet(parsed.debby), vincenzo: window.normalizePet(parsed.vincenzo) };
+      }
+    } catch (e) {}
+    return window.getDefaultState();
+  }
+
+  window.state = loadLocalState();
+
+  window.evaluateMidnightHalfCheck = function() {
+    const now = new Date(), today = todayStr(), d = window.state.debby, isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
     if (d.lastCheckDay !== today && isPastHalfMidnight) { if (d.love < 50 || d.food < 50 || d.happy < 50 || d.boredom < 50) d.neglectWarningDate = today; d.lastCheckDay = today; }
     if (d.dailyLvlsDate !== today) { d.dailyLvlsDate = today; d.dailyLvlsGained = 0; }
-    if (state.vincenzo.moodLogDate !== today) { state.vincenzo.moodLogDate = today; state.vincenzo.moodLogCount = 0; }
-  }
+    if (window.state.vincenzo.moodLogDate !== today) { window.state.vincenzo.moodLogDate = today; window.state.vincenzo.moodLogCount = 0; }
+  };
 
-  function saveState(pushToCloud = true) {
-    evaluateMidnightHalfCheck(); localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); renderAll();
-    if (pushToCloud && sharedDocRef && !isApplyingRemote) { setDoc(sharedDocRef, state, { merge: true }).catch(() => {}); }
-  }
+  window.saveState = function(pushToCloud = true) {
+    window.evaluateMidnightHalfCheck();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(window.state));
+    window.renderAll();
+    if (pushToCloud && window.pushCloudState) window.pushCloudState();
+  };
 
-  async function initCloud() {
-    const badge = document.getElementById("syncStatus");
-    try {
-      const app = initializeApp(GITHUB_FIREBASE_CONFIG); const auth = getAuth(app); db = getFirestore(app); await signInAnonymously(auth); sharedDocRef = doc(db, "tamalove_rooms", "vincenzo_deborah_shared"); badge.textContent = "☁️ Cloud Online"; badge.style.background = "#d8f3dc";
-      onSnapshot(sharedDocRef, (snap) => {
-        if (snap.exists()) {
-          const remote = snap.data(); isApplyingRemote = true;
-          state = { ...getDefaultState(), ...remote, wishes: remote.wishes || [], debby: normalizePet(remote.debby), vincenzo: normalizePet(remote.vincenzo) };
-          evaluateMidnightHalfCheck(); localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); renderAll(); isApplyingRemote = false;
-        } else { setDoc(sharedDocRef, state, { merge: true }); }
-      });
-    } catch (err) { badge.textContent = "📱 Locale"; badge.style.background = "#fef3c7"; }
-  }
-
-  function renderAll() {
-    const d = state.debby, v = state.vincenzo, today = todayStr();
+  window.renderAll = function() {
+    const d = window.state.debby, v = window.state.vincenzo, today = todayStr();
     document.getElementById("lvlBadge").textContent = `Lv. ${d.level}`;
     document.getElementById("xpFill").style.width = `${Math.min(100, d.xp)}%`;
     document.getElementById("dailyCapLabel").textContent = `Oggi: ${d.dailyLvlsGained || 0}/6 Lv`;
@@ -484,7 +477,7 @@
     document.getElementById("myMoodUses").textContent = `(${v.moodLogDate === today ? (v.moodLogCount || 0) : 0}/2 oggi)`;
     document.getElementById("neglectAlert").style.display = (d.neglectWarningDate === today) ? "block" : "none";
     
-    const availPacks = Math.max(0, Math.floor(d.level / 10) - (state.vincenzoPacksClaimed || 0));
+    const availPacks = Math.max(0, Math.floor(d.level / 10) - (window.state.vincenzoPacksClaimed || 0));
     const packModalEl = document.getElementById("packModalCount");
     if (packModalEl) packModalEl.textContent = availPacks;
 
@@ -496,10 +489,9 @@
       document.getElementById("adminVincenzoXp").value = v.xp;
     }
 
-    // PIANTE 5 STELLE APPOGGIATE SULLA MENSOLA
     const shelfGroup = document.getElementById("shelfFiveStarGroup");
     shelfGroup.innerHTML = "";
-    const unlockedIds = state.vincenzoPlantsUnlocked || [];
+    const unlockedIds = window.state.vincenzoPlantsUnlocked || [];
     const fiveStarUnlocked = PLANTS_CATALOG.filter(p => unlockedIds.includes(p.id) && p.stars === 5);
     fiveStarUnlocked.slice(0, 12).forEach((plant, idx) => {
       const row = idx < 6 ? 0 : 1;
@@ -516,56 +508,65 @@
     document.getElementById("wallCalDay").textContent = `${String(now.getDate()).padStart(2, "0")} ${monthsShort[now.getMonth()]}`;
     document.getElementById("wallCalYear").textContent = `${now.getFullYear()}`;
     document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
-    const target = new Date(state.targetDate || "2027-05-11");
+    const target = new Date(window.state.targetDate || "2027-05-11");
     const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
     document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
     document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
 
     const chatList = document.getElementById("chatList");
-    chatList.innerHTML = (state.messages || []).map(m => `<div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}"><strong>${m.sender}:</strong> ${m.text}</div>`).join("");
+    chatList.innerHTML = (window.state.messages || []).map(m => `<div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}"><strong>${m.sender}:</strong> ${m.text}</div>`).join("");
     chatList.scrollTop = chatList.scrollHeight;
     
     const wishList = document.getElementById("wishList");
-    wishList.innerHTML = (state.wishes || []).map(w => `<div class="wish-msg"><span>${w.sender === 'Vincenzo' ? '🐧' : '🦥'}</span> ${w.text}</div>`).join("") || `<div style="text-align:center; font-size:0.8rem; color:#cbd5e1; margin-top:20px;">Ancora nessun desiderio espresso... sii il primo!</div>`;
+    wishList.innerHTML = (window.state.wishes || []).map(w => `<div class="wish-msg"><span>${w.sender === 'Vincenzo' ? '🐧' : '🦥'}</span> ${w.text}</div>`).join("") || `<div style="text-align:center; font-size:0.8rem; color:#cbd5e1; margin-top:20px;">Ancora nessun desiderio espresso... sii il primo!</div>`;
     wishList.scrollTop = wishList.scrollHeight;
 
     const photoGrid = document.getElementById("photoGrid");
-    photoGrid.innerHTML = (state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
+    photoGrid.innerHTML = (window.state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
     
     const colGrid = document.getElementById("collectionGrid");
     colGrid.innerHTML = PLANTS_CATALOG.map(p => `<div class="col-item ${unlockedIds.includes(p.id) ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}"><div style="height:32px;display:flex;align-items:center;justify-content:center;">${unlockedIds.includes(p.id) ? renderPlantSvg(p.id, 30) : '🔒'}</div><div>#${p.id} ${p.name}</div><div style="color:#d97706;">${"⭐".repeat(p.stars)}</div></div>`).join("");
     
     const btnNight = document.getElementById("magicStarBtn");
     if (btnNight) btnNight.style.display = (isNorwayNight && isItalyNight) ? "block" : "none";
-  }
+  };
 
-  window.sendMyMood = function(moodKey) { const v = state.vincenzo; if (v.moodLogDate !== todayStr()) { v.moodLogDate = todayStr(); v.moodLogCount = 0; } if (v.moodLogCount >= 2) return alert("Massimo 2 volte al giorno!"); v.moodLogCount++; v.feeling = moodKey; v.sickNeeds = { cuddle: false, food: false, gift: false }; if (moodKey === "felice") v.happy = Math.min(100, v.happy + 15); else if (moodKey === "triste") v.happy = Math.max(0, v.happy - 55); else if (moodKey === "affamato") v.food = 0; else if (moodKey === "mancanza") v.love = 0; else if (moodKey === "annoiato") v.boredom = 0; else if (moodKey === "malato") { v.love = 0; v.food = 0; v.happy = 0; v.boredom = 0; } saveState(true); showSpeech(`Hai inviato a Debby: ${MOOD_LABELS[moodKey]}!`); };
-  window.performCare = function(type) { const d = state.debby, fx = document.getElementById("petFx"); if (d.dailyLvlsDate !== todayStr()) { d.dailyLvlsDate = todayStr(); d.dailyLvlsGained = 0; } if (type === "cuddle") { d.love = Math.min(100, d.love + 25); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.cuddle = true; fx.textContent = "🤗💖"; showSpeech("Coccole! 💕"); } else if (type === "food") { d.food = Math.min(100, d.food + 30); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.food = true; fx.textContent = "🥞✨"; showSpeech("Mmmh! 😋🥞"); } else if (type === "gift") { d.boredom = Math.min(100, d.boredom + 32); d.happy = Math.min(100, d.happy + 18); if (d.sickNeeds) d.sickNeeds.gift = true; fx.textContent = "💆‍♀️🛍️"; showSpeech("Addio noia! 😍✨"); } if ((d.feeling === "malata" || d.feeling === "malato") && d.sickNeeds?.cuddle && d.sickNeeds?.food && d.sickNeeds?.gift) { d.love = Math.max(d.love, 75); d.food = Math.max(d.food, 75); d.happy = Math.max(d.happy, 80); d.boredom = Math.max(d.boredom, 75); d.feeling = "felice"; d.sickNeeds = { cuddle: false, food: false, gift: false }; showSpeech("Sono guarita! 🥰"); } else if (d.love >= 70 && d.food >= 70 && d.happy >= 70 && d.boredom >= 70) d.feeling = "felice"; if ((d.dailyLvlsGained || 0) < 6) { d.xp += 35; if (d.xp >= 100) { d.level++; d.xp -= 100; d.dailyLvlsGained++; showSpeech(`Lv. ${d.level}! 🎉`); if (d.dailyLvlsGained >= 6) d.xp = 0; } } else d.xp = 0; fx.style.opacity = 1; setTimeout(() => { fx.style.opacity = 0; }, 1100); saveState(true); };
   function showSpeech(text) { const b = document.getElementById("speechBubble"); b.textContent = text; b.classList.add("show"); clearTimeout(window._speechTimer); window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200); }
-  window.openGiftPack = function() { const avail = Math.floor(state.debby.level / 10) - (state.vincenzoPacksClaimed || 0); if (avail <= 0) return alert("Raggiungi il prossimo multiplo di 10 livelli!"); const lockedPool = PLANTS_CATALOG.filter(p => !(state.vincenzoPlantsUnlocked || []).includes(p.id)); if (lockedPool.length === 0) return alert("Hai già tutte le 60 Piante!"); const won = lockedPool[Math.floor(Math.random() * lockedPool.length)]; state.vincenzoPlantsUnlocked.push(won.id); state.vincenzoPacksClaimed = (state.vincenzoPacksClaimed || 0) + 1; saveState(true); alert(`🎉 Hai sbloccato: #${won.id} ${won.name} (${won.stars}★)!`); };
-  window.sendChatMessage = function() { const i = document.getElementById("chatInput"); if (!i.value.trim()) return; state.messages.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; saveState(true); };
-  window.sendWish = function() { const i = document.getElementById("wishInput"); if (!i.value.trim()) return; state.wishes.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; saveState(true); };
-  window.handlePhotoUpload = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement("canvas"); const scale = Math.min(1, 480 / img.width); canvas.width = img.width * scale; canvas.height = img.height * scale; canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() }); document.getElementById("photoCaption").value = ""; saveState(true); }; img.src = ev.target.result; }; reader.readAsDataURL(file); };
-  window.unlockAdmin = function() { const p = document.getElementById("adminPassInput").value.trim(); if (p === "admin123" || p === "pocketcare2026") { document.getElementById("adminLockBox").style.display = "none"; document.getElementById("adminControlsBox").style.display = "flex"; document.getElementById("adminDebbyLvl").value = state.debby.level || 1; document.getElementById("adminDebbyXp").value = state.debby.xp || 0; document.getElementById("adminVincenzoLvl").value = state.vincenzo.level || 1; document.getElementById("adminVincenzoXp").value = state.vincenzo.xp || 0; document.getElementById("adminStartDate").value = state.startDate || todayStr(); document.getElementById("adminTargetDate").value = state.targetDate || "2027-05-11"; } else alert("Password errata!"); };
+  window.sendMyMood = function(moodKey) { const v = window.state.vincenzo; if (v.moodLogDate !== todayStr()) { v.moodLogDate = todayStr(); v.moodLogCount = 0; } if (v.moodLogCount >= 2) return alert("Massimo 2 volte al giorno!"); v.moodLogCount++; v.feeling = moodKey; v.sickNeeds = { cuddle: false, food: false, gift: false }; if (moodKey === "felice") v.happy = Math.min(100, v.happy + 15); else if (moodKey === "triste") v.happy = Math.max(0, v.happy - 55); else if (moodKey === "affamato") v.food = 0; else if (moodKey === "mancanza") v.love = 0; else if (moodKey === "annoiato") v.boredom = 0; else if (moodKey === "malato") { v.love = 0; v.food = 0; v.happy = 0; v.boredom = 0; } window.saveState(true); showSpeech(`Hai inviato a Debby: ${MOOD_LABELS[moodKey]}!`); };
+  window.performCare = function(type) { const d = window.state.debby, fx = document.getElementById("petFx"); if (d.dailyLvlsDate !== todayStr()) { d.dailyLvlsDate = todayStr(); d.dailyLvlsGained = 0; } if (type === "cuddle") { d.love = Math.min(100, d.love + 25); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.cuddle = true; fx.textContent = "🤗💖"; showSpeech("Coccole! 💕"); } else if (type === "food") { d.food = Math.min(100, d.food + 30); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.food = true; fx.textContent = "🥞✨"; showSpeech("Mmmh! 😋🥞"); } else if (type === "gift") { d.boredom = Math.min(100, d.boredom + 32); d.happy = Math.min(100, d.happy + 18); if (d.sickNeeds) d.sickNeeds.gift = true; fx.textContent = "💆‍♀️🛍️"; showSpeech("Addio noia! 😍✨"); } if ((d.feeling === "malata" || d.feeling === "malato") && d.sickNeeds?.cuddle && d.sickNeeds?.food && d.sickNeeds?.gift) { d.love = Math.max(d.love, 75); d.food = Math.max(d.food, 75); d.happy = Math.max(d.happy, 80); d.boredom = Math.max(d.boredom, 75); d.feeling = "felice"; d.sickNeeds = { cuddle: false, food: false, gift: false }; showSpeech("Sono guarita! 🥰"); } else if (d.love >= 70 && d.food >= 70 && d.happy >= 70 && d.boredom >= 70) d.feeling = "felice"; if ((d.dailyLvlsGained || 0) < 6) { d.xp += 35; if (d.xp >= 100) { d.level++; d.xp -= 100; d.dailyLvlsGained++; showSpeech(`Lv. ${d.level}! 🎉`); if (d.dailyLvlsGained >= 6) d.xp = 0; } } else d.xp = 0; fx.style.opacity = 1; setTimeout(() => { fx.style.opacity = 0; }, 1100); window.saveState(true); };
+  window.openGiftPack = function() { const avail = Math.floor(window.state.debby.level / 10) - (window.state.vincenzoPacksClaimed || 0); if (avail <= 0) return alert("Raggiungi il prossimo multiplo di 10 livelli!"); const lockedPool = PLANTS_CATALOG.filter(p => !(window.state.vincenzoPlantsUnlocked || []).includes(p.id)); if (lockedPool.length === 0) return alert("Hai già tutte le 60 Piante!"); const won = lockedPool[Math.floor(Math.random() * lockedPool.length)]; window.state.vincenzoPlantsUnlocked.push(won.id); window.state.vincenzoPacksClaimed = (window.state.vincenzoPacksClaimed || 0) + 1; window.saveState(true); alert(`🎉 Hai sbloccato: #${won.id} ${won.name} (${won.stars}★)!`); };
+  window.sendChatMessage = function() { const i = document.getElementById("chatInput"); if (!i.value.trim()) return; window.state.messages.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
+  window.sendWish = function() { const i = document.getElementById("wishInput"); if (!i.value.trim()) return; window.state.wishes.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
+  window.handlePhotoUpload = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement("canvas"); const scale = Math.min(1, 480 / img.width); canvas.width = img.width * scale; canvas.height = img.height * scale; canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); window.state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() }); document.getElementById("photoCaption").value = ""; window.saveState(true); }; img.src = ev.target.result; }; reader.readAsDataURL(file); };
+  window.unlockAdmin = function() { const p = document.getElementById("adminPassInput").value.trim(); if (p === "admin123" || p === "pocketcare2026") { document.getElementById("adminLockBox").style.display = "none"; document.getElementById("adminControlsBox").style.display = "flex"; document.getElementById("adminDebbyLvl").value = window.state.debby.level || 1; document.getElementById("adminDebbyXp").value = window.state.debby.xp || 0; document.getElementById("adminVincenzoLvl").value = window.state.vincenzo.level || 1; document.getElementById("adminVincenzoXp").value = window.state.vincenzo.xp || 0; document.getElementById("adminStartDate").value = window.state.startDate || todayStr(); document.getElementById("adminTargetDate").value = window.state.targetDate || "2027-05-11"; } else alert("Password errata!"); };
   window.quickAdjustLevel = function(who, delta) { const inp = document.getElementById(who === "debby" ? "adminDebbyLvl" : "adminVincenzoLvl"); inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) + delta); };
-  window.saveAdminLevels = function() { state.debby.level = Math.max(1, parseInt(document.getElementById("adminDebbyLvl").value, 10) || 1); state.debby.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminDebbyXp").value, 10) || 0)); state.vincenzo.level = Math.max(1, parseInt(document.getElementById("adminVincenzoLvl").value, 10) || 1); state.vincenzo.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminVincenzoXp").value, 10) || 0)); if ((state.vincenzoPacksClaimed || 0) > Math.floor(state.debby.level / 10)) state.vincenzoPacksClaimed = Math.floor(state.debby.level / 10); if ((state.deborahPacksClaimed || 0) > Math.floor(state.vincenzo.level / 10)) state.deborahPacksClaimed = Math.floor(state.vincenzo.level / 10); saveState(true); alert("✅ Livelli salvati!"); };
-  window.resetDailyLevelCap = function() { state.debby.dailyLvlsGained = 0; state.vincenzo.dailyLvlsGained = 0; saveState(true); alert("🔓 Limiti azzerati!"); };
-  window.saveAdminDates = function() { state.startDate = document.getElementById("adminStartDate").value; state.targetDate = document.getElementById("adminTargetDate").value; saveState(true); alert("✅ Date salvate!"); };
-  window.exportBackup = function() { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: "application/json" })); a.download = `tamalove_backup.json`; a.click(); };
-  window.importBackup = function(e) { const r = new FileReader(); r.onload = function(ev) { try { state = { ...getDefaultState(), ...JSON.parse(ev.target.result) }; saveState(true); alert("✅ Backup ripristinato!"); } catch (err) { alert("File non valido."); } }; r.readAsText(e.target.files[0]); };
-  let rcs = 0; window.triggerOfficialReset = function() { if (rcs === 0) { rcs = 1; alert("⚠️ Conferma reset totale entro 10 sec."); setTimeout(() => rcs = 0, 10000); return; } state = getDefaultState(); state.lastResetAt = Date.now(); saveState(true); alert("🎉 Partita resettata!"); };
+  window.saveAdminLevels = function() { window.state.debby.level = Math.max(1, parseInt(document.getElementById("adminDebbyLvl").value, 10) || 1); window.state.debby.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminDebbyXp").value, 10) || 0)); window.state.vincenzo.level = Math.max(1, parseInt(document.getElementById("adminVincenzoLvl").value, 10) || 1); window.state.vincenzo.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminVincenzoXp").value, 10) || 0)); if ((window.state.vincenzoPacksClaimed || 0) > Math.floor(window.state.debby.level / 10)) window.state.vincenzoPacksClaimed = Math.floor(window.state.debby.level / 10); if ((window.state.deborahPacksClaimed || 0) > Math.floor(window.state.vincenzo.level / 10)) window.state.deborahPacksClaimed = Math.floor(window.state.vincenzo.level / 10); window.saveState(true); alert("✅ Livelli salvati!"); };
+  window.resetDailyLevelCap = function() { window.state.debby.dailyLvlsGained = 0; window.state.vincenzo.dailyLvlsGained = 0; window.saveState(true); alert("🔓 Limiti azzerati!"); };
+  window.saveAdminDates = function() { window.state.startDate = document.getElementById("adminStartDate").value; window.state.targetDate = document.getElementById("adminTargetDate").value; window.saveState(true); alert("✅ Date salvate!"); };
+  window.exportBackup = function() { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(window.state, null, 2)], { type: "application/json" })); a.download = `tamalove_backup.json`; a.click(); };
+  window.importBackup = function(e) { const r = new FileReader(); r.onload = function(ev) { try { window.state = { ...window.getDefaultState(), ...JSON.parse(ev.target.result) }; window.saveState(true); alert("✅ Backup ripristinato!"); } catch (err) { alert("File non valido."); } }; r.readAsText(e.target.files[0]); };
+  let rcs = 0; window.triggerOfficialReset = function() { if (rcs === 0) { rcs = 1; alert("⚠️ Conferma reset totale entro 10 sec."); setTimeout(() => rcs = 0, 10000); return; } window.state = window.getDefaultState(); window.state.lastResetAt = Date.now(); window.saveState(true); alert("🎉 Partita resettata!"); };
 
+  // MOVIMENTO AUTONOMO IMMEDIATO SUL PAVIMENTO
   const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup"); let petX = 200, petY = 330;
-  setInterval(() => {
+  function stepRoam() {
     const tgts = [{x:200,y:330}, {x:158,y:322}, {x:242,y:322}, {x:180,y:344}, {x:222,y:344}], n = tgts[Math.floor(Math.random()*tgts.length)], dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
-    if (d > 4) { if (dx < -2) petFlipEl.setAttribute("transform", "scale(-1, 1)"); else if (dx > 2) petFlipEl.setAttribute("transform", "scale(1, 1)"); petEl.classList.add("walking"); petEl.style.transition = `transform ${Math.max(1.2, d/22)}s linear`; petX = n.x; petY = n.y; petEl.setAttribute("transform", `translate(${petX}, ${petY})`); setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d/22)*1000)); }
-  }, 4200); setInterval(() => saveState(false), 60000);
+    if (d > 4) {
+      if (dx < -2) petFlipEl.setAttribute("transform", "scale(-1, 1)"); else if (dx > 2) petFlipEl.setAttribute("transform", "scale(1, 1)");
+      petEl.classList.add("walking"); petEl.style.transition = `transform ${Math.max(1.2, d/22)}s linear`; petX = n.x; petY = n.y; petEl.setAttribute("transform", `translate(${petX}, ${petY})`);
+      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d/22)*1000));
+    }
+  }
+  setTimeout(stepRoam, 900);
+  setInterval(stepRoam, 4000);
+  setInterval(() => window.saveState(false), 60000);
 
+  // METEO REALE E GIORNO/NOTTE LIVE (Ås, Norvegia)
   function updateWindowScene(isDay, weatherCode, temp) {
     const s1 = document.getElementById("bgStop1"), s2 = document.getElementById("bgStop2"), sun = document.getElementById("bgSun"), moon = document.getElementById("bgMoon"), stars = document.getElementById("bgStars"), hills = document.getElementById("bgLandscape"), wl = document.getElementById("bgWeatherLayer"), bdg = document.getElementById("dayNightHudBadge");
     isNorwayNight = !isDay;
     if (isDay) {
-      s1.setAttribute("stop-color", "#48cae4"); s2.setAttribute("stop-color", "#caf0f8");
+      s1.setAttribute("stop-color", "#38bdf8"); s2.setAttribute("stop-color", "#bae6fd");
       sun.setAttribute("opacity", "1"); moon.setAttribute("opacity", "0"); stars.setAttribute("opacity", "0");
       hills.setAttribute("fill", "#52b788"); bdg.textContent = "☀️ Giorno (Live)";
     } else {
@@ -577,36 +578,88 @@
     let svg = "", desc = "Sereno", icn = isDay ? "☀️" : "🌙";
     if (weatherCode >= 1 && weatherCode <= 3) {
       desc = "Nuvoloso"; icn = isDay ? "⛅" : "☁️"; const cCol = isDay ? "#ffffff" : "#94a3b8";
-      svg = `<g opacity="0.88"><ellipse cx="105" cy="95" rx="38" ry="16" fill="${cCol}"/><ellipse cx="135" cy="118" rx="28" ry="12" fill="${cCol}"/><ellipse cx="320" cy="52" rx="48" ry="18" fill="${cCol}"/></g>`;
+      svg = `<g opacity="0.88"><ellipse cx="115" cy="115" rx="34" ry="14" fill="${cCol}"/><ellipse cx="136" cy="128" rx="26" ry="11" fill="${cCol}"/><ellipse cx="320" cy="52" rx="48" ry="18" fill="${cCol}"/></g>`;
     } else if (weatherCode >= 45 && weatherCode <= 67) {
       desc = "Pioggia"; icn = "🌧️";
-      svg = `<g><ellipse cx="110" cy="92" rx="42" ry="16" fill="#64748b"/><g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.8"><line x1="60" y1="20" x2="45" y2="140"/><line x1="110" y1="80" x2="98" y2="165"/><line x1="132" y1="90" x2="120" y2="165"/><line x1="310" y1="20" x2="295" y2="130"/><line x1="355" y1="30" x2="340" y2="140"/></g></g>`;
+      svg = `<g><ellipse cx="118" cy="108" rx="38" ry="14" fill="#64748b"/><g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.85"><line x1="60" y1="20" x2="45" y2="140"/><line x1="112" y1="108" x2="100" y2="165"/><line x1="132" y1="110" x2="120" y2="165"/><line x1="310" y1="20" x2="295" y2="130"/><line x1="355" y1="30" x2="340" y2="140"/></g></g>`;
     } else if (weatherCode >= 71) {
       desc = "Neve"; icn = "❄️";
-      svg = `<g fill="#fff" opacity="0.9"><circle cx="55" cy="40" r="3"/><circle cx="112" cy="115" r="2.8"/><circle cx="130" cy="135" r="2.5"/><circle cx="105" cy="142" r="2.5"/><circle cx="290" cy="45" r="3.2"/><circle cx="345" cy="75" r="2.8"/></g>`;
+      svg = `<g fill="#fff" opacity="0.9"><circle cx="55" cy="40" r="3"/><circle cx="112" cy="118" r="2.8"/><circle cx="130" cy="135" r="2.5"/><circle cx="105" cy="142" r="2.5"/><circle cx="290" cy="45" r="3.2"/><circle cx="345" cy="75" r="2.8"/></g>`;
     }
     wl.innerHTML = svg;
     document.getElementById("weatherHudText").textContent = `${icn} Meteo Ås (Norvegia): ${temp}°C • ${desc}`;
-    renderAll();
+    window.renderAll();
   }
 
   async function fetchLiveWeather() {
+    const osloHour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Oslo", hour: "numeric", hour12: false }).format(new Date()), 10);
+    const romeHour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Rome", hour: "numeric", hour12: false }).format(new Date()), 10);
+    const fallbackNorwayDay = osloHour >= 7 && osloHour < 18;
+    isItalyNight = !(romeHour >= 7 && romeHour < 18);
+
     try {
       const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.66&longitude=10.79&current=temperature_2m,is_day,weather_code&timezone=Europe%2FOslo");
-      const cur = (await res.json()).current;
-      updateWindowScene(cur.is_day === 1, cur.weather_code, Math.round(cur.temperature_2m));
-      const resIt = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.85&longitude=17.12&current=is_day&timezone=Europe%2FRome");
-      isItalyNight = (await resIt.json()).current.is_day === 0;
-      renderAll();
+      const data = await res.json();
+      const cur = data.current || data.current_weather;
+      const temp = Math.round(cur.temperature_2m ?? cur.temperature ?? 8);
+      const isDay = (cur.is_day !== undefined) ? (cur.is_day === 1) : fallbackNorwayDay;
+      const code = cur.weather_code ?? cur.weathercode ?? 1;
+      updateWindowScene(isDay, code, temp);
     } catch (e) {
-      const h = new Date().getHours();
-      updateWindowScene(h >= 7 && h < 19, 1, 8);
-      isItalyNight = !(h >= 7 && h < 19);
-      renderAll();
+      updateWindowScene(fallbackNorwayDay, 1, 8);
     }
   }
 
-  evaluateMidnightHalfCheck(); renderAll(); initCloud(); fetchLiveWeather(); setInterval(fetchLiveWeather, 300000);
+  window.evaluateMidnightHalfCheck();
+  window.renderAll();
+  fetchLiveWeather();
+  setInterval(fetchLiveWeather, 300000);
+</script>
+
+<!-- SINCRONIZZAZIONE CLOUD FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  const GITHUB_FIREBASE_CONFIG = { apiKey: "AIzaSyD_tUjI4aIwsoUIARXeXwtWzBUsAxQf118", authDomain: "tamalove.firebaseapp.com", projectId: "tamalove", storageBucket: "tamalove.firebasestorage.app", messagingSenderId: "431289196125", appId: "1:431289196125:web:65c9d9cc44b755164777b4", measurementId: "G-FJL9K3C20C" };
+  let sharedDocRef = null, isApplyingRemote = false;
+
+  window.pushCloudState = function() {
+    if (sharedDocRef && !isApplyingRemote) {
+      setDoc(sharedDocRef, window.state, { merge: true }).catch(() => {});
+    }
+  };
+
+  async function initCloud() {
+    const badge = document.getElementById("syncStatus");
+    try {
+      const app = initializeApp(GITHUB_FIREBASE_CONFIG);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      await signInAnonymously(auth);
+      sharedDocRef = doc(db, "tamalove_rooms", "vincenzo_deborah_shared");
+      badge.textContent = "☁️ Cloud Online";
+      badge.style.background = "#d8f3dc";
+      onSnapshot(sharedDocRef, (snap) => {
+        if (snap.exists()) {
+          const remote = snap.data();
+          isApplyingRemote = true;
+          window.state = { ...window.getDefaultState(), ...remote, wishes: remote.wishes || [], debby: window.normalizePet(remote.debby), vincenzo: window.normalizePet(remote.vincenzo) };
+          window.evaluateMidnightHalfCheck();
+          localStorage.setItem("tamalove_shared_v2", JSON.stringify(window.state));
+          window.renderAll();
+          isApplyingRemote = false;
+        } else {
+          setDoc(sharedDocRef, window.state, { merge: true });
+        }
+      });
+    } catch (err) {
+      badge.textContent = "📱 Locale";
+      badge.style.background = "#fef3c7";
+    }
+  }
+  initCloud();
 </script>
 </body>
 </html>
