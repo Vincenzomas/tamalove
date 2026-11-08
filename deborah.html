@@ -34,18 +34,18 @@
     .mood-chip { background: #fefae0; border: 2px solid #432818; border-radius: 10px; padding: 5px 4px; font-family: 'Fredoka', sans-serif; font-size: 0.72rem; color: #432818; cursor: pointer; text-align: center; transition: transform 0.1s; }
     .mood-chip:active { transform: scale(0.95); }
 
-    /* STAGE SENZA BORDI BIANCHI */
-    .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #48cae4; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
+    /* STAGE */
+    .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #38bdf8; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
 
     /* ANIMAZIONI OGGETTI INTERATTIVI */
     @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3.5px); } }
     .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.4s ease-in-out infinite; transition: filter 0.2s; }
     .interactive-prop:hover { filter: drop-shadow(0px 0px 6px rgba(255,255,255,0.85)) brightness(1.08); }
-    .interactive-prop:active { filter: brightness(0.95); }
+    .interactive-prop:active { filter: brightness(0.92); }
     
     /* STELLA DEI DESIDERI */
-    @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.88; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
+    @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
     .magic-star { cursor: pointer; pointer-events: all; animation: starTwinkle 2s infinite ease-in-out; display: none; }
 
     .speech-bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid #432818; border-radius: 18px; padding: 6px 14px; font-family: 'Fredoka', sans-serif; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 0 #432818; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap; }
@@ -147,15 +147,15 @@
     </div>
   </div>
 
-  <!-- STANZA E PAESAGGIO ESTERNO UNIFICATO (SENZA RIGHE BIANCHE LATERALI) -->
+  <!-- STANZA E PAESAGGIO ESTERNO UNIFICATO (SENZA POLIGONO ARANCIONE DIETRO LA FINESTRA!) -->
   <div class="room-stage">
     <div class="speech-bubble" id="speechBubble">Ciao piccola mia! 🐧💕</div>
 
     <svg class="room-svg" viewBox="0 0 400 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="mainSky" x1="0" y1="0" x2="0" y2="1">
-          <stop id="bgStop1" offset="0%" stop-color="#48cae4"/>
-          <stop id="bgStop2" offset="100%" stop-color="#fff3b0"/>
+          <stop id="bgStop1" offset="0%" stop-color="#38bdf8"/>
+          <stop id="bgStop2" offset="100%" stop-color="#fef08a"/>
         </linearGradient>
         <radialGradient id="penguinChestGlow" cx="35%" cy="35%" r="55%">
           <stop offset="0%" stop-color="#ff9f1c"/>
@@ -164,50 +164,49 @@
         </radialGradient>
       </defs>
 
-      <!-- 1. UNICO CIELO ESTERNO (Oversized per coprire il 100% senza mai lasciare righe bianche) -->
+      <!-- 1. CIELO ESTERNO GLOBALE (Visibile sia intorno alla casa che attraverso il buco dell'oblò!) -->
       <rect x="-40" y="-40" width="480" height="500" fill="url(#mainSky)"/>
 
-      <!-- 2. UNICO SISTEMA SOLARE / NOTTURNO COERENTE A SINISTRA -->
+      <!-- 2. ELEMENTI CELESTI ESTERNI POSIZIONATI IN MODO CHE SI VEDANO SIA FUORI DAL TETTO CHE DENTRO L'OBLÒ -->
       <g id="globalSkyElements">
         <g id="bgStars" opacity="0" style="transition:opacity 0.6s">
           <circle cx="38" cy="42" r="1.5" fill="#fff"/>
           <circle cx="95" cy="28" r="1.8" fill="#fff3b0"/>
-          <circle cx="110" cy="115" r="1.4" fill="#fff"/>
-          <circle cx="138" cy="122" r="1.2" fill="#fff3b0"/>
+          <circle cx="112" cy="118" r="1.5" fill="#fff"/>
+          <circle cx="134" cy="126" r="1.4" fill="#fff3b0"/>
+          <circle cx="118" cy="144" r="1.3" fill="#fff"/>
           <circle cx="290" cy="34" r="1.5" fill="#fff"/>
           <circle cx="348" cy="60" r="1.8" fill="#fff"/>
         </g>
 
-        <!-- UNICO SOLE A SINISTRA (Visibile fuori e attraverso l'oblò!) -->
+        <!-- UNICO SOLE A SINISTRA (Centrato a x=104, y=94: metà spunta sopra il tetto sinistro e metà si vede dentro l'oblò!) -->
         <g id="bgSun" opacity="1" style="transition:opacity 0.6s">
-          <circle cx="92" cy="82" r="44" fill="rgba(255, 183, 3, 0.25)"/>
-          <circle cx="92" cy="82" r="30" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
+          <circle cx="104" cy="94" r="46" fill="rgba(255, 183, 3, 0.24)"/>
+          <circle cx="104" cy="94" r="32" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
         </g>
 
         <!-- UNICA LUNA A SINISTRA -->
         <g id="bgMoon" opacity="0" style="transition:opacity 0.6s">
-          <circle cx="96" cy="84" r="36" fill="rgba(254, 250, 224, 0.16)"/>
-          <path d="M 82,62 A 24,24 0 1,0 116,96 A 18,18 0 1,1 82,62 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
+          <circle cx="106" cy="96" r="38" fill="rgba(254, 250, 224, 0.18)"/>
+          <path d="M 92,72 A 26,26 0 1,0 128,110 A 20,20 0 1,1 92,72 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- 3. COLLINE PUGLIESI ESTERNE CONTINUATE ANCHE DIETRO LA FINESTRA -->
-      <path id="bgLandscape" d="M -30,152 Q 85,118 190,152 T 430,142 L 430,450 L -30,450 Z" fill="#74c69d"/>
+      <!-- 3. COLLINE PUGLIESI ESTERNE CHE PASSANO ANCHE DIETRO LA PARTE BASSA DELL'OBLÒ -->
+      <path id="bgLandscape" d="M -30,155 Q 110,122 210,156 T 430,142 L 430,450 L -30,450 Z" fill="#74c69d"/>
       
       <!-- 4. METEO ESTERNO UNIFICATO -->
       <g id="bgWeatherLayer"></g>
 
-      <!-- 5. STRUTTURA DELLA CASA CON VERO FORO TRASPARENTE NELLA PARETE SINISTRA -->
-      <polygon points="200,14 20,118 200,208 380,118" fill="#f4a261" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-      
-      <!-- Parete Sinistra con FORO REALE (fill-rule="evenodd") -->
+      <!-- 5. PARETE SINISTRA CON VERO FORO TRASPARENTE PER L'OBLÒ (Nessun poligono arancione dietro!) -->
       <path d="M 26,120 L 200,32 L 200,224 L 26,310 Z M 122,100 C 104,109 90,131 90,148 C 90,165 104,173 122,164 C 140,155 154,133 154,116 C 154,99 140,91 122,100 Z" fill="#ffedd8" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
 
       <!-- Parete Destra -->
       <polygon points="200,32 374,120 374,310 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Trave del Tetto a Spiovente (Senza riempimento arancione dietro le pareti!) -->
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       
       <polygon points="200,224 374,310 200,398 26,310" fill="#ddb892" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <line x1="113" y1="267" x2="287" y2="354" stroke="#b08968" stroke-width="1.8"/>
@@ -221,8 +220,9 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- CORNICE IN LEGNO DELL'OBLÒ (Trasparente: mostra il vero esterno!) -->
+      <!-- CORNICE IN LEGNO DELL'OBLÒ (Vetro trasparente che mostra il cielo vero dietro la parete!) -->
       <g transform="translate(122, 132) skewY(-26)">
+        <circle cx="0" cy="0" r="31" fill="rgba(255,255,255,0.12)"/>
         <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4.5"/>
         <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
         <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
@@ -230,7 +230,7 @@
       </g>
 
       <!-- STELLA GRANDE DEI DESIDERI ALL'ESTERNO -->
-      <g transform="translate(56, 48)" onclick="openModal('nightWishModal')">
+      <g transform="translate(52, 46)" onclick="openModal('nightWishModal')">
         <g id="magicStarBtn" class="magic-star">
           <circle cx="0" cy="0" r="32" fill="rgba(0,0,0,0)" />
           <path d="M 0,-16 L 4.5,-5 L 16,-5 L 6.5,2 L 10,14 L 0,7 L -10,14 L -6.5,2 L -16,-5 L -4.5,-5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8"/>
@@ -378,11 +378,4 @@
 
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Vincenzo)</span><button class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
 
-<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
-
-<div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> compaiono appoggiati sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc, onSnapshot } from "
+<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none"
