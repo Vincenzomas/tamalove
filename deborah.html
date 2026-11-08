@@ -35,7 +35,7 @@
     .mood-chip { background: #fefae0; border: 2px solid #432818; border-radius: 10px; padding: 5px 4px; font-family: 'Fredoka', sans-serif; font-size: 0.72rem; color: #432818; cursor: pointer; text-align: center; transition: transform 0.1s; }
     .mood-chip:active { transform: scale(0.95); }
 
-    /* STAGE AMPLIATO */
+    /* STAGE */
     .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #38bdf8; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
 
@@ -109,6 +109,7 @@
     .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .mem-card { height: 56px; background: #bde0fe; border: 2.5px solid #432818; border-radius: 12px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 0 #432818; }
     .mem-card.flipped { background: #fff; }
+    .section-subtitle { font-family: 'Fredoka', sans-serif; font-size: 0.85rem; color: #432818; display: flex; justify-content: space-between; align-items: center; background: #f1e3d3; padding: 6px 10px; border-radius: 10px; border: 2px solid #432818; }
   </style>
 
   <script>
@@ -124,7 +125,7 @@
       <div class="pet-title">
         <span>🐧 Vincenzo (Putignano 🇮🇹)</span>
         <span class="lvl-badge" id="lvlBadge">Lv. 1</span>
-        <span class="coin-badge" onclick="openModal('gamesModal')">🪙 <span id="coinCount">100</span></span>
+        <span class="coin-badge" onclick="openModal('gamesModal')">🪙 <span id="coinCount">25</span></span>
       </div>
       <span class="sync-pill" id="syncStatus">☁️ Cloud Attivo</span>
     </div>
@@ -167,16 +168,16 @@
     </div>
   </div>
 
-  <!-- STANZA INGRANDITA CON GUARDAROBA, PULSANTI HTML E PINGUINO VESTIBILE -->
+  <!-- STANZA ISOMETRICA CORRETTA -->
   <div class="room-stage">
     <div class="speech-bubble" id="speechBubble">Ciao piccola mia! 🐧💕</div>
 
     <!-- AREE DI TOCCO HTML -->
     <button type="button" id="starTapBtn" class="svg-tap-zone" style="top:2%; left:4%; width:16%; height:14%; display:none;" onclick="openModal('nightWishModal')" aria-label="Notte Stellata"></button>
     <button type="button" class="svg-tap-zone" style="top:31%; left:3%; width:14%; height:15%;" onclick="openModal('calendarModal')" aria-label="Calendario"></button>
-    <button type="button" class="svg-tap-zone" style="top:42%; left:13%; width:15%; height:22%;" onclick="openModal('wardrobeModal')" aria-label="Guardaroba"></button>
+    <button type="button" class="svg-tap-zone" style="top:41%; left:18%; width:18%; height:25%;" onclick="openModal('wardrobeModal')" aria-label="Guardaroba"></button>
     <button type="button" class="svg-tap-zone" style="top:61%; left:2%; width:14%; height:16%;" onclick="openModal('mailModal')" aria-label="Posta"></button>
-    <button type="button" class="svg-tap-zone" style="top:22%; right:4%; width:36%; height:22%;" onclick="openModal('smiskiModal')" aria-label="Smiski"></button>
+    <button type="button" class="svg-tap-zone" style="top:20%; right:4%; width:38%; height:24%;" onclick="openModal('smiskiModal')" aria-label="Smiski"></button>
     <button type="button" class="svg-tap-zone" style="top:63%; right:3%; width:18%; height:16%;" onclick="openModal('albumModal')" aria-label="Album"></button>
 
     <svg class="room-svg" viewBox="0 0 400 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,7 +218,7 @@
       <path id="bgLandscape" d="M -30,148 Q 110,118 210,150 T 430,138 L 430,450 L -30,450 Z" fill="#74c69d"/>
       <g id="bgWeatherLayer"></g>
 
-      <!-- CASA MOLTO PIÙ GRANDE (da x=8 a x=392, y=18 a y=412) CON FORO OBLÒ TRASPARENTE -->
+      <!-- PARETI DELLA CASA CON FORO OBLÒ TRASPARENTE -->
       <path d="M 8,114 L 200,18 L 200,224 L 8,320 Z M 118,98 C 102,106 90,125 90,140 C 90,155 102,162 118,154 C 134,146 146,127 146,112 C 146,97 134,90 118,98 Z" fill="#ffedd8" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <polygon points="200,18 392,114 392,320 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       
@@ -225,13 +226,16 @@
       <polyline points="4,116 200,14 396,116" fill="none" stroke="#432818" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
       <polyline points="4,116 200,14 396,116" fill="none" stroke="#e76f51" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
       
-      <!-- Grande Pavimento in Parquet -->
+      <!-- GRANDE PAVIMENTO IN PARQUET (Linee matematicamente confinate ai bordi del rombo!) -->
       <polygon points="200,224 392,320 200,412 8,320" fill="#ddb892" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Linee parallele da sinistra-alto a destra-basso -->
+      <line x1="152" y1="248" x2="344" y2="343" stroke="#b08968" stroke-width="1.6"/>
       <line x1="104" y1="272" x2="296" y2="366" stroke="#b08968" stroke-width="1.6"/>
-      <line x1="56" y1="296" x2="248" y2="390" stroke="#b08968" stroke-width="1.6"/>
-      <line x1="152" y1="248" x2="344" y2="342" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="56" y1="296" x2="248" y2="389" stroke="#b08968" stroke-width="1.6"/>
+      <!-- Linee parallele da destra-alto a sinistra-basso (senza mai uscire dal bordo!) -->
+      <line x1="248" y1="248" x2="56" y2="343" stroke="#b08968" stroke-width="1.6"/>
       <line x1="296" y1="272" x2="104" y2="366" stroke="#b08968" stroke-width="1.6"/>
-      <line x1="344" y1="296" x2="56" y2="390" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="344" y1="296" x2="152" y2="389" stroke="#b08968" stroke-width="1.6"/>
 
       <!-- Lucine -->
       <path d="M 200,24 Q 250,70 300,76 Q 345,104 388,114" fill="none" stroke="#432818" stroke-width="2"/>
@@ -256,7 +260,7 @@
         </g>
       </g>
 
-      <!-- Calendario (Rimpicciolito) -->
+      <!-- Calendario -->
       <g transform="translate(42, 168) skewY(-26) scale(0.76)" onclick="openModal('calendarModal')">
         <g class="interactive-prop">
           <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
@@ -268,20 +272,32 @@
         </g>
       </g>
 
-      <!-- NUOVO GUARDAROBA IN LEGNO INTERATTIVO -->
-      <g transform="translate(82, 232) scale(0.78)" onclick="openModal('wardrobeModal')">
+      <!-- GUARDAROBA 3D ISOMETRICO APPOGGIATO AL PAVIMENTO (Senza più il mobile cerchiato in rosso!) -->
+      <g transform="translate(106, 268)" onclick="openModal('wardrobeModal')">
         <g class="interactive-prop">
-          <polygon points="-24,-64 -10,-72 -10,12 -24,20" fill="#b08968" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <polygon points="-10,-72 28,-90 28,-6 -10,12" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <polygon points="-24,-64 14,-82 28,-90 -10,-72" fill="#e6ccb2" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
-          <line x1="9" y1="-81" x2="9" y2="3" stroke="#432818" stroke-width="2.4"/>
-          <circle cx="4" cy="-36" r="2.5" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
-          <circle cx="14" cy="-41" r="2.5" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
-          <text x="9" y="-56" text-anchor="middle" font-size="13">👗</text>
+          <!-- Ombra a terra sul pavimento -->
+          <polygon points="-26,12 18,-10 38,0 -6,22" fill="rgba(67,40,24,0.2)"/>
+          <!-- Piedini in legno appoggiati a terra -->
+          <rect x="-6" y="14" width="5" height="7" rx="1" fill="#432818"/>
+          <rect x="28" y="-3" width="5" height="7" rx="1" fill="#432818"/>
+          <rect x="-22" y="5" width="5" height="7" rx="1" fill="#432818"/>
+          <!-- Fianco sinistro 3D isometrico -->
+          <polygon points="-22,-65 -4,-56 -4,16 -22,7" fill="#b08968" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Frontale a 2 ante 3D isometrico -->
+          <polygon points="-4,-56 34,-75 34,-3 -4,16" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Cornice interna ante -->
+          <polygon points="-1,-52 13,-59 13,4 -1,11" fill="#e6be8a" stroke="#432818" stroke-width="1.8" stroke-linejoin="round"/>
+          <polygon points="17,-61 31,-68 31,-5 17,2" fill="#e6be8a" stroke="#432818" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- Tetto superiore 3D dell'armadio -->
+          <polygon points="-22,-65 16,-84 34,-75 -4,-56" fill="#f5ebe0" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Linea centrale tra le due ante e pomelli -->
+          <line x1="15" y1="-65.5" x2="15" y2="6.5" stroke="#432818" stroke-width="2.4"/>
+          <circle cx="11" cy="-26" r="2.3" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
+          <circle cx="19" cy="-30" r="2.3" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
         </g>
       </g>
 
-      <!-- Frigorifero retrò (Rimpicciolito nell'angolo) -->
+      <!-- Frigorifero retrò nell'angolo -->
       <g transform="translate(200, 224) scale(0.76)">
         <ellipse cx="0" cy="10" rx="34" ry="12" fill="rgba(67,40,24,0.2)"/>
         <rect x="-22" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
@@ -296,16 +312,7 @@
         <rect x="-16" y="-36" width="12" height="10" rx="2" fill="#fff3b0" stroke="#432818" stroke-width="1.8"/>
       </g>
 
-      <!-- Angolo cucina Moka (Rimpicciolito) -->
-      <g transform="translate(142, 246) scale(0.75)">
-        <polygon points="-44,8 12,-20 34,-8 -22,20" fill="#fff" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-        <polygon points="-44,8 -22,20 -22,40 -44,28" fill="#e76f51" stroke="#432818" stroke-width="2.8"/>
-        <polygon points="-22,20 34,-8 34,12 -22,40" fill="#f4a261" stroke="#432818" stroke-width="2.8"/>
-        <rect x="-10" y="-12" width="10" height="14" rx="2" fill="#ef233c" stroke="#432818" stroke-width="2"/>
-        <ellipse cx="10" cy="-6" rx="9" ry="5" fill="#ffb703" stroke="#432818" stroke-width="2"/>
-      </g>
-
-      <!-- Cassetta Posta (Rimpicciolita) -->
+      <!-- Cassetta Posta -->
       <g transform="translate(36, 294) scale(0.78)" onclick="openModal('mailModal')">
         <g class="interactive-prop">
           <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
@@ -314,24 +321,34 @@
         </g>
       </g>
 
-      <!-- Mensola Smiski (Rimpicciolita) -->
-      <g transform="translate(302, 138) scale(0.84)" onclick="openModal('smiskiModal')">
+      <!-- MENSOLE 3D ISOMETRICHE CON VERO PIANO SUPERIORE SPORGENTE -->
+      <g transform="translate(302, 142) scale(0.84)" onclick="openModal('smiskiModal')">
         <g class="interactive-prop">
-          <g transform="translate(0, -6)">
-            <polygon points="-60,-16 60,42 60,50 -60,-8" fill="#d4a373" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
-            <line x1="-44" y1="-8" x2="-44" y2="4" stroke="#432818" stroke-width="3"/>
-            <line x1="44" y1="34" x2="44" y2="46" stroke="#432818" stroke-width="3"/>
+          <!-- MENSOLA ALTA 3D -->
+          <g>
+            <path d="M -42,-4 L -42,8 L -34,4 Z" fill="#432818"/>
+            <path d="M 38,36 L 38,48 L 46,44 Z" fill="#432818"/>
+            <!-- Piano Superiore 3D (dove poggiano gli Smiski lungo la linea celeste!) -->
+            <polygon points="-54,-34 66,26 54,32 -66,-28" fill="#f5ebe0" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Bordo Frontale 3D -->
+            <polygon points="-66,-28 54,32 54,39 -66,-21" fill="#d4a373" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Spessore Destro 3D -->
+            <polygon points="54,32 66,26 66,33 54,39" fill="#b08968" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
           </g>
-          <g transform="translate(0, 26)">
-            <polygon points="-60,-16 60,42 60,50 -60,-8" fill="#d4a373" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
-            <line x1="-44" y1="-8" x2="-44" y2="4" stroke="#432818" stroke-width="3"/>
-            <line x1="44" y1="34" x2="44" y2="46" stroke="#432818" stroke-width="3"/>
+          <!-- MENSOLA BASSA 3D -->
+          <g transform="translate(0, 38)">
+            <path d="M -42,-4 L -42,8 L -34,4 Z" fill="#432818"/>
+            <path d="M 38,36 L 38,48 L 46,44 Z" fill="#432818"/>
+            <polygon points="-54,-34 66,26 54,32 -66,-28" fill="#f5ebe0" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
+            <polygon points="-66,-28 54,32 54,39 -66,-21" fill="#d4a373" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
+            <polygon points="54,32 66,26 66,33 54,39" fill="#b08968" stroke="#432818" stroke-width="2.4" stroke-linejoin="round"/>
           </g>
+          <!-- Smiski 5★ appoggiati esattamente sul piano superiore 3D -->
           <g id="shelfFiveStarGroup"></g>
         </g>
       </g>
 
-      <!-- Letto (Rimpicciolito) -->
+      <!-- Letto -->
       <g transform="translate(284, 248) scale(0.76)">
         <polygon points="-12,-28 42,-2 42,14 -12,-12" fill="#bc6c25" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 -12,-18 42,8 8,24" fill="#90e0ef" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -340,7 +357,7 @@
         <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
       </g>
 
-      <!-- Tavolino Album (Rimpicciolito) -->
+      <!-- Tavolino Album -->
       <g transform="translate(352, 298) scale(0.78)" onclick="openModal('albumModal')">
         <g class="interactive-prop">
           <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
@@ -358,7 +375,7 @@
       <ellipse cx="200" cy="332" rx="68" ry="32" fill="#ffcad4" stroke="#432818" stroke-width="2.5"/>
       <ellipse cx="200" cy="332" rx="52" ry="22" fill="#ffe5ec" stroke="#432818" stroke-width="1.8" stroke-dasharray="5 4"/>
 
-      <!-- VINCENZO IL PINGUINO (Rimpicciolito in proporzione alla stanza più grande + Layer Vestiti, Cappelli e Accessori) -->
+      <!-- VINCENZO IL PINGUINO -->
       <g id="petCharacter" transform="translate(200, 334)">
         <g transform="scale(0.76)">
           <g id="petFlipGroup">
@@ -369,7 +386,6 @@
             <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
             <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
             
-            <!-- LAYER VESTITO EQUIPAGGIATO SUL PINGUINO -->
             <g id="petOutfitLayer"></g>
 
             <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -378,7 +394,6 @@
             <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
             <g class="wing-r"><path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/><path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/></g>
 
-            <!-- LAYER CAPPELLO E OGGETTO IN MANO SUL PINGUINO -->
             <g id="petHatLayer"></g>
             <g id="petPropLayer"></g>
           </g>
@@ -399,20 +414,29 @@
   </div>
 </div>
 
-<!-- MODAL GUARDAROBA, SHOP & SCAMBIO -->
+<!-- MODAL GUARDAROBA, SHOP A ROTAZIONE 48H & SCAMBIO -->
 <div class="modal-backdrop" id="wardrobeModal">
   <div class="modal-box">
     <div class="modal-head" style="background:#e0fbfc;">
-      <span>👗 Guardaroba, Shop & Scambi</span>
+      <span>👗 Guardaroba & Shop (Deborah)</span>
       <button type="button" class="close-btn" onclick="closeModal('wardrobeModal')">✕</button>
     </div>
     <div class="modal-body">
-      <div style="display:flex; justify-content:space-between; align-items:center; background:#fef08a; padding:8px 12px; border-radius:14px; border:2.5px solid #432818; font-weight:700; font-size:0.84rem;">
-        <span>🪙 Tue Monete: <strong id="shopCoinsLabel">100</strong></span>
-        <button type="button" class="mini-btn" style="background:#b7e4c7;" onclick="closeModal('wardrobeModal'); openModal('gamesModal');">🕹️ Guadagna Monete</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#fef08a; padding:8px 12px; border-radius:14px; border:2.5px solid #432818; font-weight:700; font-size:0.82rem;">
+        <span>🪙 Monete: <strong id="shopCoinsLabel">25</strong></span>
+        <button type="button" class="mini-btn" style="background:#b7e4c7;" onclick="closeModal('wardrobeModal'); openModal('gamesModal');">🕹️ Sala Giochi</button>
       </div>
-      <p style="font-size:0.74rem; font-weight:700; color:#6f4e37;">Compra vestiti, cappelli e oggetti, indossali sul pinguino oppure inviali in regalo a Vincenzo!</p>
-      <div class="collection-grid" id="wardrobeGrid"></div>
+
+      <div class="section-subtitle">
+        <span>🛍️ Shop di Deborah (6 Articoli)</span>
+        <span id="shopCountdownLabel" style="font-size:0.72rem; color:#d97706;">⏳ 48h 00m</span>
+      </div>
+      <div class="collection-grid" id="shopRotationGrid"></div>
+
+      <div class="section-subtitle">
+        <span>🚪 Tuo Guardaroba (Indossa o Scambia)</span>
+      </div>
+      <div class="collection-grid" id="wardrobeOwnedGrid"></div>
     </div>
   </div>
 </div>
@@ -426,10 +450,10 @@
     </div>
     <div class="modal-body">
       <div style="display:flex; gap:8px;">
-        <button type="button" class="action-pill" style="flex:1; background:#ffcad4;" onclick="startCatchHeartsGame()">💖 Acchiappa-Cuori</button>
-        <button type="button" class="action-pill" style="flex:1; background:#bde0fe;" onclick="startMemoryGame()">🃏 Memory (+30🪙)</button>
+        <button type="button" class="action-pill" style="flex:1; background:#ffcad4;" onclick="startCatchHeartsGame()">💖 Acchiappa-Cuori (+1🪙)</button>
+        <button type="button" class="action-pill" style="flex:1; background:#bde0fe;" onclick="startMemoryGame()">🃏 Memory (+8🪙)</button>
       </div>
-      <div id="gameStatusLabel" style="text-align:center; font-weight:700; font-size:0.84rem;">Scegli un mini-gioco per vincere monete!</div>
+      <div id="gameStatusLabel" style="text-align:center; font-weight:700; font-size:0.84rem;">Scegli un mini-gioco per guadagnare monete!</div>
       <div class="game-arena" id="gameArena"></div>
     </div>
   </div>
@@ -440,23 +464,62 @@
 <div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button type="button" class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Vincenzo)</span><button type="button" class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button type="button" class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
 <div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button type="button" class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button type="button" class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
-<div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button type="button" class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button type="button" class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> compaiono appoggiati sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
+<div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button type="button" class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button type="button" class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> poggiano sul piano 3D della mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
 
 <script>
-  const SHOP_ITEMS = [
-    { id: "hat_crown", name: "Corona Reale", type: "hat", price: 40, icon: "👑" },
-    { id: "hat_beanie", name: "Berretto Nordico", type: "hat", price: 30, icon: "🧶" },
-    { id: "hat_chef", name: "Cappello Chef", type: "hat", price: 35, icon: "👩‍🍳" },
-    { id: "hat_wizard", name: "Cappello Magico", type: "hat", price: 50, icon: "🧙" },
-    { id: "out_scarf", name: "Sciarpa Rossa", type: "outfit", price: 30, icon: "🧣" },
-    { id: "out_sweater", name: "Maglione Cuore", type: "outfit", price: 45, icon: "🧥" },
-    { id: "out_bowtie", name: "Papillon Gala", type: "outfit", price: 25, icon: "🎀" },
-    { id: "out_cape", name: "Mantello Eroe", type: "outfit", price: 55, icon: "🦸" },
-    { id: "prop_balloon", name: "Palloncino Cuore", type: "prop", price: 30, icon: "🎈" },
-    { id: "prop_rose", name: "Rosa d'Amore", type: "prop", price: 35, icon: "🌹" },
-    { id: "prop_coffee", name: "Cioccolata Calda", type: "prop", price: 25, icon: "☕" },
-    { id: "prop_wand", name: "Bacchetta Stella", type: "prop", price: 45, icon: "🪄" }
+  const VINCENZO_POOL = [
+    { id: "v_hat_viking", name: "Elmo Vichingo", type: "hat", price: 35, emoji: "🪖" },
+    { id: "v_hat_crown", name: "Corona Nordica", type: "hat", price: 45, emoji: "👑" },
+    { id: "v_hat_beanie", name: "Berretto Lana Ås", type: "hat", price: 25, emoji: "🧶" },
+    { id: "v_hat_flower", name: "Ghirlanda Fiori", type: "hat", price: 30, emoji: "🌸" },
+    { id: "v_out_scarf", name: "Sciarpa Hygge", type: "outfit", price: 28, emoji: "🧣" },
+    { id: "v_out_sweater", name: "Maglione Renna", type: "outfit", price: 40, emoji: "🧥" },
+    { id: "v_out_ bathrobe", name: "Accappatoio Spa", type: "outfit", price: 38, emoji: "🧖‍♀️" },
+    { id: "v_out_cape", name: "Mantello Aurora", type: "outfit", price: 50, emoji: "🌌" },
+    { id: "v_prop_crepe", name: "Crepe Nutella", type: "prop", price: 22, emoji: "🥞" },
+    { id: "v_prop_sephora", name: "Bag Sephora", type: "prop", price: 32, emoji: "🛍️" },
+    { id: "v_prop_tulip", name: "Tulipano Rosa", type: "prop", price: 26, emoji: "🌷" },
+    { id: "v_prop_lantern", name: "Lanterna Calda", type: "prop", price: 34, emoji: "🏮" }
   ];
+
+  const DEBORAH_POOL = [
+    { id: "d_hat_chef", name: "Toque Chef Pugliese", type: "hat", price: 35, emoji: "👨‍🍳" },
+    { id: "d_hat_cap", name: "Cappellino Gamer", type: "hat", price: 25, emoji: "🧢" },
+    { id: "d_hat_wizard", name: "Cappello Mago", type: "hat", price: 45, emoji: "🧙‍♂️" },
+    { id: "d_hat_headphones", name: "Cuffie Pro RGB", type: "hat", price: 32, emoji: "🎧" },
+    { id: "d_out_bowtie", name: "Papillon Gala", type: "outfit", price: 24, emoji: "🎀" },
+    { id: "d_out_hoodie", name: "Felpa Street", type: "outfit", price: 38, emoji: "👕" },
+    { id: "d_out_apron", name: "Grembiule Moka", type: "outfit", price: 30, emoji: "🎽" },
+    { id: "d_out_hero", name: "Armatura Manga", type: "outfit", price: 50, emoji: "🛡️" },
+    { id: "d_prop_mms", name: "Tazza M&M's", type: "prop", price: 22, emoji: "🍫" },
+    { id: "d_prop_gamepad", name: "Joypad Gold", type: "prop", price: 34, emoji: "🎮" },
+    { id: "d_prop_comic", name: "Fumetto Raro", type: "prop", price: 28, emoji: "📘" },
+    { id: "d_prop_espresso", name: "Moka Fumante", type: "prop", price: 26, emoji: "☕" }
+  ];
+
+  const ALL_SHOP_ITEMS = VINCENZO_POOL.concat(DEBORAH_POOL);
+  const ROTATION_MS = 48 * 3600 * 1000;
+
+  function getActiveShopForPool(pool) {
+    const period = Math.floor(Date.now() / ROTATION_MS);
+    const startIdx = (period * 5) % pool.length;
+    const active = [];
+    for (let i = 0; i < 6; i++) {
+      active.push(pool[(startIdx + i) % pool.length]);
+    }
+    return active;
+  }
+
+  function updateShopCountdownText() {
+    const el = document.getElementById("shopCountdownLabel");
+    if (!el) return;
+    const rem = ROTATION_MS - (Date.now() % ROTATION_MS);
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    const s = Math.floor((rem % 60000) / 1000);
+    el.textContent = `⏳ Nuovo stock: ${h}h ${String(m).padStart(2,"0")}m ${String(s).padStart(2,"0")}s`;
+  }
+  setInterval(updateShopCountdownText, 1000);
 
   function renderEquippedSvgOnPenguin(eq) {
     eq = eq || {};
@@ -465,26 +528,13 @@
     const propG = document.getElementById("petPropLayer");
     if (!hatG || !outG || !propG) return;
 
-    // Cappelli sul Pinguino
-    if (eq.hat === "hat_crown") hatG.innerHTML = `<polygon points="-14,-35 -8,-48 -1,-39 6,-48 12,-35" fill="#ffb703" stroke="#432818" stroke-width="2.2" stroke-linejoin="round"/>`;
-    else if (eq.hat === "hat_beanie") hatG.innerHTML = `<path d="M -16,-33 Q -1,-50 15,-32 Z" fill="#ef476f" stroke="#432818" stroke-width="2.2"/><circle cx="-1" cy="-45" r="4.5" fill="#fff" stroke="#432818" stroke-width="2"/>`;
-    else if (eq.hat === "hat_chef") hatG.innerHTML = `<path d="M -13,-34 L -13,-44 Q -17,-54 0,-54 Q 17,-54 13,-44 L 13,-34 Z" fill="#fff" stroke="#432818" stroke-width="2.2"/>`;
-    else if (eq.hat === "hat_wizard") hatG.innerHTML = `<polygon points="-18,-34 18,-34 -1,-58" fill="#7209b7" stroke="#432818" stroke-width="2.2"/><text x="-1" y="-38" text-anchor="middle" font-size="9">⭐</text>`;
-    else hatG.innerHTML = "";
+    const hatItem = ALL_SHOP_ITEMS.find(x => x.id === eq.hat);
+    const outItem = ALL_SHOP_ITEMS.find(x => x.id === eq.outfit);
+    const propItem = ALL_SHOP_ITEMS.find(x => x.id === eq.prop);
 
-    // Vestiti sul Pinguino
-    if (eq.outfit === "out_scarf") outG.innerHTML = `<path d="M -18,-16 Q -2,-10 14,-16 L 13,-9 Q -2,-4 -17,-9 Z" fill="#ef233c" stroke="#432818" stroke-width="2"/><rect x="-14" y="-12" width="6" height="14" rx="2" fill="#ef233c" stroke="#432818" stroke-width="2"/>`;
-    else if (eq.outfit === "out_sweater") outG.innerHTML = `<path d="M -19,-14 Q 0,-8 18,-12 L 20,10 Q 0,16 -20,10 Z" fill="#ff758f" stroke="#432818" stroke-width="2.2"/><text x="-4" y="4" text-anchor="middle" font-size="11">🤍</text>`;
-    else if (eq.outfit === "out_bowtie") outG.innerHTML = `<polygon points="-17,-18 -9,-14 -17,-10" fill="#e63946" stroke="#432818" stroke-width="1.6"/><polygon points="-1,-18 -9,-14 -1,-10" fill="#e63946" stroke="#432818" stroke-width="1.6"/><circle cx="-9" cy="-14" r="2.5" fill="#ffb703" stroke="#432818" stroke-width="1.4"/>`;
-    else if (eq.outfit === "out_cape") outG.innerHTML = `<path d="M 4,-18 L 28,16 L 10,18 L -2,-14 Z" fill="#3a86ff" stroke="#432818" stroke-width="2"/>`;
-    else outG.innerHTML = "";
-
-    // Oggetti a mano sul Pinguino
-    if (eq.prop === "prop_balloon") propG.innerHTML = `<line x1="-18" y1="4" x2="-26" y2="-32" stroke="#432818" stroke-width="2"/><circle cx="-26" cy="-40" r="11" fill="#ff4d6d" stroke="#432818" stroke-width="2"/>`;
-    else if (eq.prop === "prop_rose") propG.innerHTML = `<text x="-24" y="6" text-anchor="middle" font-size="18">🌹</text>`;
-    else if (eq.prop === "prop_coffee") propG.innerHTML = `<text x="-24" y="8" text-anchor="middle" font-size="17">☕</text>`;
-    else if (eq.prop === "prop_wand") propG.innerHTML = `<line x1="-16" y1="6" x2="-28" y2="-10" stroke="#d4a373" stroke-width="3" stroke-linecap="round"/><text x="-30" y="-10" text-anchor="middle" font-size="14">🌟</text>`;
-    else propG.innerHTML = "";
+    hatG.innerHTML = hatItem ? `<text x="-1" y="-36" text-anchor="middle" font-size="22">${hatItem.emoji}</text>` : "";
+    outG.innerHTML = outItem ? `<text x="-6" y="4" text-anchor="middle" font-size="19">${outItem.emoji}</text>` : "";
+    propG.innerHTML = propItem ? `<text x="-24" y="6" text-anchor="middle" font-size="19">${propItem.emoji}</text>` : "";
   }
 
   const UNIQUE_SMISKI_LIST = [{ name: "Smiski Curioso (Mutandina)", prop: "" }, { name: "Smiski Lampada", prop: "" }, { name: "Smiski Trasloco 3 Scatole", prop: "" }, { name: "Smiski Sdraiato Fragile", prop: "" }, { name: "Smiski Pensatore Seduto", prop: "💭" }, { name: "Smiski Abbraccia Ginocchia", prop: "🌿" }, { name: "Smiski Yoga Loto", prop: "🧘" }, { name: "Smiski Peso Bilanciere", prop: "🏋️" }, { name: "Smiski Lettore Libro", prop: "📗" }, { name: "Smiski Dormiglione", prop: "💤" }, { name: "Smiski Hula Hoop", prop: "⭕" }, { name: "Smiski Skateboarder", prop: "🛹" }, { name: "Smiski Pittore", prop: "🖌️" }, { name: "Smiski Piantina", prop: "🌱" }, { name: "Smiski Gatto Spalla", prop: "🐱" }, { name: "Smiski Tamburello", prop: "🥁" }, { name: "Smiski Flauto", prop: "🪈" }, { name: "Smiski Chitarra", prop: "🎸" }, { name: "Smiski Cuffie", prop: "🎧" }, { name: "Smiski Aereoplanino", prop: "✈️" }, { name: "Smiski Scatola Segreta", prop: "📦" }, { name: "Smiski Spazzolino", prop: "🪥" }, { name: "Smiski Specchietto", prop: "🪞" }, { name: "Smiski Sapone Bolle", prop: "🫧" }, { name: "Smiski Turbante", prop: "🧖" }, { name: "Smiski Paperella", prop: "🦆" }, { name: "Smiski Caffè", prop: "☕" }, { name: "Smiski Laptop", prop: "💻" }, { name: "Smiski Telefono", prop: "📞" }, { name: "Smiski Matita", prop: "✏️" }, { name: "Smiski Lampadina", prop: "💡" }, { name: "Smiski Sveglia", prop: "⏰" }, { name: "Smiski Chiave", prop: "🔑" }, { name: "Smiski Lente", prop: "🔍" }, { name: "Smiski Zainetto", prop: "🎒" }, { name: "Smiski Fotocamera", prop: "📷" }, { name: "Smiski Binocolo", prop: "🔭" }, { name: "Smiski Ombrello", prop: "☂️" }, { name: "Smiski Lanterna", prop: "🏮" }, { name: "Smiski Candela", prop: "🕯️" }, { name: "Smiski Stella", prop: "⭐" }, { name: "Smiski Mezzaluna", prop: "🌙" }, { name: "Smiski Sole", prop: "☀️" }, { name: "Smiski Arcobaleno", prop: "🌈" }, { name: "Smiski Fiorellino", prop: "🌼" }, { name: "Smiski Quadrifoglio", prop: "🍀" }, { name: "Smiski Funghetto", prop: "🍄" }, { name: "Smiski Cactus", prop: "🌵" }, { name: "Smiski Farfalla", prop: "🦋" }, { name: "Smiski Conchiglia", prop: "🐚" }, { name: "Smiski Salvagente", prop: "🛟" }, { name: "Smiski Surf", prop: "🏄" }, { name: "Smiski Pescatore", prop: "🎣" }, { name: "Smiski Sciatore", prop: "⛷️" }, { name: "Smiski Regalo", prop: "🎁" }, { name: "Smiski Palloncino", prop: "🎈" }, { name: "Smiski Corona", prop: "👑" }, { name: "Smiski Trofeo", prop: "🏆" }, { name: "Smiski Lettera", prop: "💌" }, { name: "Smiski Cuore Custode", prop: "💚" }];
@@ -517,8 +567,8 @@
     const t = todayStr();
     return {
       startDate: t, targetDate: "2027-05-11", lastResetAt: 0,
-      debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 100, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
-      vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 100, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
+      debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 25, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
+      vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 25, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
       vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0,
       deborahSmiskiUnlocked: [], deborahPacksClaimed: 0,
       messages: [{ sender: "Vincenzo", text: "Ciao amore! Prenditi cura del tuo pinguino! 🐧💕", ts: Date.now() }],
@@ -531,7 +581,7 @@
     const merged = Object.assign({}, def, pet || {});
     if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90;
     if (typeof merged.boredom !== "number") merged.boredom = 85;
-    if (typeof merged.coins !== "number") merged.coins = 100;
+    if (typeof merged.coins !== "number") merged.coins = 25;
     if (!Array.isArray(merged.inventory)) merged.inventory = [];
     if (!merged.equipped) merged.equipped = { hat: "", outfit: "", prop: "" };
     if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false };
@@ -596,23 +646,38 @@
       document.getElementById("vincenzoMoodStatus").innerHTML = "🐧 Il pinguino Vincenzo si sente: <strong>" + (MOOD_LABELS[v.feeling] || "Felice 😊") + "</strong>";
       
       renderEquippedSvgOnPenguin(v.equipped);
+      updateShopCountdownText();
 
-      // Render Guardaroba & Shop (Deborah gestisce gli abiti di Vincenzo il pinguino e può scambiarli con Vincenzo)
-      const wGrid = document.getElementById("wardrobeGrid");
-      if (wGrid) {
-        wGrid.innerHTML = SHOP_ITEMS.map(item => {
+      // Renderizza i 6 articoli attivi nelle 48h dello Shop esclusivo di Deborah
+      const rotGrid = document.getElementById("shopRotationGrid");
+      if (rotGrid) {
+        const activeShop = getActiveShopForPool(DEBORAH_POOL);
+        rotGrid.innerHTML = activeShop.map(item => {
           const owned = (v.inventory || []).includes(item.id);
-          const isEq = v.equipped && v.equipped[item.type] === item.id;
-          return `<div class="col-item ${isEq ? 'five-star' : ''}">
-            <div style="font-size:1.6rem;">${item.icon}</div>
+          return `<div class="col-item">
+            <div style="font-size:1.5rem;">${item.emoji}</div>
             <div>${item.name}</div>
-            ${!owned
-              ? `<button type="button" class="mini-btn" style="background:#fef08a;width:100%;" onclick="buyShopItem('${item.id}')">🪙 ${item.price} Compra</button>`
-              : `<button type="button" class="mini-btn" style="background:${isEq ? '#ffcad4' : '#b7e4c7'};width:100%;" onclick="toggleEquipItem('${item.id}')">${isEq ? 'Togli' : 'Indossa'}</button>
-                 <button type="button" class="mini-btn" style="background:#e0fbfc;width:100%;" onclick="tradeItemToPartner('${item.id}')">🎁 Invia a Vincenzo</button>`
+            ${owned
+              ? `<span style="color:#2d6a4f;font-size:0.68rem;">✅ Nel Guardaroba</span>`
+              : `<button type="button" class="mini-btn" style="background:#fef08a;width:100%;" onclick="buyShopItem('${item.id}')">🪙 ${item.price} Compra</button>`
             }
           </div>`;
         }).join("");
+      }
+
+      // Renderizza tutti gli articoli posseduti nel Guardaroba (inclusi quelli ricevuti da Vincenzo!)
+      const ownGrid = document.getElementById("wardrobeOwnedGrid");
+      if (ownGrid) {
+        const ownedItems = (v.inventory || []).map(id => ALL_SHOP_ITEMS.find(x => x.id === id)).filter(Boolean);
+        ownGrid.innerHTML = ownedItems.length ? ownedItems.map(item => {
+          const isEq = v.equipped && v.equipped[item.type] === item.id;
+          return `<div class="col-item ${isEq ? 'five-star' : ''}">
+            <div style="font-size:1.5rem;">${item.emoji}</div>
+            <div>${item.name}</div>
+            <button type="button" class="mini-btn" style="background:${isEq ? '#ffcad4' : '#b7e4c7'};width:100%;" onclick="toggleEquipItem('${item.id}')">${isEq ? 'Togli' : 'Indossa'}</button>
+            <button type="button" class="mini-btn" style="background:#e0fbfc;width:100%;" onclick="tradeItemToPartner('${item.id}')">🎁 Invia a Vincenzo</button>
+          </div>`;
+        }).join("") : `<p style="grid-column:1/-1;text-align:center;font-size:0.75rem;color:#6f4e37;">Ancora nessun capo nell'armadio. Acquistane uno dallo Shop!</p>`;
       }
 
       if (v.feeling === "malato" || v.feeling === "malata") {
@@ -630,6 +695,7 @@
       const packModalEl = document.getElementById("packModalCount");
       if (packModalEl) packModalEl.textContent = availPacks;
 
+      // POSIZIONAMENTO MILLIMETRICO LUNGO LA LINEA CELESTE DEL PIANO SUPERIORE 3D DELLA MENSOLA
       const shelfGroup = document.getElementById("shelfFiveStarGroup");
       shelfGroup.innerHTML = "";
       const unlockedIds = window.state.deborahSmiskiUnlocked || [];
@@ -638,9 +704,11 @@
         const row = idx < 6 ? 0 : 1;
         const col = idx % 6;
         const xPos = -48 + (col * 19);
-        const ySurface = (row === 0 ? -18 : 14) + (xPos * 0.483);
+        // Equazione esatta del piano superiore 3D: y = -1 + 0.5 * x (mensola alta) e y = 37 + 0.5 * x (mensola bassa)
+        // Poiché i piedini dello Smiski sono a y = +12 (scalato 0.62 -> +7.4), sottraiamo 7.5 per appoggiarlo esattamente sulla tavola lungo la linea celeste!
+        const yContact = (row === 0 ? -8.5 : 29.5) + (xPos * 0.5);
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        g.setAttribute("transform", "translate(" + xPos + ", " + (ySurface - 16) + ") scale(0.65)");
+        g.setAttribute("transform", "translate(" + xPos + ", " + yContact + ") scale(0.62)");
         g.innerHTML = renderSmiskiSvg(smiski.id, 32);
         shelfGroup.appendChild(g);
       });
@@ -687,9 +755,8 @@
     window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200);
   }
 
-  // FUNZIONI SHOP, EQUIPAGGIAMENTO E SCAMBIO
   window.buyShopItem = function(itemId) {
-    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const item = ALL_SHOP_ITEMS.find(x => x.id === itemId);
     const v = window.state.vincenzo;
     if (!item) return;
     if ((v.coins || 0) < item.price) return alert("Monete insufficienti! Gioca nella Sala Giochi per guadagnare altre 🪙.");
@@ -701,7 +768,7 @@
   };
 
   window.toggleEquipItem = function(itemId) {
-    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const item = ALL_SHOP_ITEMS.find(x => x.id === itemId);
     const v = window.state.vincenzo;
     if (!item) return;
     if (v.equipped[item.type] === item.id) v.equipped[item.type] = "";
@@ -710,19 +777,19 @@
   };
 
   window.tradeItemToPartner = function(itemId) {
-    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const item = ALL_SHOP_ITEMS.find(x => x.id === itemId);
     const v = window.state.vincenzo, d = window.state.debby;
     if (!item) return;
-    if (d.inventory.includes(item.id)) return alert("Vincenzo possiede già questo oggetto nel suo guardaroba!");
+    if (d.inventory.includes(item.id)) return alert("Vincenzo possiede già questo articolo nel suo guardaroba!");
     v.inventory = v.inventory.filter(id => id !== item.id);
     if (v.equipped[item.type] === item.id) v.equipped[item.type] = "";
     d.inventory.push(item.id);
-    window.state.messages.push({ sender: "Deborah", text: "🎁 Ti ho inviato nel Guardaroba: " + item.icon + " " + item.name + "!", ts: Date.now() });
+    window.state.messages.push({ sender: "Deborah", text: "🎁 Ti ho mandato nel Guardaroba: " + item.emoji + " " + item.name + "!", ts: Date.now() });
     window.saveState(true);
     alert("🎁 Hai inviato " + item.name + " a Vincenzo!");
   };
 
-  // MINI-GIOCHI PER GUADAGNARE MONETE
+  // MINI-GIOCHI CON RICOMPENSE RIDOTTE (+1🪙 per cuore, +8🪙 per Memory)
   let gameTimer = null, spawnTimer = null;
   window.stopMiniGames = function() {
     clearInterval(gameTimer);
@@ -748,7 +815,7 @@
 
       let pos = -30;
       const fall = setInterval(() => {
-        pos += 4;
+        pos += 4.5;
         token.style.top = pos + "px";
         if (pos > 220) { clearInterval(fall); token.remove(); }
       }, 35);
@@ -756,12 +823,12 @@
       token.onclick = function() {
         clearInterval(fall);
         token.remove();
-        earned += 4;
-        window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 4;
+        earned += 1;
+        window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 1;
         status.textContent = "⏱️ Tempo: " + timeLeft + "s | 🪙 Vinte: +" + earned;
         window.saveState(false);
       };
-    }, 550);
+    }, 650);
 
     gameTimer = setInterval(() => {
       timeLeft--;
@@ -780,7 +847,7 @@
     const status = document.getElementById("gameStatusLabel");
     const symbols = ["🦥","🐧","🥞","🍫","💖","🌟","🦥","🐧","🥞","🍫","💖","🌟"].sort(() => Math.random() - 0.5);
     let flipped = [], matched = 0;
-    status.textContent = "🃏 Trova le 6 coppie per vincere +30 🪙!";
+    status.textContent = "🃏 Trova le 6 coppie per vincere +8 🪙!";
     arena.innerHTML = `<div class="memory-grid" style="padding:12px;">` + symbols.map((s, idx) => `<div class="mem-card" id="mem_${idx}" data-sym="${s}">❓</div>`).join("") + `</div>`;
 
     symbols.forEach((s, idx) => {
@@ -795,8 +862,8 @@
             matched++;
             flipped = [];
             if (matched === 6) {
-              window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 30;
-              status.textContent = "🎉 Complimenti! Hai vinto +30 🪙!";
+              window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 8;
+              status.textContent = "🎉 Complimenti! Hai vinto +8 🪙!";
               window.saveState(true);
             }
           } else {
@@ -905,7 +972,6 @@
     reader.readAsDataURL(file);
   };
   
-  // MOVIMENTO AUTONOMO AMPLIATO DEL PINGUINO NELLA STANZA PIÙ GRANDE
   const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup");
   let petX = 200, petY = 334;
   function stepRoam() {
