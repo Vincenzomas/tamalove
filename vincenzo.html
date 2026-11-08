@@ -10,7 +10,6 @@
     body { font-family: 'Quicksand', sans-serif; background: linear-gradient(180deg, #dff5ea 0%, #f7ede2 100%); color: #432818; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
     .app-shell { width: 100%; max-width: 480px; padding: 10px 12px 24px; display: flex; flex-direction: column; gap: 10px; }
     
-    /* TOP HUD */
     .hud-card { background: #fffdf9; border: 3.5px solid #432818; border-radius: 22px; padding: 10px 12px; box-shadow: 0 5px 0 #432818; display: flex; flex-direction: column; gap: 7px; }
     .hud-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
     .pet-title { font-family: 'Fredoka', sans-serif; font-size: 1.08rem; display: flex; align-items: center; gap: 6px; }
@@ -39,20 +38,27 @@
     .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #48cae4; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
     
-    /* ANIMAZIONI OGGETTI INTERATTIVI */
+    .svg-tap-zone {
+      position: absolute;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+      border-radius: 14px;
+    }
+    .svg-tap-zone:active {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
     @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3.5px); } }
-    .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.4s ease-in-out infinite; transition: filter 0.2s; }
-    .interactive-prop:hover { filter: drop-shadow(0px 0px 6px rgba(255,255,255,0.85)) brightness(1.08); }
-    .interactive-prop:active { filter: brightness(0.92); }
+    .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.4s ease-in-out infinite; }
     
-    /* STELLA DEI DESIDERI */
     @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
     .magic-star { cursor: pointer; pointer-events: all; animation: starTwinkle 2s infinite ease-in-out; display: none; }
 
     .speech-bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid #432818; border-radius: 18px; padding: 6px 14px; font-family: 'Fredoka', sans-serif; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 0 #432818; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap; }
     .speech-bubble.show { opacity: 1; }
 
-    /* BOTTONI CURA */
     .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .care-btn { background: #fffdf9; border: 3.5px solid #432818; border-radius: 20px; padding: 9px 6px; font-family: 'Fredoka', sans-serif; font-size: 0.86rem; color: #432818; box-shadow: 0 5px 0 #432818; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
     .care-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #432818; }
@@ -104,6 +110,17 @@
     .polaroid img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; border: 1.5px solid #432818; }
     .polaroid p { font-size: 0.74rem; font-weight: 700; margin-top: 4px; }
   </style>
+
+  <script>
+    window.openModal = function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add("open");
+    };
+    window.closeModal = function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.remove("open");
+    };
+  </script>
 </head>
 <body>
 
@@ -143,18 +160,24 @@
       <span id="myMoodUses" style="font-size:0.7rem; color:#6f4e37;">(0/2 oggi)</span>
     </div>
     <div class="mood-btns">
-      <button class="mood-chip" onclick="sendMyMood('felice')">😊 Felice</button>
-      <button class="mood-chip" onclick="sendMyMood('triste')">😢 Triste</button>
-      <button class="mood-chip" onclick="sendMyMood('affamato')">🍫 Affamato</button>
-      <button class="mood-chip" onclick="sendMyMood('malato')">🤒 Malato</button>
-      <button class="mood-chip" onclick="sendMyMood('annoiato')">🥱 Annoiato</button>
-      <button class="mood-chip" onclick="sendMyMood('mancanza')">🥺 Mi manchi</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('felice')">😊 Felice</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('triste')">😢 Triste</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('affamato')">🍫 Affamato</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('malato')">🤒 Malato</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('annoiato')">🥱 Annoiato</button>
+      <button type="button" class="mood-chip" onclick="sendMyMood('mancanza')">🥺 Mi manchi</button>
     </div>
   </div>
 
-  <!-- STANZA E PAESAGGIO ESTERNO UNIFICATO (SENZA POLIGONO ARANCIONE DIETRO LA FINESTRA!) -->
+  <!-- STANZA CON PULSANTI HTML INVISIBILI SOVRAPPOSTI AGLI OGGETTI -->
   <div class="room-stage" id="roomStage">
     <div class="speech-bubble" id="speechBubble">Ciao amore mio! 💕</div>
+
+    <button type="button" id="starTapBtn" class="svg-tap-zone" style="top:3%; left:5%; width:18%; height:15%; display:none;" onclick="openModal('nightWishModal')" aria-label="Notte Stellata"></button>
+    <button type="button" class="svg-tap-zone" style="top:31%; left:6%; width:18%; height:18%;" onclick="openModal('calendarModal')" aria-label="Calendario"></button>
+    <button type="button" class="svg-tap-zone" style="top:58%; left:5%; width:17%; height:18%;" onclick="openModal('mailModal')" aria-label="Posta"></button>
+    <button type="button" class="svg-tap-zone" style="top:24%; right:5%; width:38%; height:24%;" onclick="openModal('plantsModal')" aria-label="Piante"></button>
+    <button type="button" class="svg-tap-zone" style="top:61%; right:5%; width:20%; height:18%;" onclick="openModal('albumModal')" aria-label="Album"></button>
 
     <svg class="room-svg" viewBox="0 0 400 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -164,10 +187,8 @@
         </linearGradient>
       </defs>
 
-      <!-- 1. CIELO ESTERNO GLOBALE (Visibile sia intorno alla casa che attraverso il buco dell'oblò!) -->
       <rect x="-40" y="-40" width="480" height="500" fill="url(#mainSky)"/>
       
-      <!-- 2. ELEMENTI CELESTI ESTERNI POSIZIONATI IN MODO CHE SI VEDANO SIA FUORI DAL TETTO CHE DENTRO L'OBLÒ -->
       <g id="globalSkyElements">
         <g id="bgStars" opacity="0" style="transition:opacity 0.6s">
           <circle cx="38" cy="42" r="1.5" fill="#fff"/>
@@ -179,36 +200,26 @@
           <circle cx="348" cy="60" r="1.8" fill="#fff"/>
         </g>
 
-        <!-- UNICO SOLE A SINISTRA (Centrato a x=104, y=94: metà spunta sopra il tetto sinistro e metà si vede dentro l'oblò!) -->
         <g id="bgSun" opacity="1" style="transition:opacity 0.6s">
           <circle cx="104" cy="94" r="46" fill="rgba(255, 183, 3, 0.24)"/>
           <circle cx="104" cy="94" r="32" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
         </g>
 
-        <!-- UNICA LUNA A SINISTRA (Visibile sia sopra il tetto che attraverso l'oblò) -->
         <g id="bgMoon" opacity="0" style="transition:opacity 0.6s">
           <circle cx="106" cy="96" r="38" fill="rgba(254, 250, 224, 0.18)"/>
           <path d="M 92,72 A 26,26 0 1,0 128,110 A 20,20 0 1,1 92,72 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- 3. COLLINE ESTERNE CHE PASSANO ANCHE DIETRO LA PARTE BASSA DELL'OBLÒ -->
       <path id="bgLandscape" d="M -30,155 Q 110,122 210,156 T 430,142 L 430,450 L -30,450 Z" fill="#52b788"/>
-      
-      <!-- 4. METEO ESTERNO UNIFICATO (Nuvole / Pioggia / Neve visibili fuori e dentro l'oblò) -->
       <g id="bgWeatherLayer"></g>
 
-      <!-- 5. PARETE SINISTRA CON VERO FORO TRASPARENTE PER L'OBLÒ (Nessun poligono arancione dietro!) -->
       <path d="M 26,120 L 200,32 L 200,224 L 26,310 Z M 122,100 C 104,109 90,131 90,148 C 90,165 104,173 122,164 C 140,155 154,133 154,116 C 154,99 140,91 122,100 Z" fill="#e9f5ec" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-
-      <!-- Parete Destra -->
       <polygon points="200,32 374,120 374,310 200,224" fill="#fefae0" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       
-      <!-- Trave del Tetto a Spiovente (Solo lungo il bordo superiore, senza riempimento arancione dietro le pareti!) -->
       <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
       <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       
-      <!-- Pavimento in Parquet -->
       <polygon points="200,224 374,310 200,398 26,310" fill="#e6be8a" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <line x1="113" y1="267" x2="287" y2="354" stroke="#c89b6e" stroke-width="1.8"/>
       <line x1="70" y1="288" x2="244" y2="375" stroke="#c89b6e" stroke-width="1.8"/>
@@ -216,14 +227,12 @@
       <line x1="287" y1="267" x2="113" y2="354" stroke="#c89b6e" stroke-width="1.8"/>
       <line x1="330" y1="288" x2="156" y2="375" stroke="#c89b6e" stroke-width="1.8"/>
 
-      <!-- Lucine -->
       <path d="M 198,38 Q 245,82 290,85 Q 332,115 368,122" fill="none" stroke="#432818" stroke-width="2"/>
       <circle cx="220" cy="60" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="255" cy="78" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- CORNICE IN LEGNO DELL'OBLÒ (Vetro trasparente che mostra il cielo vero dietro la parete!) -->
       <g transform="translate(122, 132) skewY(-26)">
         <circle cx="0" cy="0" r="31" fill="rgba(255,255,255,0.12)"/>
         <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4.5"/>
@@ -232,18 +241,14 @@
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3.2"/>
       </g>
 
-      <!-- STELLA GRANDE DEI DESIDERI ALL'ESTERNO (Appare di notte nel cielo sopra il tetto) -->
       <g transform="translate(52, 46)" onclick="openModal('nightWishModal')">
         <g id="magicStarBtn" class="magic-star">
-          <circle cx="0" cy="0" r="32" fill="rgba(0,0,0,0)" />
           <path d="M 0,-16 L 4.5,-5 L 16,-5 L 6.5,2 L 10,14 L 0,7 L -10,14 L -6.5,2 L -16,-5 L -4.5,-5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- CALENDARIO INTERATTIVO -->
       <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')">
         <g class="interactive-prop">
-          <rect x="-32" y="-32" width="64" height="64" fill="rgba(0,0,0,0)" />
           <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
           <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#ef476f" stroke="#432818" stroke-width="2.5"/>
           <circle cx="-12" cy="-19" r="2" fill="#fff"/>
@@ -253,7 +258,6 @@
         </g>
       </g>
 
-      <!-- Stufa a legna a terra -->
       <g transform="translate(200, 232)">
         <polygon points="-38,4 0,-15 38,4 0,23" fill="#adb5bd" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-38,4 0,23 0,28 -38,9" fill="#6c757d" stroke="#432818" stroke-width="2.2"/>
@@ -268,7 +272,6 @@
         <path d="M -7,-20 Q 0,-36 7,-20 Z" fill="#fb8500"/>
       </g>
 
-      <!-- Divano -->
       <g transform="translate(114, 246)">
         <polygon points="-48,6 10,-22 22,-16 -36,12" fill="#95d5b2" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-36,12 22,-16 42,-4 -16,24" fill="#d8f3dc" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -278,20 +281,16 @@
         <circle cx="8" cy="-6" r="8" fill="#fefae0" stroke="#432818" stroke-width="2"/>
       </g>
 
-      <!-- CASSETTA POSTA INTERATTIVA -->
       <g transform="translate(54, 282)" onclick="openModal('mailModal')">
         <g class="interactive-prop">
-          <rect x="-28" y="-32" width="56" height="72" fill="rgba(0,0,0,0)" />
           <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
           <rect x="-18" y="-22" width="36" height="24" rx="10" fill="#ff758f" stroke="#432818" stroke-width="2.8"/>
           <rect x="-10" y="-14" width="20" height="5" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
         </g>
       </g>
 
-      <!-- MENSOLA PIANTE INTERATTIVA -->
       <g transform="translate(294, 146)" onclick="openModal('plantsModal')">
         <g class="interactive-prop">
-          <polygon points="-70,-28 70,42 70,88 -70,18" fill="rgba(0,0,0,0)" />
           <g transform="translate(0, -6)">
             <polygon points="-60,-16 60,42 60,50 -60,-8" fill="#d4a373" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
             <line x1="-44" y1="-8" x2="-44" y2="4" stroke="#432818" stroke-width="3"/>
@@ -306,7 +305,6 @@
         </g>
       </g>
 
-      <!-- Letto -->
       <g transform="translate(282, 248)">
         <polygon points="-12,-28 42,-2 42,14 -12,-12" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 -12,-18 42,8 8,24" fill="#a8dadc" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -315,10 +313,8 @@
         <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
       </g>
 
-      <!-- TAVOLINO ALBUM FOTO INTERATTIVO -->
       <g transform="translate(336, 288)" onclick="openModal('albumModal')">
         <g class="interactive-prop">
-          <circle cx="0" cy="4" r="36" fill="rgba(0,0,0,0)" />
           <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
           <rect x="-18" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
           <rect x="13" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
@@ -366,12 +362,12 @@
   </div>
 
   <div class="actions-grid">
-    <button class="care-btn cuddle" onclick="performCare('cuddle')"><span class="care-icon">🤗</span><span>Coccole</span></button>
-    <button class="care-btn food" onclick="performCare('food')"><span class="care-icon">🥞</span><span>Crepe Crema</span></button>
-    <button class="care-btn gift" onclick="performCare('gift')"><span class="care-icon">💆‍♀️</span><span>Sephora</span></button>
+    <button type="button" class="care-btn cuddle" onclick="performCare('cuddle')"><span class="care-icon">🤗</span><span>Coccole</span></button>
+    <button type="button" class="care-btn food" onclick="performCare('food')"><span class="care-icon">🥞</span><span>Crepe Crema</span></button>
+    <button type="button" class="care-btn gift" onclick="performCare('gift')"><span class="care-icon">💆‍♀️</span><span>Sephora</span></button>
   </div>
   <div class="bottom-tools">
-    <button class="tool-btn" onclick="openModal('adminModal')">⚙️ Pannello Amministratore</button>
+    <button type="button" class="tool-btn" onclick="openModal('adminModal')">⚙️ Pannello Amministratore</button>
   </div>
 </div>
 
@@ -380,41 +376,51 @@
   <div class="modal-box" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%); border-color: #e2e8f0; color:#fff;">
     <div class="modal-head" style="background: transparent; border-bottom: 2px solid rgba(255,255,255,0.2); color:#fff;">
       <span>✨ Sotto lo stesso cielo</span>
-      <button class="close-btn" style="background:#334155; color:#fff; border-color:#fff;" onclick="closeModal('nightWishModal')">✕</button>
+      <button type="button" class="close-btn" style="background:#334155; color:#fff; border-color:#fff;" onclick="closeModal('nightWishModal')">✕</button>
     </div>
     <div class="modal-body">
       <p style="font-size:0.85rem; font-weight:700; text-align:center;">È notte sia in Italia che in Norvegia! Scrivete qui i vostri desideri condivisi sotto le stelle 💫</p>
       <div class="wish-list" id="wishList"></div>
       <div class="input-row">
         <input type="text" id="wishInput" class="text-input" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.4);" placeholder="Esprimi un desiderio..." />
-        <button class="action-pill" style="background:#fef08a; border-color:#ca8a04; color:#854d0e;" onclick="sendWish()">Invia 🌟</button>
+        <button type="button" class="action-pill" style="background:#fef08a; border-color:#ca8a04; color:#854d0e;" onclick="sendWish()">Invia 🌟</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
+<div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button type="button" class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
 
-<div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Debby)</span><button class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
+<div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Debby)</span><button type="button" class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button type="button" class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
 
-<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
+<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button type="button" class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button type="button" class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
 
-<div class="modal-backdrop" id="plantsModal"><div class="modal-box"><div class="modal-head"><span>🌿 60 Piante Kawaii</span><button class="close-btn" onclick="closeModal('plantsModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Le piante a <strong>5 Stelle (5★)</strong> compaiono appoggiate sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
+<div class="modal-backdrop" id="plantsModal"><div class="modal-box"><div class="modal-head"><span>🌿 60 Piante Kawaii</span><button type="button" class="close-btn" onclick="closeModal('plantsModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button type="button" class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Le piante a <strong>5 Stelle (5★)</strong> compaiono appoggiate sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
 
-<div class="modal-backdrop" id="adminModal"><div class="modal-box"><div class="modal-head" style="background:#bde0fe;"><span>⚙️ Pannello Admin</span><button class="close-btn" onclick="closeModal('adminModal')">✕</button></div><div class="modal-body"><div id="adminLockBox"><p style="font-size:0.85rem; font-weight:700; margin-bottom:8px;">Password amministratore:</p><div class="input-row"><input type="password" id="adminPassInput" class="text-input" placeholder="Password..." /><button class="action-pill" onclick="unlockAdmin()">Sblocca 🔓</button></div></div><div id="adminControlsBox" style="display:none; flex-direction:column; gap:12px;"><div style="background:#d8f3dc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="font-weight:700; font-size:0.86rem; margin-bottom:8px;">⭐ Livelli & XP</div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🦥 Debby</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminDebbyLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminDebbyXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('debby', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('debby', 10)">+10 Lv</button></div></div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🐧 Vincenzo</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminVincenzoLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminVincenzoXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 10)">+10 Lv</button></div></div><div style="display:flex; gap:6px;"><button class="action-pill" style="flex:1; background:#52b788; color:#fff;" onclick="saveAdminLevels()">💾 Salva</button><button class="action-pill" style="flex:1; background:#ffb703;" onclick="resetDailyLevelCap()">🔓 Azzera Limiti</button></div></div><div style="background:#fefae0; border:2.5px solid #432818; border-radius:14px; padding:10px;"><label style="font-size:0.75rem; font-weight:700;">Data Inizio:</label><input type="date" id="adminStartDate" class="text-input" style="width:100%; margin-bottom:6px;"/><label style="font-size:0.75rem; font-weight:700;">Data Fine:</label><input type="date" id="adminTargetDate" class="text-input" style="width:100%; margin-bottom:8px;"/><button class="action-pill" style="width:100%;" onclick="saveAdminDates()">💾 Salva Date</button></div><div style="background:#e0fbfc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="display:flex; gap:8px;"><button class="action-pill" style="flex:1;" onclick="exportBackup()">⬇️ Esporta Backup</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)"/><button class="action-pill" style="flex:1;" onclick="document.getElementById('importFile').click()">⬆️ Importa</button></div></div><div style="background:#ffe5ec; border:2.5px solid #432818; border-radius:14px; padding:10px;"><button class="action-pill" style="width:100%; background:#ef233c; color:#fff;" onclick="triggerOfficialReset()">🔄 Resetta Inizio a Ora</button></div></div></div></div></div>
+<div class="modal-backdrop" id="adminModal"><div class="modal-box"><div class="modal-head" style="background:#bde0fe;"><span>⚙️ Pannello Admin</span><button type="button" class="close-btn" onclick="closeModal('adminModal')">✕</button></div><div class="modal-body"><div id="adminLockBox"><p style="font-size:0.85rem; font-weight:700; margin-bottom:8px;">Password amministratore:</p><div class="input-row"><input type="password" id="adminPassInput" class="text-input" placeholder="Password..." /><button type="button" class="action-pill" onclick="unlockAdmin()">Sblocca 🔓</button></div></div><div id="adminControlsBox" style="display:none; flex-direction:column; gap:12px;"><div style="background:#d8f3dc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="font-weight:700; font-size:0.86rem; margin-bottom:8px;">⭐ Livelli & XP</div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🦥 Debby</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminDebbyLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminDebbyXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button type="button" class="mini-btn" onclick="quickAdjustLevel('debby', 1)">+1 Lv</button><button type="button" class="mini-btn" onclick="quickAdjustLevel('debby', 10)">+10 Lv</button></div></div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🐧 Vincenzo</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminVincenzoLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminVincenzoXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button type="button" class="mini-btn" onclick="quickAdjustLevel('vincenzo', 1)">+1 Lv</button><button type="button" class="mini-btn" onclick="quickAdjustLevel('vincenzo', 10)">+10 Lv</button></div></div><div style="display:flex; gap:6px;"><button type="button" class="action-pill" style="flex:1; background:#52b788; color:#fff;" onclick="saveAdminLevels()">💾 Salva</button><button type="button" class="action-pill" style="flex:1; background:#ffb703;" onclick="resetDailyLevelCap()">🔓 Azzera Limiti</button></div></div><div style="background:#fefae0; border:2.5px solid #432818; border-radius:14px; padding:10px;"><label style="font-size:0.75rem; font-weight:700;">Data Inizio:</label><input type="date" id="adminStartDate" class="text-input" style="width:100%; margin-bottom:6px;"/><label style="font-size:0.75rem; font-weight:700;">Data Fine:</label><input type="date" id="adminTargetDate" class="text-input" style="width:100%; margin-bottom:8px;"/><button type="button" class="action-pill" style="width:100%;" onclick="saveAdminDates()">💾 Salva Date</button></div><div style="background:#e0fbfc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="display:flex; gap:8px;"><button type="button" class="action-pill" style="flex:1;" onclick="exportBackup()">⬇️ Esporta Backup</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)"/><button type="button" class="action-pill" style="flex:1;" onclick="document.getElementById('importFile').click()">⬆️ Importa</button></div></div><div style="background:#ffe5ec; border:2.5px solid #432818; border-radius:14px; padding:10px;"><button type="button" class="action-pill" style="width:100%; background:#ef233c; color:#fff;" onclick="triggerOfficialReset()">🔄 Resetta Inizio a Ora</button></div></div></div></div></div>
 
-<!-- MOTORE PRINCIPALE IMMEDIATO (Indipendente dalla rete, garantisce che clic e camminata funzionino sempre!) -->
 <script>
-  window.openModal = function(id) { var el = document.getElementById(id); if (el) el.classList.add("open"); };
-  window.closeModal = function(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); };
-
   const UNIQUE_PLANT_NAMES = ["Monstera Deliciosa", "Ficus Lyrata Bambino", "Pothos Neon", "Sansevieria Cylindrica", "Bonsai Ginseng", "Aloe Vera Baby", "Echeveria Perla", "Cactus Orecchie Bunny", "Calathea Orbifolia", "Marimo Moss Ball", "Bonsai Ciliegio Sakura", "Orchidea Phalaenopsis", "Peperomia Watermelon", "Pilea Peperomioides", "String of Pearls", "String of Hearts", "Anthurium Clarinervium", "Philodendron Pink Princess", "Alocasia Polly", "Bonsai Acero Rosso", "Kokedama Felce", "Haworthia Zebra", "Lithops Pietra Viva", "Crassula Ovata Jade", "Hoya Kerrii Cuore", "Tradescantia Nanouk", "Begonia Maculata", "Maranta Leuconeura", "Zamioculcas Raven", "Spathiphyllum Chopin", "Guzmania Bromelia", "Tillandsia Ionantha", "Dionaea Pigliamosche", "Nepenthes Alata", "Sarracenia Purpurea", "Pachira Aquatica", "Beaucarnea Nolina", "Chamaedorea Elegans", "Areca Palma Mini", "Cycas Revoluta", "Lavanda Provenzale", "Rosmarino Bonsai", "Piantina Fragola Bosco", "Limone Nano Sorrento", "Ulivo Pugliese Bonsai", "Fico d'India Mini", "Agave Victoriae", "Sedum Burrito", "Sempervivum Tectorum", "Kalanchoe Blossfeldiana", "Schlumbergera Cactus", "Epiphyllum Anguliger", "Rhipsalis Cassutha", "Asparagus Plumosus", "Adiantum Capillus", "Asplenium Nidus", "Fittonia Rosa", "Hypoestes Splash", "Oxalis Triangularis", "Bonsai Pino Giapponese"];
   const POT_COLORS = ["#e76f51","#2a9d8f","#e9c46a","#f4a261","#8ecae6","#ffafcc","#bde0fe","#cdb4db","#a3b18a","#dda15e"];
   const FOLIAGE_COLORS = ["#2d6a4f","#40916c","#52b788","#74c69d","#95d5b2","#ff758f","#ffb703","#a855f7","#38b000","#0077b6"];
   
-  function renderPlantSvg(id, size = 28) {
-    const idx = id - 1; const potCol = POT_COLORS[idx % POT_COLORS.length]; const leafCol = FOLIAGE_COLORS[(idx * 3) % FOLIAGE_COLORS.length]; const shapeType = idx % 10; let foliage = "";
-    if (shapeType === 0) { foliage = `<ellipse cx="-5" cy="-8" rx="6" ry="8" transform="rotate(-20 -5 -8)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><ellipse cx="5" cy="-9" rx="6" ry="8" transform="rotate(20 5 -9)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; } else if (shapeType === 1) { foliage = `<ellipse cx="0" cy="-7" rx="5" ry="8" fill="#52b788" stroke="#432818" stroke-width="1.5"/><ellipse cx="-5" cy="-14" rx="3" ry="5" transform="rotate(-25 -5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/><ellipse cx="5" cy="-14" rx="3" ry="5" transform="rotate(25 5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/>`; } else if (shapeType === 2) { foliage = `<path d="M -1,0 C -2,-6 2,-8 0,-12" stroke="#6f4e37" stroke-width="3" fill="none"/><circle cx="-4" cy="-12" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="4" cy="-11" r="5.5" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; } else if (shapeType === 3) { foliage = `<path d="M -5,0 L -3,-16 L 0,0 Z" fill="#2d6a4f" stroke="#432818" stroke-width="1.4"/><path d="M -1,0 L 2,-18 L 5,0 Z" fill="#52b788" stroke="#432818" stroke-width="1.4"/>`; } else if (shapeType === 4) { foliage = `<path d="M 0,-2 C -10,-8 -8,-18 0,-12 C 8,-18 10,-8 0,-2 Z" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; } else if (shapeType === 5) { foliage = `<circle cx="0" cy="-6" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="0" cy="-6" r="3.5" fill="#d8f3dc" stroke="#432818" stroke-width="1.2"/>`; } else if (shapeType === 6) { foliage = `<line x1="0" y1="0" x2="0" y2="-13" stroke="#2d6a4f" stroke-width="2.2"/><circle cx="0" cy="-14" r="5.5" fill="#ff758f" stroke="#432818" stroke-width="1.5"/><circle cx="0" cy="-14" r="2" fill="#ffb703"/>`; } else if (shapeType === 7) { foliage = `<line x1="-3" y1="0" x2="-6" y2="-11" stroke="#432818" stroke-width="1.5"/><line x1="3" y1="0" x2="6" y2="-12" stroke="#432818" stroke-width="1.5"/><circle cx="-6" cy="-11" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="6" cy="-12" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="0" cy="-15" r="4.2" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>`; } else if (shapeType === 8) { foliage = `<circle cx="0" cy="-5" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="-5" cy="2" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/><circle cx="-5" cy="6" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/>`; } else { foliage = `<rect x="-1.5" y="-10" width="3" height="10" fill="#7f5539"/><circle cx="0" cy="-13" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="-3" cy="-13" r="1.8" fill="#ffb703"/><circle cx="3" cy="-11" r="1.8" fill="#ffb703"/>`; }
+  function renderPlantSvg(id, size) {
+    size = size || 28;
+    const idx = (id - 1) % UNIQUE_PLANT_NAMES.length;
+    const potCol = POT_COLORS[idx % POT_COLORS.length];
+    const leafCol = FOLIAGE_COLORS[(idx * 3) % FOLIAGE_COLORS.length];
+    const shapeType = idx % 10;
+    let foliage = "";
+    if (shapeType === 0) { foliage = `<ellipse cx="-5" cy="-8" rx="6" ry="8" transform="rotate(-20 -5 -8)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><ellipse cx="5" cy="-9" rx="6" ry="8" transform="rotate(20 5 -9)" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; }
+    else if (shapeType === 1) { foliage = `<ellipse cx="0" cy="-7" rx="5" ry="8" fill="#52b788" stroke="#432818" stroke-width="1.5"/><ellipse cx="-5" cy="-14" rx="3" ry="5" transform="rotate(-25 -5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/><ellipse cx="5" cy="-14" rx="3" ry="5" transform="rotate(25 5 -14)" fill="#74c69d" stroke="#432818" stroke-width="1.4"/>`; }
+    else if (shapeType === 2) { foliage = `<path d="M -1,0 C -2,-6 2,-8 0,-12" stroke="#6f4e37" stroke-width="3" fill="none"/><circle cx="-4" cy="-12" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="4" cy="-11" r="5.5" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; }
+    else if (shapeType === 3) { foliage = `<path d="M -5,0 L -3,-16 L 0,0 Z" fill="#2d6a4f" stroke="#432818" stroke-width="1.4"/><path d="M -1,0 L 2,-18 L 5,0 Z" fill="#52b788" stroke="#432818" stroke-width="1.4"/>`; }
+    else if (shapeType === 4) { foliage = `<path d="M 0,-2 C -10,-8 -8,-18 0,-12 C 8,-18 10,-8 0,-2 Z" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/>`; }
+    else if (shapeType === 5) { foliage = `<circle cx="0" cy="-6" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="0" cy="-6" r="3.5" fill="#d8f3dc" stroke="#432818" stroke-width="1.2"/>`; }
+    else if (shapeType === 6) { foliage = `<line x1="0" y1="0" x2="0" y2="-13" stroke="#2d6a4f" stroke-width="2.2"/><circle cx="0" cy="-14" r="5.5" fill="#ff758f" stroke="#432818" stroke-width="1.5"/><circle cx="0" cy="-14" r="2" fill="#ffb703"/>`; }
+    else if (shapeType === 7) { foliage = `<line x1="-3" y1="0" x2="-6" y2="-11" stroke="#432818" stroke-width="1.5"/><line x1="3" y1="0" x2="6" y2="-12" stroke="#432818" stroke-width="1.5"/><circle cx="-6" cy="-11" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="6" cy="-12" r="4" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="0" cy="-15" r="4.2" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/>`; }
+    else if (shapeType === 8) { foliage = `<circle cx="0" cy="-5" r="6" fill="${leafCol}" stroke="#432818" stroke-width="1.4"/><circle cx="-5" cy="2" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/><circle cx="-5" cy="6" r="2.2" fill="#74c69d" stroke="#432818" stroke-width="1"/>`; }
+    else { foliage = `<rect x="-1.5" y="-10" width="3" height="10" fill="#7f5539"/><circle cx="0" cy="-13" r="7" fill="${leafCol}" stroke="#432818" stroke-width="1.5"/><circle cx="-3" cy="-13" r="1.8" fill="#ffb703"/><circle cx="3" cy="-11" r="1.8" fill="#ffb703"/>`; }
     return `<svg width="${size}" height="${size}" viewBox="-16 -22 32 32" style="overflow:visible">${foliage}<polygon points="-8,-1 8,-1 6,8 -6,8" fill="${potCol}" stroke="#432818" stroke-width="1.6" stroke-linejoin="round"/><rect x="-9" y="-3" width="18" height="3" rx="1" fill="${potCol}" stroke="#432818" stroke-width="1.5"/><circle cx="-2.5" cy="3" r="0.9" fill="#432818"/><circle cx="2.5" cy="3" r="0.9" fill="#432818"/></svg>`;
   }
 
@@ -424,17 +430,45 @@
   let isNorwayNight = false, isItalyNight = false;
 
   function todayStr() { return new Date().toISOString().slice(0, 10); }
-  window.getDefaultState = function() { const t = todayStr(); return { startDate: t, targetDate: "2027-05-11", lastResetAt: 0, debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0, deborahSmiskiUnlocked: [], deborahPacksClaimed: 0, messages: [{ sender: "Deborah", text: "Benvenuto nella nostra casetta! 💕", ts: Date.now() }], photos: [], wishes: [] }; };
-  window.normalizePet = function(pet) { const def = window.getDefaultState().debby; const merged = { ...def, ...(pet || {}) }; if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90; if (typeof merged.boredom !== "number") merged.boredom = 85; if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false }; return merged; };
-  
+  window.getDefaultState = function() {
+    const t = todayStr();
+    return {
+      startDate: t, targetDate: "2027-05-11", lastResetAt: 0,
+      debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" },
+      vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" },
+      vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0,
+      deborahSmiskiUnlocked: [], deborahPacksClaimed: 0,
+      messages: [{ sender: "Deborah", text: "Benvenuto nella nostra casetta! 💕", ts: Date.now() }],
+      photos: [], wishes: []
+    };
+  };
+
+  window.normalizePet = function(pet) {
+    const def = window.getDefaultState().debby;
+    const merged = Object.assign({}, def, pet || {});
+    if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90;
+    if (typeof merged.boredom !== "number") merged.boredom = 85;
+    if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false };
+    return merged;
+  };
+
+  window.sanitizeState = function(rawObj) {
+    const def = window.getDefaultState();
+    const s = Object.assign({}, def, rawObj || {});
+    s.debby = window.normalizePet(s.debby);
+    s.vincenzo = window.normalizePet(s.vincenzo);
+    if (!Array.isArray(s.vincenzoPlantsUnlocked)) s.vincenzoPlantsUnlocked = [];
+    if (!Array.isArray(s.deborahSmiskiUnlocked)) s.deborahSmiskiUnlocked = [];
+    if (!Array.isArray(s.messages)) s.messages = def.messages;
+    if (!Array.isArray(s.photos)) s.photos = [];
+    if (!Array.isArray(s.wishes)) s.wishes = [];
+    return s;
+  };
+
   function loadLocalState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("tamalove_shared_v3");
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        const def = window.getDefaultState();
-        return { ...def, ...parsed, wishes: parsed.wishes || [], debby: window.normalizePet(parsed.debby), vincenzo: window.normalizePet(parsed.vincenzo) };
-      }
+      if (raw) return window.sanitizeState(JSON.parse(raw));
     } catch (e) {}
     return window.getDefaultState();
   }
@@ -442,13 +476,18 @@
   window.state = loadLocalState();
 
   window.evaluateMidnightHalfCheck = function() {
-    const now = new Date(), today = todayStr(), d = window.state.debby, isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
-    if (d.lastCheckDay !== today && isPastHalfMidnight) { if (d.love < 50 || d.food < 50 || d.happy < 50 || d.boredom < 50) d.neglectWarningDate = today; d.lastCheckDay = today; }
+    const now = new Date(), today = todayStr(), d = window.state.debby;
+    const isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
+    if (d.lastCheckDay !== today && isPastHalfMidnight) {
+      if (d.love < 50 || d.food < 50 || d.happy < 50 || d.boredom < 50) d.neglectWarningDate = today;
+      d.lastCheckDay = today;
+    }
     if (d.dailyLvlsDate !== today) { d.dailyLvlsDate = today; d.dailyLvlsGained = 0; }
     if (window.state.vincenzo.moodLogDate !== today) { window.state.vincenzo.moodLogDate = today; window.state.vincenzo.moodLogCount = 0; }
   };
 
-  window.saveState = function(pushToCloud = true) {
+  window.saveState = function(pushToCloud) {
+    if (pushToCloud === undefined) pushToCloud = true;
     window.evaluateMidnightHalfCheck();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(window.state));
     window.renderAll();
@@ -456,109 +495,248 @@
   };
 
   window.renderAll = function() {
-    const d = window.state.debby, v = window.state.vincenzo, today = todayStr();
-    document.getElementById("lvlBadge").textContent = `Lv. ${d.level}`;
-    document.getElementById("xpFill").style.width = `${Math.min(100, d.xp)}%`;
-    document.getElementById("dailyCapLabel").textContent = `Oggi: ${d.dailyLvlsGained || 0}/6 Lv`;
-    document.getElementById("valLove").textContent = `${d.love}%`; document.getElementById("barLove").style.width = `${d.love}%`;
-    document.getElementById("valFood").textContent = `${d.food}%`; document.getElementById("barFood").style.width = `${d.food}%`;
-    document.getElementById("valHappy").textContent = `${d.happy}%`; document.getElementById("barHappy").style.width = `${d.happy}%`;
-    document.getElementById("valBoredom").textContent = `${d.boredom}%`; document.getElementById("barBoredom").style.width = `${d.boredom}%`;
-    document.getElementById("debbyMoodStatus").innerHTML = `🦥 Il bradipo Debby si sente: <strong>${MOOD_LABELS[d.feeling] || "Felice 😊"}</strong>`;
-    
-    if (d.feeling === "malata" || d.feeling === "malato") {
-      const sn = d.sickNeeds || {};
-      const missing = [!sn.cuddle?"Coccole":null, !sn.food?"Crepe":null, !sn.gift?"Sephora":null].filter(Boolean);
-      document.getElementById("sickCureHint").textContent = missing.length ? `Serve mix: ${missing.join(" + ")}` : "";
-    } else {
-      document.getElementById("sickCureHint").textContent = "";
+    try {
+      window.state = window.sanitizeState(window.state);
+      const d = window.state.debby, v = window.state.vincenzo, today = todayStr();
+      document.getElementById("lvlBadge").textContent = "Lv. " + d.level;
+      document.getElementById("xpFill").style.width = Math.min(100, d.xp) + "%";
+      document.getElementById("dailyCapLabel").textContent = "Oggi: " + (d.dailyLvlsGained || 0) + "/6 Lv";
+      document.getElementById("valLove").textContent = d.love + "%"; document.getElementById("barLove").style.width = d.love + "%";
+      document.getElementById("valFood").textContent = d.food + "%"; document.getElementById("barFood").style.width = d.food + "%";
+      document.getElementById("valHappy").textContent = d.happy + "%"; document.getElementById("barHappy").style.width = d.happy + "%";
+      document.getElementById("valBoredom").textContent = d.boredom + "%"; document.getElementById("barBoredom").style.width = d.boredom + "%";
+      document.getElementById("debbyMoodStatus").innerHTML = "🦥 Il bradipo Debby si sente: <strong>" + (MOOD_LABELS[d.feeling] || "Felice 😊") + "</strong>";
+      
+      if (d.feeling === "malata" || d.feeling === "malato") {
+        const sn = d.sickNeeds || {};
+        const missing = [!sn.cuddle?"Coccole":null, !sn.food?"Crepe":null, !sn.gift?"Sephora":null].filter(Boolean);
+        document.getElementById("sickCureHint").textContent = missing.length ? ("Serve mix: " + missing.join(" + ")) : "";
+      } else {
+        document.getElementById("sickCureHint").textContent = "";
+      }
+
+      document.getElementById("myMoodUses").textContent = "(" + (v.moodLogDate === today ? (v.moodLogCount || 0) : 0) + "/2 oggi)";
+      document.getElementById("neglectAlert").style.display = (d.neglectWarningDate === today) ? "block" : "none";
+      
+      const availPacks = Math.max(0, Math.floor(d.level / 10) - (window.state.vincenzoPacksClaimed || 0));
+      const packModalEl = document.getElementById("packModalCount");
+      if (packModalEl) packModalEl.textContent = availPacks;
+
+      const debLvlInp = document.getElementById("adminDebbyLvl");
+      if (debLvlInp && document.activeElement !== debLvlInp) {
+        debLvlInp.value = d.level;
+        document.getElementById("adminDebbyXp").value = d.xp;
+        document.getElementById("adminVincenzoLvl").value = v.level;
+        document.getElementById("adminVincenzoXp").value = v.xp;
+      }
+
+      const shelfGroup = document.getElementById("shelfFiveStarGroup");
+      shelfGroup.innerHTML = "";
+      const unlockedIds = window.state.vincenzoPlantsUnlocked || [];
+      const fiveStarUnlocked = PLANTS_CATALOG.filter(p => unlockedIds.includes(p.id) && p.stars === 5);
+      fiveStarUnlocked.slice(0, 12).forEach((plant, idx) => {
+        const row = idx < 6 ? 0 : 1;
+        const col = idx % 6;
+        const xPos = -48 + (col * 19);
+        const ySurface = (row === 0 ? -18 : 14) + (xPos * 0.483);
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.setAttribute("transform", "translate(" + xPos + ", " + (ySurface - 14) + ") scale(0.68)");
+        g.innerHTML = renderPlantSvg(plant.id, 32);
+        shelfGroup.appendChild(g);
+      });
+
+      const now = new Date(), monthsShort = ["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"];
+      document.getElementById("wallCalDay").textContent = String(now.getDate()).padStart(2, "0") + " " + monthsShort[now.getMonth()];
+      document.getElementById("wallCalYear").textContent = String(now.getFullYear());
+      document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
+      const target = new Date(window.state.targetDate || "2027-05-11");
+      const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+      document.getElementById("countdownBig").textContent = diffDays + " Giorni";
+      document.getElementById("targetDateDisplay").textContent = "Obiettivo: " + target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
+
+      const chatList = document.getElementById("chatList");
+      chatList.innerHTML = (window.state.messages || []).map(m => `<div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}"><strong>${m.sender}:</strong> ${m.text}</div>`).join("");
+      chatList.scrollTop = chatList.scrollHeight;
+      
+      const wishList = document.getElementById("wishList");
+      wishList.innerHTML = (window.state.wishes || []).map(w => `<div class="wish-msg"><span>${w.sender === 'Vincenzo' ? '🐧' : '🦥'}</span> ${w.text}</div>`).join("") || `<div style="text-align:center; font-size:0.8rem; color:#cbd5e1; margin-top:20px;">Ancora nessun desiderio espresso... sii il primo!</div>`;
+      wishList.scrollTop = wishList.scrollHeight;
+
+      const photoGrid = document.getElementById("photoGrid");
+      photoGrid.innerHTML = (window.state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
+      
+      const colGrid = document.getElementById("collectionGrid");
+      colGrid.innerHTML = PLANTS_CATALOG.map(p => `<div class="col-item ${unlockedIds.includes(p.id) ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}"><div style="height:32px;display:flex;align-items:center;justify-content:center;">${unlockedIds.includes(p.id) ? renderPlantSvg(p.id, 30) : '🔒'}</div><div>#${p.id} ${p.name}</div><div style="color:#d97706;">${"⭐".repeat(p.stars)}</div></div>`).join("");
+      
+      const showNightStar = (isNorwayNight && isItalyNight);
+      const btnNight = document.getElementById("magicStarBtn");
+      const tapNight = document.getElementById("starTapBtn");
+      if (btnNight) btnNight.style.display = showNightStar ? "block" : "none";
+      if (tapNight) tapNight.style.display = showNightStar ? "block" : "none";
+    } catch (err) {
+      console.error("Render error:", err);
     }
-
-    document.getElementById("myMoodUses").textContent = `(${v.moodLogDate === today ? (v.moodLogCount || 0) : 0}/2 oggi)`;
-    document.getElementById("neglectAlert").style.display = (d.neglectWarningDate === today) ? "block" : "none";
-    
-    const availPacks = Math.max(0, Math.floor(d.level / 10) - (window.state.vincenzoPacksClaimed || 0));
-    const packModalEl = document.getElementById("packModalCount");
-    if (packModalEl) packModalEl.textContent = availPacks;
-
-    const debLvlInp = document.getElementById("adminDebbyLvl");
-    if (debLvlInp && document.activeElement !== debLvlInp) {
-      debLvlInp.value = d.level;
-      document.getElementById("adminDebbyXp").value = d.xp;
-      document.getElementById("adminVincenzoLvl").value = v.level;
-      document.getElementById("adminVincenzoXp").value = v.xp;
-    }
-
-    const shelfGroup = document.getElementById("shelfFiveStarGroup");
-    shelfGroup.innerHTML = "";
-    const unlockedIds = window.state.vincenzoPlantsUnlocked || [];
-    const fiveStarUnlocked = PLANTS_CATALOG.filter(p => unlockedIds.includes(p.id) && p.stars === 5);
-    fiveStarUnlocked.slice(0, 12).forEach((plant, idx) => {
-      const row = idx < 6 ? 0 : 1;
-      const col = idx % 6;
-      const xPos = -48 + (col * 19);
-      const ySurface = (row === 0 ? -18 : 14) + (xPos * 0.483);
-      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("transform", `translate(${xPos}, ${ySurface - 14}) scale(0.68)`);
-      g.innerHTML = renderPlantSvg(plant.id, 32);
-      shelfGroup.appendChild(g);
-    });
-
-    const now = new Date(), monthsShort = ["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"];
-    document.getElementById("wallCalDay").textContent = `${String(now.getDate()).padStart(2, "0")} ${monthsShort[now.getMonth()]}`;
-    document.getElementById("wallCalYear").textContent = `${now.getFullYear()}`;
-    document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
-    const target = new Date(window.state.targetDate || "2027-05-11");
-    const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
-    document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
-    document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
-
-    const chatList = document.getElementById("chatList");
-    chatList.innerHTML = (window.state.messages || []).map(m => `<div class="chat-msg ${m.sender === 'Vincenzo' ? 'me' : 'partner'}"><strong>${m.sender}:</strong> ${m.text}</div>`).join("");
-    chatList.scrollTop = chatList.scrollHeight;
-    
-    const wishList = document.getElementById("wishList");
-    wishList.innerHTML = (window.state.wishes || []).map(w => `<div class="wish-msg"><span>${w.sender === 'Vincenzo' ? '🐧' : '🦥'}</span> ${w.text}</div>`).join("") || `<div style="text-align:center; font-size:0.8rem; color:#cbd5e1; margin-top:20px;">Ancora nessun desiderio espresso... sii il primo!</div>`;
-    wishList.scrollTop = wishList.scrollHeight;
-
-    const photoGrid = document.getElementById("photoGrid");
-    photoGrid.innerHTML = (window.state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
-    
-    const colGrid = document.getElementById("collectionGrid");
-    colGrid.innerHTML = PLANTS_CATALOG.map(p => `<div class="col-item ${unlockedIds.includes(p.id) ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}"><div style="height:32px;display:flex;align-items:center;justify-content:center;">${unlockedIds.includes(p.id) ? renderPlantSvg(p.id, 30) : '🔒'}</div><div>#${p.id} ${p.name}</div><div style="color:#d97706;">${"⭐".repeat(p.stars)}</div></div>`).join("");
-    
-    const btnNight = document.getElementById("magicStarBtn");
-    if (btnNight) btnNight.style.display = (isNorwayNight && isItalyNight) ? "block" : "none";
   };
 
-  function showSpeech(text) { const b = document.getElementById("speechBubble"); b.textContent = text; b.classList.add("show"); clearTimeout(window._speechTimer); window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200); }
-  window.sendMyMood = function(moodKey) { const v = window.state.vincenzo; if (v.moodLogDate !== todayStr()) { v.moodLogDate = todayStr(); v.moodLogCount = 0; } if (v.moodLogCount >= 2) return alert("Massimo 2 volte al giorno!"); v.moodLogCount++; v.feeling = moodKey; v.sickNeeds = { cuddle: false, food: false, gift: false }; if (moodKey === "felice") v.happy = Math.min(100, v.happy + 15); else if (moodKey === "triste") v.happy = Math.max(0, v.happy - 55); else if (moodKey === "affamato") v.food = 0; else if (moodKey === "mancanza") v.love = 0; else if (moodKey === "annoiato") v.boredom = 0; else if (moodKey === "malato") { v.love = 0; v.food = 0; v.happy = 0; v.boredom = 0; } window.saveState(true); showSpeech(`Hai inviato a Debby: ${MOOD_LABELS[moodKey]}!`); };
-  window.performCare = function(type) { const d = window.state.debby, fx = document.getElementById("petFx"); if (d.dailyLvlsDate !== todayStr()) { d.dailyLvlsDate = todayStr(); d.dailyLvlsGained = 0; } if (type === "cuddle") { d.love = Math.min(100, d.love + 25); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.cuddle = true; fx.textContent = "🤗💖"; showSpeech("Coccole! 💕"); } else if (type === "food") { d.food = Math.min(100, d.food + 30); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.food = true; fx.textContent = "🥞✨"; showSpeech("Mmmh! 😋🥞"); } else if (type === "gift") { d.boredom = Math.min(100, d.boredom + 32); d.happy = Math.min(100, d.happy + 18); if (d.sickNeeds) d.sickNeeds.gift = true; fx.textContent = "💆‍♀️🛍️"; showSpeech("Addio noia! 😍✨"); } if ((d.feeling === "malata" || d.feeling === "malato") && d.sickNeeds?.cuddle && d.sickNeeds?.food && d.sickNeeds?.gift) { d.love = Math.max(d.love, 75); d.food = Math.max(d.food, 75); d.happy = Math.max(d.happy, 80); d.boredom = Math.max(d.boredom, 75); d.feeling = "felice"; d.sickNeeds = { cuddle: false, food: false, gift: false }; showSpeech("Sono guarita! 🥰"); } else if (d.love >= 70 && d.food >= 70 && d.happy >= 70 && d.boredom >= 70) d.feeling = "felice"; if ((d.dailyLvlsGained || 0) < 6) { d.xp += 35; if (d.xp >= 100) { d.level++; d.xp -= 100; d.dailyLvlsGained++; showSpeech(`Lv. ${d.level}! 🎉`); if (d.dailyLvlsGained >= 6) d.xp = 0; } } else d.xp = 0; fx.style.opacity = 1; setTimeout(() => { fx.style.opacity = 0; }, 1100); window.saveState(true); };
-  window.openGiftPack = function() { const avail = Math.floor(window.state.debby.level / 10) - (window.state.vincenzoPacksClaimed || 0); if (avail <= 0) return alert("Raggiungi il prossimo multiplo di 10 livelli!"); const lockedPool = PLANTS_CATALOG.filter(p => !(window.state.vincenzoPlantsUnlocked || []).includes(p.id)); if (lockedPool.length === 0) return alert("Hai già tutte le 60 Piante!"); const won = lockedPool[Math.floor(Math.random() * lockedPool.length)]; window.state.vincenzoPlantsUnlocked.push(won.id); window.state.vincenzoPacksClaimed = (window.state.vincenzoPacksClaimed || 0) + 1; window.saveState(true); alert(`🎉 Hai sbloccato: #${won.id} ${won.name} (${won.stars}★)!`); };
-  window.sendChatMessage = function() { const i = document.getElementById("chatInput"); if (!i.value.trim()) return; window.state.messages.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
-  window.sendWish = function() { const i = document.getElementById("wishInput"); if (!i.value.trim()) return; window.state.wishes.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
-  window.handlePhotoUpload = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement("canvas"); const scale = Math.min(1, 480 / img.width); canvas.width = img.width * scale; canvas.height = img.height * scale; canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); window.state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() }); document.getElementById("photoCaption").value = ""; window.saveState(true); }; img.src = ev.target.result; }; reader.readAsDataURL(file); };
-  window.unlockAdmin = function() { const p = document.getElementById("adminPassInput").value.trim(); if (p === "admin123" || p === "pocketcare2026") { document.getElementById("adminLockBox").style.display = "none"; document.getElementById("adminControlsBox").style.display = "flex"; document.getElementById("adminDebbyLvl").value = window.state.debby.level || 1; document.getElementById("adminDebbyXp").value = window.state.debby.xp || 0; document.getElementById("adminVincenzoLvl").value = window.state.vincenzo.level || 1; document.getElementById("adminVincenzoXp").value = window.state.vincenzo.xp || 0; document.getElementById("adminStartDate").value = window.state.startDate || todayStr(); document.getElementById("adminTargetDate").value = window.state.targetDate || "2027-05-11"; } else alert("Password errata!"); };
-  window.quickAdjustLevel = function(who, delta) { const inp = document.getElementById(who === "debby" ? "adminDebbyLvl" : "adminVincenzoLvl"); inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) + delta); };
-  window.saveAdminLevels = function() { window.state.debby.level = Math.max(1, parseInt(document.getElementById("adminDebbyLvl").value, 10) || 1); window.state.debby.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminDebbyXp").value, 10) || 0)); window.state.vincenzo.level = Math.max(1, parseInt(document.getElementById("adminVincenzoLvl").value, 10) || 1); window.state.vincenzo.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminVincenzoXp").value, 10) || 0)); if ((window.state.vincenzoPacksClaimed || 0) > Math.floor(window.state.debby.level / 10)) window.state.vincenzoPacksClaimed = Math.floor(window.state.debby.level / 10); if ((window.state.deborahPacksClaimed || 0) > Math.floor(window.state.vincenzo.level / 10)) window.state.deborahPacksClaimed = Math.floor(window.state.vincenzo.level / 10); window.saveState(true); alert("✅ Livelli salvati!"); };
+  function showSpeech(text) {
+    const b = document.getElementById("speechBubble");
+    if (!b) return;
+    b.textContent = text;
+    b.classList.add("show");
+    clearTimeout(window._speechTimer);
+    window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200);
+  }
+
+  window.sendMyMood = function(moodKey) {
+    const v = window.state.vincenzo;
+    if (v.moodLogDate !== todayStr()) { v.moodLogDate = todayStr(); v.moodLogCount = 0; }
+    if (v.moodLogCount >= 2) return alert("Massimo 2 volte al giorno!");
+    v.moodLogCount++; v.feeling = moodKey; v.sickNeeds = { cuddle: false, food: false, gift: false };
+    if (moodKey === "felice") v.happy = Math.min(100, v.happy + 15);
+    else if (moodKey === "triste") v.happy = Math.max(0, v.happy - 55);
+    else if (moodKey === "affamato") v.food = 0;
+    else if (moodKey === "mancanza") v.love = 0;
+    else if (moodKey === "annoiato") v.boredom = 0;
+    else if (moodKey === "malato") { v.love = 0; v.food = 0; v.happy = 0; v.boredom = 0; }
+    window.saveState(true);
+    showSpeech("Hai inviato a Debby: " + MOOD_LABELS[moodKey] + "!");
+  };
+
+  window.performCare = function(type) {
+    const d = window.state.debby, fx = document.getElementById("petFx");
+    if (d.dailyLvlsDate !== todayStr()) { d.dailyLvlsDate = todayStr(); d.dailyLvlsGained = 0; }
+    if (type === "cuddle") { d.love = Math.min(100, d.love + 25); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.cuddle = true; fx.textContent = "🤗💖"; showSpeech("Coccole! 💕"); }
+    else if (type === "food") { d.food = Math.min(100, d.food + 30); d.happy = Math.min(100, d.happy + 14); if (d.sickNeeds) d.sickNeeds.food = true; fx.textContent = "🥞✨"; showSpeech("Mmmh! 😋🥞"); }
+    else if (type === "gift") { d.boredom = Math.min(100, d.boredom + 32); d.happy = Math.min(100, d.happy + 18); if (d.sickNeeds) d.sickNeeds.gift = true; fx.textContent = "💆‍♀️🛍️"; showSpeech("Addio noia! 😍✨"); }
+
+    if ((d.feeling === "malata" || d.feeling === "malato") && d.sickNeeds && d.sickNeeds.cuddle && d.sickNeeds.food && d.sickNeeds.gift) {
+      d.love = Math.max(d.love, 75); d.food = Math.max(d.food, 75); d.happy = Math.max(d.happy, 80); d.boredom = Math.max(d.boredom, 75);
+      d.feeling = "felice"; d.sickNeeds = { cuddle: false, food: false, gift: false };
+      showSpeech("Sono guarita! 🥰");
+    } else if (d.love >= 70 && d.food >= 70 && d.happy >= 70 && d.boredom >= 70) {
+      d.feeling = "felice";
+    }
+
+    if ((d.dailyLvlsGained || 0) < 6) {
+      d.xp += 35;
+      if (d.xp >= 100) {
+        d.level++; d.xp -= 100; d.dailyLvlsGained = (d.dailyLvlsGained || 0) + 1;
+        showSpeech("Lv. " + d.level + "! 🎉");
+        if (d.dailyLvlsGained >= 6) d.xp = 0;
+      }
+    } else {
+      d.xp = 0;
+    }
+
+    fx.style.opacity = 1;
+    setTimeout(() => { fx.style.opacity = 0; }, 1100);
+    window.saveState(true);
+  };
+
+  window.openGiftPack = function() {
+    const avail = Math.floor(window.state.debby.level / 10) - (window.state.vincenzoPacksClaimed || 0);
+    if (avail <= 0) return alert("Raggiungi il prossimo multiplo di 10 livelli (Lv. 10, 20, 30...)!");
+    const lockedPool = PLANTS_CATALOG.filter(p => !(window.state.vincenzoPlantsUnlocked || []).includes(p.id));
+    if (lockedPool.length === 0) return alert("Hai già tutte le 60 Piante!");
+    const won = lockedPool[Math.floor(Math.random() * lockedPool.length)];
+    window.state.vincenzoPlantsUnlocked.push(won.id);
+    window.state.vincenzoPacksClaimed = (window.state.vincenzoPacksClaimed || 0) + 1;
+    window.saveState(true);
+    alert("🎉 Hai sbloccato: #" + won.id + " " + won.name + " (" + won.stars + "★)!");
+  };
+
+  window.sendChatMessage = function() {
+    const i = document.getElementById("chatInput");
+    if (!i || !i.value.trim()) return;
+    window.state.messages.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() });
+    i.value = "";
+    window.saveState(true);
+  };
+
+  window.sendWish = function() {
+    const i = document.getElementById("wishInput");
+    if (!i || !i.value.trim()) return;
+    window.state.wishes.push({ sender: "Vincenzo", text: i.value.trim(), ts: Date.now() });
+    i.value = "";
+    window.saveState(true);
+  };
+
+  window.handlePhotoUpload = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement("canvas");
+        const scale = Math.min(1, 480 / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        window.state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() });
+        document.getElementById("photoCaption").value = "";
+        window.saveState(true);
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.unlockAdmin = function() {
+    const p = document.getElementById("adminPassInput").value.trim();
+    if (p === "admin123" || p === "pocketcare2026") {
+      document.getElementById("adminLockBox").style.display = "none";
+      document.getElementById("adminControlsBox").style.display = "flex";
+      document.getElementById("adminDebbyLvl").value = window.state.debby.level || 1;
+      document.getElementById("adminDebbyXp").value = window.state.debby.xp || 0;
+      document.getElementById("adminVincenzoLvl").value = window.state.vincenzo.level || 1;
+      document.getElementById("adminVincenzoXp").value = window.state.vincenzo.xp || 0;
+      document.getElementById("adminStartDate").value = window.state.startDate || todayStr();
+      document.getElementById("adminTargetDate").value = window.state.targetDate || "2027-05-11";
+    } else alert("Password errata!");
+  };
+
+  window.quickAdjustLevel = function(who, delta) {
+    const inp = document.getElementById(who === "debby" ? "adminDebbyLvl" : "adminVincenzoLvl");
+    inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) + delta);
+  };
+
+  window.saveAdminLevels = function() {
+    window.state.debby.level = Math.max(1, parseInt(document.getElementById("adminDebbyLvl").value, 10) || 1);
+    window.state.debby.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminDebbyXp").value, 10) || 0));
+    window.state.vincenzo.level = Math.max(1, parseInt(document.getElementById("adminVincenzoLvl").value, 10) || 1);
+    window.state.vincenzo.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminVincenzoXp").value, 10) || 0));
+    if ((window.state.vincenzoPacksClaimed || 0) > Math.floor(window.state.debby.level / 10)) window.state.vincenzoPacksClaimed = Math.floor(window.state.debby.level / 10);
+    if ((window.state.deborahPacksClaimed || 0) > Math.floor(window.state.vincenzo.level / 10)) window.state.deborahPacksClaimed = Math.floor(window.state.vincenzo.level / 10);
+    window.saveState(true);
+    alert("✅ Livelli salvati!");
+  };
+
   window.resetDailyLevelCap = function() { window.state.debby.dailyLvlsGained = 0; window.state.vincenzo.dailyLvlsGained = 0; window.saveState(true); alert("🔓 Limiti azzerati!"); };
   window.saveAdminDates = function() { window.state.startDate = document.getElementById("adminStartDate").value; window.state.targetDate = document.getElementById("adminTargetDate").value; window.saveState(true); alert("✅ Date salvate!"); };
-  window.exportBackup = function() { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(window.state, null, 2)], { type: "application/json" })); a.download = `tamalove_backup.json`; a.click(); };
-  window.importBackup = function(e) { const r = new FileReader(); r.onload = function(ev) { try { window.state = { ...window.getDefaultState(), ...JSON.parse(ev.target.result) }; window.saveState(true); alert("✅ Backup ripristinato!"); } catch (err) { alert("File non valido."); } }; r.readAsText(e.target.files[0]); };
+  window.exportBackup = function() { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(window.state, null, 2)], { type: "application/json" })); a.download = "tamalove_backup.json"; a.click(); };
+  window.importBackup = function(e) { const r = new FileReader(); r.onload = function(ev) { try { window.state = window.sanitizeState(JSON.parse(ev.target.result)); window.saveState(true); alert("✅ Backup ripristinato!"); } catch (err) { alert("File non valido."); } }; r.readAsText(e.target.files[0]); };
   let rcs = 0; window.triggerOfficialReset = function() { if (rcs === 0) { rcs = 1; alert("⚠️ Conferma reset totale entro 10 sec."); setTimeout(() => rcs = 0, 10000); return; } window.state = window.getDefaultState(); window.state.lastResetAt = Date.now(); window.saveState(true); alert("🎉 Partita resettata!"); };
 
-  // MOVIMENTO AUTONOMO IMMEDIATO SUL PAVIMENTO
-  const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup"); let petX = 200, petY = 330;
+  // MOVIMENTO AUTONOMO DEL BRADIPO SUL PAVIMENTO
+  const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup");
+  let petX = 200, petY = 330;
   function stepRoam() {
-    const tgts = [{x:200,y:330}, {x:158,y:322}, {x:242,y:322}, {x:180,y:344}, {x:222,y:344}], n = tgts[Math.floor(Math.random()*tgts.length)], dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
+    const tgts = [{x:200,y:330}, {x:156,y:322}, {x:244,y:322}, {x:178,y:345}, {x:224,y:345}];
+    const n = tgts[Math.floor(Math.random() * tgts.length)];
+    const dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
     if (d > 4) {
-      if (dx < -2) petFlipEl.setAttribute("transform", "scale(-1, 1)"); else if (dx > 2) petFlipEl.setAttribute("transform", "scale(1, 1)");
-      petEl.classList.add("walking"); petEl.style.transition = `transform ${Math.max(1.2, d/22)}s linear`; petX = n.x; petY = n.y; petEl.setAttribute("transform", `translate(${petX}, ${petY})`);
-      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d/22)*1000));
+      if (dx < -2) petFlipEl.setAttribute("transform", "scale(-1, 1)");
+      else if (dx > 2) petFlipEl.setAttribute("transform", "scale(1, 1)");
+      petEl.classList.add("walking");
+      petEl.style.transition = "transform " + Math.max(1.2, d / 22) + "s linear";
+      petX = n.x; petY = n.y;
+      petEl.setAttribute("transform", "translate(" + petX + ", " + petY + ")");
+      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d / 22) * 1000));
     }
   }
-  setTimeout(stepRoam, 900);
-  setInterval(stepRoam, 4000);
+  setTimeout(stepRoam, 600);
+  setInterval(stepRoam, 3800);
   setInterval(() => window.saveState(false), 60000);
 
   // METEO REALE E GIORNO/NOTTE LIVE (Ås, Norvegia)
@@ -645,7 +823,7 @@
         if (snap.exists()) {
           const remote = snap.data();
           isApplyingRemote = true;
-          window.state = { ...window.getDefaultState(), ...remote, wishes: remote.wishes || [], debby: window.normalizePet(remote.debby), vincenzo: window.normalizePet(remote.vincenzo) };
+          window.state = window.sanitizeState(remote);
           window.evaluateMidnightHalfCheck();
           localStorage.setItem("tamalove_shared_v2", JSON.stringify(window.state));
           window.renderAll();
