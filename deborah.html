@@ -11,10 +11,11 @@
     .app-shell { width: 100%; max-width: 480px; padding: 10px 12px 24px; display: flex; flex-direction: column; gap: 10px; }
     
     .hud-card { background: #fffdf9; border: 3.5px solid #432818; border-radius: 22px; padding: 10px 12px; box-shadow: 0 5px 0 #432818; display: flex; flex-direction: column; gap: 7px; }
-    .hud-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-    .pet-title { font-family: 'Fredoka', sans-serif; font-size: 1.08rem; display: flex; align-items: center; gap: 6px; }
-    .lvl-badge { background: #bde0fe; border: 2.5px solid #432818; border-radius: 999px; padding: 2px 9px; font-family: 'Fredoka', sans-serif; font-size: 0.8rem; font-weight: 700; }
-    .sync-pill { font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; border: 2px solid #432818; background: #d8f3dc; }
+    .hud-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .pet-title { font-family: 'Fredoka', sans-serif; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; }
+    .lvl-badge { background: #bde0fe; border: 2.5px solid #432818; border-radius: 999px; padding: 2px 9px; font-family: 'Fredoka', sans-serif; font-size: 0.78rem; font-weight: 700; }
+    .coin-badge { background: #fef08a; border: 2.5px solid #432818; border-radius: 999px; padding: 2px 10px; font-family: 'Fredoka', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .sync-pill { font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; border: 2px solid #432818; background: #d8f3dc; }
     .xp-row { display: flex; align-items: center; gap: 8px; }
     .xp-bar-wrap { flex: 1; height: 11px; background: #f1e3d3; border: 2.5px solid #432818; border-radius: 999px; overflow: hidden; }
     .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #90e0ef, #00b4d8); width: 0%; transition: width 0.35s ease; }
@@ -34,35 +35,22 @@
     .mood-chip { background: #fefae0; border: 2px solid #432818; border-radius: 10px; padding: 5px 4px; font-family: 'Fredoka', sans-serif; font-size: 0.72rem; color: #432818; cursor: pointer; text-align: center; transition: transform 0.1s; }
     .mood-chip:active { transform: scale(0.95); }
 
-    /* STAGE */
+    /* STAGE AMPLIATO */
     .room-stage { position: relative; width: 100%; aspect-ratio: 400 / 420; background: #38bdf8; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
 
-    /* VERE AREE DI TOCCO HTML SOPRA GLI OGGETTI DELLA STANZA (Infallibili su tutti i telefoni!) */
-    .svg-tap-zone {
-      position: absolute;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 20;
-      border-radius: 14px;
-    }
-    .svg-tap-zone:active {
-      background: rgba(255, 255, 255, 0.22);
-    }
+    .svg-tap-zone { position: absolute; background: transparent; border: none; cursor: pointer; z-index: 20; border-radius: 14px; }
+    .svg-tap-zone:active { background: rgba(255, 255, 255, 0.22); }
 
-    /* ANIMAZIONI OGGETTI INTERATTIVI */
-    @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3.5px); } }
+    @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3px); } }
     .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.4s ease-in-out infinite; }
     
-    /* STELLA DEI DESIDERI */
     @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
     .magic-star { cursor: pointer; pointer-events: all; animation: starTwinkle 2s infinite ease-in-out; display: none; }
 
     .speech-bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid #432818; border-radius: 18px; padding: 6px 14px; font-family: 'Fredoka', sans-serif; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 0 #432818; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap; }
     .speech-bubble.show { opacity: 1; }
 
-    /* BOTTONI CURA */
     .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .care-btn { background: #fffdf9; border: 3.5px solid #432818; border-radius: 20px; padding: 9px 6px; font-family: 'Fredoka', sans-serif; font-size: 0.86rem; color: #432818; box-shadow: 0 5px 0 #432818; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
     .care-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #432818; }
@@ -70,6 +58,9 @@
     .care-btn.food { background: #fff3b0; }
     .care-btn.gift { background: #e0fbfc; }
     .care-icon { font-size: 1.45rem; }
+
+    .bottom-tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .tool-btn { background: #f8edeb; border: 2.5px solid #432818; border-radius: 14px; padding: 8px 6px; font-family: 'Fredoka', sans-serif; font-size: 0.78rem; color: #432818; box-shadow: 0 3px 0 #432818; cursor: pointer; text-align: center; }
 
     @keyframes footWaddleL { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(18deg) translateY(-2px); } 75% { transform: rotate(-14deg); } }
     @keyframes footWaddleR { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-14deg); } 75% { transform: rotate(18deg) translateY(-2px); } }
@@ -83,7 +74,7 @@
     /* MODALS */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(67, 40, 24, 0.55); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
     .modal-backdrop.open { display: flex; }
-    .modal-box { background: #fffdf9; border: 4px solid #432818; border-radius: 26px; width: 100%; max-width: 430px; max-height: 86vh; display: flex; flex-direction: column; box-shadow: 0 10px 0 #432818; overflow: hidden; }
+    .modal-box { background: #fffdf9; border: 4px solid #432818; border-radius: 26px; width: 100%; max-width: 440px; max-height: 88vh; display: flex; flex-direction: column; box-shadow: 0 10px 0 #432818; overflow: hidden; }
     .modal-head { background: #bde0fe; border-bottom: 3.5px solid #432818; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'Fredoka', sans-serif; font-size: 1.05rem; }
     .close-btn { background: #fff; border: 2.5px solid #432818; border-radius: 10px; width: 32px; height: 32px; font-weight: 700; cursor: pointer; }
     .modal-body { padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
@@ -99,9 +90,10 @@
     .input-row { display: flex; gap: 6px; }
     .text-input { flex: 1; padding: 9px 12px; border: 2.5px solid #432818; border-radius: 14px; font-family: inherit; font-weight: 700; }
     .action-pill { background: #ffcad4; border: 2.5px solid #432818; border-radius: 14px; padding: 8px 14px; font-family: 'Fredoka', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 3px 0 #432818; }
+    .mini-btn { background: #fff; border: 2px solid #432818; border-radius: 10px; padding: 5px 8px; font-family: 'Fredoka', sans-serif; font-size: 0.72rem; cursor: pointer; box-shadow: 0 2px 0 #432818; }
     
     .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .col-item { background: #fefae0; border: 2.5px solid #432818; border-radius: 14px; padding: 8px 4px; text-align: center; font-size: 0.7rem; font-weight: 700; }
+    .col-item { background: #fefae0; border: 2.5px solid #432818; border-radius: 14px; padding: 8px 4px; text-align: center; font-size: 0.7rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .col-item.locked { opacity: 0.42; filter: grayscale(1); }
     .col-item.five-star { background: #fff3b0; border-color: #d97706; }
     
@@ -109,18 +101,19 @@
     .polaroid { background: #fff; border: 2.5px solid #432818; border-radius: 12px; padding: 6px 6px 10px; box-shadow: 0 3px 0 #432818; text-align: center; }
     .polaroid img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; border: 1.5px solid #432818; }
     .polaroid p { font-size: 0.74rem; font-weight: 700; margin-top: 4px; }
+
+    /* MINI-GAMES */
+    .game-arena { position: relative; width: 100%; height: 220px; background: linear-gradient(180deg, #caf0f8, #ffedd8); border: 3px solid #432818; border-radius: 18px; overflow: hidden; }
+    .falling-token { position: absolute; font-size: 1.9rem; cursor: pointer; user-select: none; transition: transform 0.1s; }
+    .falling-token:active { transform: scale(1.3); }
+    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .mem-card { height: 56px; background: #bde0fe; border: 2.5px solid #432818; border-radius: 12px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 0 #432818; }
+    .mem-card.flipped { background: #fff; }
   </style>
 
-  <!-- MOTORE INTERFACCIA DEFINITO SUBITO NEL HEAD (Attivo istantaneamente al caricamento!) -->
   <script>
-    window.openModal = function(id) {
-      var el = document.getElementById(id);
-      if (el) el.classList.add("open");
-    };
-    window.closeModal = function(id) {
-      var el = document.getElementById(id);
-      if (el) el.classList.remove("open");
-    };
+    window.openModal = function(id) { var el = document.getElementById(id); if (el) el.classList.add("open"); };
+    window.closeModal = function(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); };
   </script>
 </head>
 <body>
@@ -128,7 +121,11 @@
 <div class="app-shell">
   <div class="hud-card">
     <div class="hud-top">
-      <div class="pet-title"><span>🐧 Vincenzo (Putignano 🇮🇹)</span><span class="lvl-badge" id="lvlBadge">Lv. 1</span></div>
+      <div class="pet-title">
+        <span>🐧 Vincenzo (Putignano 🇮🇹)</span>
+        <span class="lvl-badge" id="lvlBadge">Lv. 1</span>
+        <span class="coin-badge" onclick="openModal('gamesModal')">🪙 <span id="coinCount">100</span></span>
+      </div>
       <span class="sync-pill" id="syncStatus">☁️ Cloud Attivo</span>
     </div>
     <div class="xp-row">
@@ -170,16 +167,17 @@
     </div>
   </div>
 
-  <!-- STANZA CON PULSANTI HTML INVISIBILI SOVRAPPOSTI AGLI OGGETTI -->
+  <!-- STANZA INGRANDITA CON GUARDAROBA, PULSANTI HTML E PINGUINO VESTIBILE -->
   <div class="room-stage">
     <div class="speech-bubble" id="speechBubble">Ciao piccola mia! 🐧💕</div>
 
-    <!-- VERI PULSANTI HTML TRASPARENTI POSIZIONATI SUGLI OGGETTI (Funzionano sempre su iOS/Android/PC) -->
-    <button type="button" id="starTapBtn" class="svg-tap-zone" style="top:3%; left:5%; width:18%; height:15%; display:none;" onclick="openModal('nightWishModal')" aria-label="Notte Stellata"></button>
-    <button type="button" class="svg-tap-zone" style="top:31%; left:6%; width:18%; height:18%;" onclick="openModal('calendarModal')" aria-label="Calendario"></button>
-    <button type="button" class="svg-tap-zone" style="top:58%; left:5%; width:17%; height:18%;" onclick="openModal('mailModal')" aria-label="Posta"></button>
-    <button type="button" class="svg-tap-zone" style="top:24%; right:5%; width:38%; height:24%;" onclick="openModal('smiskiModal')" aria-label="Smiski"></button>
-    <button type="button" class="svg-tap-zone" style="top:61%; right:5%; width:20%; height:18%;" onclick="openModal('albumModal')" aria-label="Album"></button>
+    <!-- AREE DI TOCCO HTML -->
+    <button type="button" id="starTapBtn" class="svg-tap-zone" style="top:2%; left:4%; width:16%; height:14%; display:none;" onclick="openModal('nightWishModal')" aria-label="Notte Stellata"></button>
+    <button type="button" class="svg-tap-zone" style="top:31%; left:3%; width:14%; height:15%;" onclick="openModal('calendarModal')" aria-label="Calendario"></button>
+    <button type="button" class="svg-tap-zone" style="top:42%; left:13%; width:15%; height:22%;" onclick="openModal('wardrobeModal')" aria-label="Guardaroba"></button>
+    <button type="button" class="svg-tap-zone" style="top:61%; left:2%; width:14%; height:16%;" onclick="openModal('mailModal')" aria-label="Posta"></button>
+    <button type="button" class="svg-tap-zone" style="top:22%; right:4%; width:36%; height:22%;" onclick="openModal('smiskiModal')" aria-label="Smiski"></button>
+    <button type="button" class="svg-tap-zone" style="top:63%; right:3%; width:18%; height:16%;" onclick="openModal('albumModal')" aria-label="Album"></button>
 
     <svg class="room-svg" viewBox="0 0 400 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -194,78 +192,72 @@
         </radialGradient>
       </defs>
 
-      <!-- 1. CIELO ESTERNO GLOBALE -->
+      <!-- CIELO ESTERNO -->
       <rect x="-40" y="-40" width="480" height="500" fill="url(#mainSky)"/>
 
-      <!-- 2. SOLE E LUNA A SINISTRA (Visibili sia sopra il tetto sia attraverso l'oblò trasparente!) -->
       <g id="globalSkyElements">
         <g id="bgStars" opacity="0" style="transition:opacity 0.6s">
           <circle cx="38" cy="42" r="1.5" fill="#fff"/>
           <circle cx="95" cy="28" r="1.8" fill="#fff3b0"/>
-          <circle cx="112" cy="118" r="1.5" fill="#fff"/>
-          <circle cx="134" cy="126" r="1.4" fill="#fff3b0"/>
-          <circle cx="118" cy="144" r="1.3" fill="#fff"/>
+          <circle cx="112" cy="112" r="1.5" fill="#fff"/>
+          <circle cx="134" cy="120" r="1.4" fill="#fff3b0"/>
           <circle cx="290" cy="34" r="1.5" fill="#fff"/>
           <circle cx="348" cy="60" r="1.8" fill="#fff"/>
         </g>
-
         <g id="bgSun" opacity="1" style="transition:opacity 0.6s">
-          <circle cx="104" cy="94" r="46" fill="rgba(255, 183, 3, 0.24)"/>
-          <circle cx="104" cy="94" r="32" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
+          <circle cx="106" cy="88" r="44" fill="rgba(255, 183, 3, 0.24)"/>
+          <circle cx="106" cy="88" r="30" fill="#ffb703" stroke="#fb8500" stroke-width="2.5"/>
         </g>
-
         <g id="bgMoon" opacity="0" style="transition:opacity 0.6s">
-          <circle cx="106" cy="96" r="38" fill="rgba(254, 250, 224, 0.18)"/>
-          <path d="M 92,72 A 26,26 0 1,0 128,110 A 20,20 0 1,1 92,72 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
+          <circle cx="106" cy="90" r="36" fill="rgba(254, 250, 224, 0.18)"/>
+          <path d="M 92,68 A 24,24 0 1,0 126,104 A 18,18 0 1,1 92,68 Z" fill="#fefae0" stroke="#e9c46a" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- 3. COLLINE ESTERNE -->
-      <path id="bgLandscape" d="M -30,155 Q 110,122 210,156 T 430,142 L 430,450 L -30,450 Z" fill="#74c69d"/>
-      
-      <!-- 4. METEO ESTERNO -->
+      <path id="bgLandscape" d="M -30,148 Q 110,118 210,150 T 430,138 L 430,450 L -30,450 Z" fill="#74c69d"/>
       <g id="bgWeatherLayer"></g>
 
-      <!-- 5. PARETE SINISTRA CON VERO FORO TRASPARENTE PER L'OBLÒ -->
-      <path d="M 26,120 L 200,32 L 200,224 L 26,310 Z M 122,100 C 104,109 90,131 90,148 C 90,165 104,173 122,164 C 140,155 154,133 154,116 C 154,99 140,91 122,100 Z" fill="#ffedd8" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-
-      <!-- Parete Destra -->
-      <polygon points="200,32 374,120 374,310 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <!-- CASA MOLTO PIÙ GRANDE (da x=8 a x=392, y=18 a y=412) CON FORO OBLÒ TRASPARENTE -->
+      <path d="M 8,114 L 200,18 L 200,224 L 8,320 Z M 118,98 C 102,106 90,125 90,140 C 90,155 102,162 118,154 C 134,146 146,127 146,112 C 146,97 134,90 118,98 Z" fill="#ffedd8" fill-rule="evenodd" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="200,18 392,114 392,320 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       
-      <!-- Trave del Tetto (Nessun poligono arancione dietro l'oblò!) -->
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#432818" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline points="16,122 200,26 384,122" fill="none" stroke="#e76f51" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Trave del Tetto -->
+      <polyline points="4,116 200,14 396,116" fill="none" stroke="#432818" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="4,116 200,14 396,116" fill="none" stroke="#e76f51" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
       
-      <polygon points="200,224 374,310 200,398 26,310" fill="#ddb892" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
-      <line x1="113" y1="267" x2="287" y2="354" stroke="#b08968" stroke-width="1.8"/>
-      <line x1="70" y1="288" x2="244" y2="375" stroke="#b08968" stroke-width="1.8"/>
-      <line x1="156" y1="246" x2="330" y2="333" stroke="#b08968" stroke-width="1.8"/>
-      <line x1="287" y1="267" x2="113" y2="354" stroke="#b08968" stroke-width="1.8"/>
+      <!-- Grande Pavimento in Parquet -->
+      <polygon points="200,224 392,320 200,412 8,320" fill="#ddb892" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
+      <line x1="104" y1="272" x2="296" y2="366" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="56" y1="296" x2="248" y2="390" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="152" y1="248" x2="344" y2="342" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="296" y1="272" x2="104" y2="366" stroke="#b08968" stroke-width="1.6"/>
+      <line x1="344" y1="296" x2="56" y2="390" stroke="#b08968" stroke-width="1.6"/>
 
-      <path d="M 198,38 Q 245,82 290,85 Q 332,115 368,122" fill="none" stroke="#432818" stroke-width="2"/>
-      <circle cx="220" cy="60" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
-      <circle cx="255" cy="78" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
-      <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
-      <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
+      <!-- Lucine -->
+      <path d="M 200,24 Q 250,70 300,76 Q 345,104 388,114" fill="none" stroke="#432818" stroke-width="2"/>
+      <circle cx="225" cy="48" r="3.5" fill="#ffe66d" stroke="#432818" stroke-width="1.4"/>
+      <circle cx="265" cy="68" r="3.5" fill="#ffe66d" stroke="#432818" stroke-width="1.4"/>
+      <circle cx="305" cy="80" r="3.5" fill="#ffe66d" stroke="#432818" stroke-width="1.4"/>
+      <circle cx="350" cy="100" r="3.5" fill="#ffe66d" stroke="#432818" stroke-width="1.4"/>
 
-      <!-- CORNICE IN LEGNO DELL'OBLÒ -->
-      <g transform="translate(122, 132) skewY(-26)">
-        <circle cx="0" cy="0" r="31" fill="rgba(255,255,255,0.12)"/>
+      <!-- Cornice Oblò -->
+      <g transform="translate(118, 126) skewY(-26) scale(0.88)">
+        <circle cx="0" cy="0" r="31" fill="rgba(255,255,255,0.1)"/>
         <circle cx="0" cy="0" r="30" fill="none" stroke="#d4a373" stroke-width="4.5"/>
         <line x1="-30" y1="0" x2="30" y2="0" stroke="#d4a373" stroke-width="3.2"/>
         <line x1="0" y1="-30" x2="0" y2="30" stroke="#d4a373" stroke-width="3.2"/>
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3.2"/>
       </g>
 
-      <!-- STELLA GRANDE DEI DESIDERI ALL'ESTERNO -->
-      <g transform="translate(52, 46)" onclick="openModal('nightWishModal')">
+      <!-- Stella dei Desideri -->
+      <g transform="translate(46, 40)" onclick="openModal('nightWishModal')">
         <g id="magicStarBtn" class="magic-star">
-          <path d="M 0,-16 L 4.5,-5 L 16,-5 L 6.5,2 L 10,14 L 0,7 L -10,14 L -6.5,2 L -16,-5 L -4.5,-5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8"/>
+          <path d="M 0,-15 L 4,-4.5 L 15,-4.5 L 6,2 L 9,13 L 0,6.5 L -9,13 L -6,2 L -15,-4.5 L -4,-4.5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8"/>
         </g>
       </g>
 
-      <!-- CALENDARIO ANIMATO -->
-      <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')">
+      <!-- Calendario (Rimpicciolito) -->
+      <g transform="translate(42, 168) skewY(-26) scale(0.76)" onclick="openModal('calendarModal')">
         <g class="interactive-prop">
           <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
           <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#00b4d8" stroke="#432818" stroke-width="2.5"/>
@@ -276,8 +268,21 @@
         </g>
       </g>
 
-      <!-- Frigorifero retrò a terra -->
-      <g transform="translate(200, 232)">
+      <!-- NUOVO GUARDAROBA IN LEGNO INTERATTIVO -->
+      <g transform="translate(82, 232) scale(0.78)" onclick="openModal('wardrobeModal')">
+        <g class="interactive-prop">
+          <polygon points="-24,-64 -10,-72 -10,12 -24,20" fill="#b08968" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <polygon points="-10,-72 28,-90 28,-6 -10,12" fill="#dda15e" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+          <polygon points="-24,-64 14,-82 28,-90 -10,-72" fill="#e6ccb2" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
+          <line x1="9" y1="-81" x2="9" y2="3" stroke="#432818" stroke-width="2.4"/>
+          <circle cx="4" cy="-36" r="2.5" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
+          <circle cx="14" cy="-41" r="2.5" fill="#fefae0" stroke="#432818" stroke-width="1.5"/>
+          <text x="9" y="-56" text-anchor="middle" font-size="13">👗</text>
+        </g>
+      </g>
+
+      <!-- Frigorifero retrò (Rimpicciolito nell'angolo) -->
+      <g transform="translate(200, 224) scale(0.76)">
         <ellipse cx="0" cy="10" rx="34" ry="12" fill="rgba(67,40,24,0.2)"/>
         <rect x="-22" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
         <rect x="14" y="2" width="8" height="8" rx="2" fill="#2b2d42" stroke="#432818" stroke-width="2"/>
@@ -291,8 +296,8 @@
         <rect x="-16" y="-36" width="12" height="10" rx="2" fill="#fff3b0" stroke="#432818" stroke-width="1.8"/>
       </g>
 
-      <!-- Angolo cucina Moka -->
-      <g transform="translate(114, 248)">
+      <!-- Angolo cucina Moka (Rimpicciolito) -->
+      <g transform="translate(142, 246) scale(0.75)">
         <polygon points="-44,8 12,-20 34,-8 -22,20" fill="#fff" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-44,8 -22,20 -22,40 -44,28" fill="#e76f51" stroke="#432818" stroke-width="2.8"/>
         <polygon points="-22,20 34,-8 34,12 -22,40" fill="#f4a261" stroke="#432818" stroke-width="2.8"/>
@@ -300,8 +305,8 @@
         <ellipse cx="10" cy="-6" rx="9" ry="5" fill="#ffb703" stroke="#432818" stroke-width="2"/>
       </g>
 
-      <!-- CASSETTA POSTA ANIMATA -->
-      <g transform="translate(54, 282)" onclick="openModal('mailModal')">
+      <!-- Cassetta Posta (Rimpicciolita) -->
+      <g transform="translate(36, 294) scale(0.78)" onclick="openModal('mailModal')">
         <g class="interactive-prop">
           <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
           <rect x="-18" y="-22" width="36" height="24" rx="10" fill="#00b4d8" stroke="#432818" stroke-width="2.8"/>
@@ -309,8 +314,8 @@
         </g>
       </g>
 
-      <!-- MENSOLA SMISKI ANIMATA -->
-      <g transform="translate(294, 146)" onclick="openModal('smiskiModal')">
+      <!-- Mensola Smiski (Rimpicciolita) -->
+      <g transform="translate(302, 138) scale(0.84)" onclick="openModal('smiskiModal')">
         <g class="interactive-prop">
           <g transform="translate(0, -6)">
             <polygon points="-60,-16 60,42 60,50 -60,-8" fill="#d4a373" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
@@ -326,8 +331,8 @@
         </g>
       </g>
 
-      <!-- Letto -->
-      <g transform="translate(282, 248)">
+      <!-- Letto (Rimpicciolito) -->
+      <g transform="translate(284, 248) scale(0.76)">
         <polygon points="-12,-28 42,-2 42,14 -12,-12" fill="#bc6c25" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 -12,-18 42,8 8,24" fill="#90e0ef" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
         <polygon points="-46,-2 8,24 8,36 -46,10" fill="#0077b6" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
@@ -335,8 +340,8 @@
         <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
       </g>
 
-      <!-- TAVOLINO ALBUM FOTO ANIMATO -->
-      <g transform="translate(336, 288)" onclick="openModal('albumModal')">
+      <!-- Tavolino Album (Rimpicciolito) -->
+      <g transform="translate(352, 298) scale(0.78)" onclick="openModal('albumModal')">
         <g class="interactive-prop">
           <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
           <rect x="-18" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
@@ -349,25 +354,36 @@
         </g>
       </g>
 
-      <ellipse cx="200" cy="328" rx="64" ry="30" fill="#ffcad4" stroke="#432818" stroke-width="2.8"/>
-      <ellipse cx="200" cy="328" rx="48" ry="20" fill="#ffe5ec" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
+      <!-- Tappeto Centrale -->
+      <ellipse cx="200" cy="332" rx="68" ry="32" fill="#ffcad4" stroke="#432818" stroke-width="2.5"/>
+      <ellipse cx="200" cy="332" rx="52" ry="22" fill="#ffe5ec" stroke="#432818" stroke-width="1.8" stroke-dasharray="5 4"/>
 
-      <!-- VINCENZO THE PENGUIN -->
-      <g id="petCharacter" transform="translate(200, 330)">
-        <g id="petFlipGroup">
-          <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
-          <g class="wing-l"><path d="M -14,-14 C -24,-6 -24,8 -17,12 C -12,12 -11,2 -14,-14 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/></g>
-          <g class="foot-l"><path d="M -18,16 L -26,20 L -21,22 L -18,24 L -11,19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/></g>
-          <g class="foot-r"><path d="M 6,18 L 0,23 L 6,24 L 11,25 L 15,20 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/></g>
-          <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
-          <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
-          <circle cx="-10" cy="-26" r="3.4" fill="#2b1911"/>
-          <circle cx="-10.8" cy="-27" r="1.2" fill="#fff"/>
-          <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
-          <g class="wing-r"><path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/><path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/></g>
+      <!-- VINCENZO IL PINGUINO (Rimpicciolito in proporzione alla stanza più grande + Layer Vestiti, Cappelli e Accessori) -->
+      <g id="petCharacter" transform="translate(200, 334)">
+        <g transform="scale(0.76)">
+          <g id="petFlipGroup">
+            <ellipse cx="0" cy="22" rx="24" ry="9" fill="rgba(67,40,24,0.22)"/>
+            <g class="wing-l"><path d="M -14,-14 C -24,-6 -24,8 -17,12 C -12,12 -11,2 -14,-14 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/></g>
+            <g class="foot-l"><path d="M -18,16 L -26,20 L -21,22 L -18,24 L -11,19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/></g>
+            <g class="foot-r"><path d="M 6,18 L 0,23 L 6,24 L 11,25 L 15,20 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/></g>
+            <path d="M -16,-36 C -2,-40 16,-32 18,-14 C 22,-2 25,10 29,12 C 32,14 29,20 22,19 C 14,22 -12,22 -18,12 C -24,0 -22,-26 -16,-36 Z" fill="#4a4441" stroke="#432818" stroke-width="3.4" stroke-linejoin="round"/>
+            <path d="M -17,-18 C -8,-20 -2,-12 0,-4 C 6,8 10,18 2,20 C -10,20 -20,12 -20,-4 C -20,-12 -19,-16 -17,-18 Z" fill="url(#penguinChestGlow)" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+            
+            <!-- LAYER VESTITO EQUIPAGGIATO SUL PINGUINO -->
+            <g id="petOutfitLayer"></g>
+
+            <path d="M -19,-26 C -27,-27 -28,-20 -18,-19 Z" fill="#f77f00" stroke="#432818" stroke-width="2.8" stroke-linejoin="round"/>
+            <circle cx="-10" cy="-26" r="3.4" fill="#2b1911"/>
+            <circle cx="-10.8" cy="-27" r="1.2" fill="#fff"/>
+            <ellipse cx="2" cy="-20" rx="5.5" ry="7.5" transform="rotate(20 2 -20)" fill="#f77f00" stroke="#432818" stroke-width="2.5"/>
+            <g class="wing-r"><path d="M 4,-12 C 14,-2 15,12 8,15 C 2,16 -1,4 4,-12 Z" fill="#4a4441" stroke="#432818" stroke-width="3.2" stroke-linejoin="round"/><path d="M 4,-10 C 9,-1 9,10 5,12" fill="none" stroke="#fff8e7" stroke-width="2" stroke-linecap="round"/></g>
+
+            <!-- LAYER CAPPELLO E OGGETTO IN MANO SUL PINGUINO -->
+            <g id="petHatLayer"></g>
+            <g id="petPropLayer"></g>
+          </g>
+          <text id="petFx" x="0" y="-58" text-anchor="middle" font-size="24" opacity="0">💖</text>
         </g>
-        <text id="petFx" x="0" y="-54" text-anchor="middle" font-size="22" opacity="0">💖</text>
       </g>
     </svg>
   </div>
@@ -377,36 +393,100 @@
     <button type="button" class="care-btn food" onclick="performCare('food')"><span class="care-icon">🍫</span><span>M&M's</span></button>
     <button type="button" class="care-btn gift" onclick="performCare('gift')"><span class="care-icon">🎮</span><span>Fumetto</span></button>
   </div>
+  <div class="bottom-tools">
+    <button type="button" class="tool-btn" style="background:#fef08a;" onclick="openModal('gamesModal')">🕹️ Sala Giochi (Monete)</button>
+    <button type="button" class="tool-btn" style="background:#e0fbfc;" onclick="openModal('wardrobeModal')">👗 Guardaroba & Shop</button>
+  </div>
 </div>
 
-<!-- MODALS -->
-<div class="modal-backdrop" id="nightWishModal">
-  <div class="modal-box" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%); border-color: #e2e8f0; color:#fff;">
-    <div class="modal-head" style="background: transparent; border-bottom: 2px solid rgba(255,255,255,0.2); color:#fff;">
-      <span>✨ Sotto lo stesso cielo</span>
-      <button type="button" class="close-btn" style="background:#334155; color:#fff; border-color:#fff;" onclick="closeModal('nightWishModal')">✕</button>
+<!-- MODAL GUARDAROBA, SHOP & SCAMBIO -->
+<div class="modal-backdrop" id="wardrobeModal">
+  <div class="modal-box">
+    <div class="modal-head" style="background:#e0fbfc;">
+      <span>👗 Guardaroba, Shop & Scambi</span>
+      <button type="button" class="close-btn" onclick="closeModal('wardrobeModal')">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:0.85rem; font-weight:700; text-align:center;">È notte sia in Italia che in Norvegia! Scrivete qui i vostri desideri condivisi sotto le stelle 💫</p>
-      <div class="wish-list" id="wishList"></div>
-      <div class="input-row">
-        <input type="text" id="wishInput" class="text-input" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.4);" placeholder="Esprimi un desiderio..." />
-        <button type="button" class="action-pill" style="background:#fef08a; border-color:#ca8a04; color:#854d0e;" onclick="sendWish()">Invia 🌟</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#fef08a; padding:8px 12px; border-radius:14px; border:2.5px solid #432818; font-weight:700; font-size:0.84rem;">
+        <span>🪙 Tue Monete: <strong id="shopCoinsLabel">100</strong></span>
+        <button type="button" class="mini-btn" style="background:#b7e4c7;" onclick="closeModal('wardrobeModal'); openModal('gamesModal');">🕹️ Guadagna Monete</button>
       </div>
+      <p style="font-size:0.74rem; font-weight:700; color:#6f4e37;">Compra vestiti, cappelli e oggetti, indossali sul pinguino oppure inviali in regalo a Vincenzo!</p>
+      <div class="collection-grid" id="wardrobeGrid"></div>
     </div>
   </div>
 </div>
 
+<!-- MODAL SALA GIOCHI -->
+<div class="modal-backdrop" id="gamesModal">
+  <div class="modal-box">
+    <div class="modal-head" style="background:#fef08a;">
+      <span>🕹️ Sala Giochi (Guadagna 🪙)</span>
+      <button type="button" class="close-btn" onclick="stopMiniGames(); closeModal('gamesModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="action-pill" style="flex:1; background:#ffcad4;" onclick="startCatchHeartsGame()">💖 Acchiappa-Cuori</button>
+        <button type="button" class="action-pill" style="flex:1; background:#bde0fe;" onclick="startMemoryGame()">🃏 Memory (+30🪙)</button>
+      </div>
+      <div id="gameStatusLabel" style="text-align:center; font-weight:700; font-size:0.84rem;">Scegli un mini-gioco per vincere monete!</div>
+      <div class="game-arena" id="gameArena"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ALTRI MODALS -->
+<div class="modal-backdrop" id="nightWishModal"><div class="modal-box" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%); border-color: #e2e8f0; color:#fff;"><div class="modal-head" style="background: transparent; border-bottom: 2px solid rgba(255,255,255,0.2); color:#fff;"><span>✨ Sotto lo stesso cielo</span><button type="button" class="close-btn" style="background:#334155; color:#fff; border-color:#fff;" onclick="closeModal('nightWishModal')">✕</button></div><div class="modal-body"><p style="font-size:0.85rem; font-weight:700; text-align:center;">È notte sia in Italia che in Norvegia! Scrivete qui i vostri desideri condivisi sotto le stelle 💫</p><div class="wish-list" id="wishList"></div><div class="input-row"><input type="text" id="wishInput" class="text-input" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.4);" placeholder="Esprimi un desiderio..." /><button type="button" class="action-pill" style="background:#fef08a; border-color:#ca8a04; color:#854d0e;" onclick="sendWish()">Invia 🌟</button></div></div></div></div>
 <div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button type="button" class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
-
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Vincenzo)</span><button type="button" class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button type="button" class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
-
 <div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button type="button" class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button type="button" class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
-
 <div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button type="button" class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button type="button" class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> compaiono appoggiati sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
 
-<!-- LOGICA DI GIOCO E MOVIMENTO IMMEDIATA -->
 <script>
+  const SHOP_ITEMS = [
+    { id: "hat_crown", name: "Corona Reale", type: "hat", price: 40, icon: "👑" },
+    { id: "hat_beanie", name: "Berretto Nordico", type: "hat", price: 30, icon: "🧶" },
+    { id: "hat_chef", name: "Cappello Chef", type: "hat", price: 35, icon: "👩‍🍳" },
+    { id: "hat_wizard", name: "Cappello Magico", type: "hat", price: 50, icon: "🧙" },
+    { id: "out_scarf", name: "Sciarpa Rossa", type: "outfit", price: 30, icon: "🧣" },
+    { id: "out_sweater", name: "Maglione Cuore", type: "outfit", price: 45, icon: "🧥" },
+    { id: "out_bowtie", name: "Papillon Gala", type: "outfit", price: 25, icon: "🎀" },
+    { id: "out_cape", name: "Mantello Eroe", type: "outfit", price: 55, icon: "🦸" },
+    { id: "prop_balloon", name: "Palloncino Cuore", type: "prop", price: 30, icon: "🎈" },
+    { id: "prop_rose", name: "Rosa d'Amore", type: "prop", price: 35, icon: "🌹" },
+    { id: "prop_coffee", name: "Cioccolata Calda", type: "prop", price: 25, icon: "☕" },
+    { id: "prop_wand", name: "Bacchetta Stella", type: "prop", price: 45, icon: "🪄" }
+  ];
+
+  function renderEquippedSvgOnPenguin(eq) {
+    eq = eq || {};
+    const hatG = document.getElementById("petHatLayer");
+    const outG = document.getElementById("petOutfitLayer");
+    const propG = document.getElementById("petPropLayer");
+    if (!hatG || !outG || !propG) return;
+
+    // Cappelli sul Pinguino
+    if (eq.hat === "hat_crown") hatG.innerHTML = `<polygon points="-14,-35 -8,-48 -1,-39 6,-48 12,-35" fill="#ffb703" stroke="#432818" stroke-width="2.2" stroke-linejoin="round"/>`;
+    else if (eq.hat === "hat_beanie") hatG.innerHTML = `<path d="M -16,-33 Q -1,-50 15,-32 Z" fill="#ef476f" stroke="#432818" stroke-width="2.2"/><circle cx="-1" cy="-45" r="4.5" fill="#fff" stroke="#432818" stroke-width="2"/>`;
+    else if (eq.hat === "hat_chef") hatG.innerHTML = `<path d="M -13,-34 L -13,-44 Q -17,-54 0,-54 Q 17,-54 13,-44 L 13,-34 Z" fill="#fff" stroke="#432818" stroke-width="2.2"/>`;
+    else if (eq.hat === "hat_wizard") hatG.innerHTML = `<polygon points="-18,-34 18,-34 -1,-58" fill="#7209b7" stroke="#432818" stroke-width="2.2"/><text x="-1" y="-38" text-anchor="middle" font-size="9">⭐</text>`;
+    else hatG.innerHTML = "";
+
+    // Vestiti sul Pinguino
+    if (eq.outfit === "out_scarf") outG.innerHTML = `<path d="M -18,-16 Q -2,-10 14,-16 L 13,-9 Q -2,-4 -17,-9 Z" fill="#ef233c" stroke="#432818" stroke-width="2"/><rect x="-14" y="-12" width="6" height="14" rx="2" fill="#ef233c" stroke="#432818" stroke-width="2"/>`;
+    else if (eq.outfit === "out_sweater") outG.innerHTML = `<path d="M -19,-14 Q 0,-8 18,-12 L 20,10 Q 0,16 -20,10 Z" fill="#ff758f" stroke="#432818" stroke-width="2.2"/><text x="-4" y="4" text-anchor="middle" font-size="11">🤍</text>`;
+    else if (eq.outfit === "out_bowtie") outG.innerHTML = `<polygon points="-17,-18 -9,-14 -17,-10" fill="#e63946" stroke="#432818" stroke-width="1.6"/><polygon points="-1,-18 -9,-14 -1,-10" fill="#e63946" stroke="#432818" stroke-width="1.6"/><circle cx="-9" cy="-14" r="2.5" fill="#ffb703" stroke="#432818" stroke-width="1.4"/>`;
+    else if (eq.outfit === "out_cape") outG.innerHTML = `<path d="M 4,-18 L 28,16 L 10,18 L -2,-14 Z" fill="#3a86ff" stroke="#432818" stroke-width="2"/>`;
+    else outG.innerHTML = "";
+
+    // Oggetti a mano sul Pinguino
+    if (eq.prop === "prop_balloon") propG.innerHTML = `<line x1="-18" y1="4" x2="-26" y2="-32" stroke="#432818" stroke-width="2"/><circle cx="-26" cy="-40" r="11" fill="#ff4d6d" stroke="#432818" stroke-width="2"/>`;
+    else if (eq.prop === "prop_rose") propG.innerHTML = `<text x="-24" y="6" text-anchor="middle" font-size="18">🌹</text>`;
+    else if (eq.prop === "prop_coffee") propG.innerHTML = `<text x="-24" y="8" text-anchor="middle" font-size="17">☕</text>`;
+    else if (eq.prop === "prop_wand") propG.innerHTML = `<line x1="-16" y1="6" x2="-28" y2="-10" stroke="#d4a373" stroke-width="3" stroke-linecap="round"/><text x="-30" y="-10" text-anchor="middle" font-size="14">🌟</text>`;
+    else propG.innerHTML = "";
+  }
+
   const UNIQUE_SMISKI_LIST = [{ name: "Smiski Curioso (Mutandina)", prop: "" }, { name: "Smiski Lampada", prop: "" }, { name: "Smiski Trasloco 3 Scatole", prop: "" }, { name: "Smiski Sdraiato Fragile", prop: "" }, { name: "Smiski Pensatore Seduto", prop: "💭" }, { name: "Smiski Abbraccia Ginocchia", prop: "🌿" }, { name: "Smiski Yoga Loto", prop: "🧘" }, { name: "Smiski Peso Bilanciere", prop: "🏋️" }, { name: "Smiski Lettore Libro", prop: "📗" }, { name: "Smiski Dormiglione", prop: "💤" }, { name: "Smiski Hula Hoop", prop: "⭕" }, { name: "Smiski Skateboarder", prop: "🛹" }, { name: "Smiski Pittore", prop: "🖌️" }, { name: "Smiski Piantina", prop: "🌱" }, { name: "Smiski Gatto Spalla", prop: "🐱" }, { name: "Smiski Tamburello", prop: "🥁" }, { name: "Smiski Flauto", prop: "🪈" }, { name: "Smiski Chitarra", prop: "🎸" }, { name: "Smiski Cuffie", prop: "🎧" }, { name: "Smiski Aereoplanino", prop: "✈️" }, { name: "Smiski Scatola Segreta", prop: "📦" }, { name: "Smiski Spazzolino", prop: "🪥" }, { name: "Smiski Specchietto", prop: "🪞" }, { name: "Smiski Sapone Bolle", prop: "🫧" }, { name: "Smiski Turbante", prop: "🧖" }, { name: "Smiski Paperella", prop: "🦆" }, { name: "Smiski Caffè", prop: "☕" }, { name: "Smiski Laptop", prop: "💻" }, { name: "Smiski Telefono", prop: "📞" }, { name: "Smiski Matita", prop: "✏️" }, { name: "Smiski Lampadina", prop: "💡" }, { name: "Smiski Sveglia", prop: "⏰" }, { name: "Smiski Chiave", prop: "🔑" }, { name: "Smiski Lente", prop: "🔍" }, { name: "Smiski Zainetto", prop: "🎒" }, { name: "Smiski Fotocamera", prop: "📷" }, { name: "Smiski Binocolo", prop: "🔭" }, { name: "Smiski Ombrello", prop: "☂️" }, { name: "Smiski Lanterna", prop: "🏮" }, { name: "Smiski Candela", prop: "🕯️" }, { name: "Smiski Stella", prop: "⭐" }, { name: "Smiski Mezzaluna", prop: "🌙" }, { name: "Smiski Sole", prop: "☀️" }, { name: "Smiski Arcobaleno", prop: "🌈" }, { name: "Smiski Fiorellino", prop: "🌼" }, { name: "Smiski Quadrifoglio", prop: "🍀" }, { name: "Smiski Funghetto", prop: "🍄" }, { name: "Smiski Cactus", prop: "🌵" }, { name: "Smiski Farfalla", prop: "🦋" }, { name: "Smiski Conchiglia", prop: "🐚" }, { name: "Smiski Salvagente", prop: "🛟" }, { name: "Smiski Surf", prop: "🏄" }, { name: "Smiski Pescatore", prop: "🎣" }, { name: "Smiski Sciatore", prop: "⛷️" }, { name: "Smiski Regalo", prop: "🎁" }, { name: "Smiski Palloncino", prop: "🎈" }, { name: "Smiski Corona", prop: "👑" }, { name: "Smiski Trofeo", prop: "🏆" }, { name: "Smiski Lettera", prop: "💌" }, { name: "Smiski Cuore Custode", prop: "💚" }];
   
   function renderSmiskiSvg(id, size) {
@@ -416,14 +496,14 @@
     const poseType = idx % 8;
     const bodyCol = "#dfee97", shadeCol = "#bdd269", darkGreen = "#1b4332", propGreen = "#6a994e", propDark = "#4a7c59";
     let figure = "";
-    if (poseType === 0) { figure = `<path d="M -4,4 L -5,12 C -5,14 -1,14 -1,12 L 0,5 Z" fill="${shadeCol}"/><path d="M 1,4 L 0,13 C 0,15 5,15 5,13 L 4,4 Z" fill="${bodyCol}"/><path d="M -6,1 C -6,6 5,6 5,1 L 4,-1 L -5,-1 Z" fill="${propGreen}"/><path d="M -5,0 C -6,-8 4,-10 5,-1 Z" fill="${bodyCol}"/><path d="M -1,-7 C -3,-2 -3,3 0,3 C 2,3 2,-2 1,-7 Z" fill="${shadeCol}"/><circle cx="3" cy="-13" r="7.5" fill="${bodyCol}"/><circle cx="1" cy="-12" r="1.1" fill="${darkGreen}"/><circle cx="6" cy="-11" r="1.1" fill="${darkGreen}"/><line x1="2" y1="-8.5" x2="5" y2="-8" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 1) { figure = `<rect x="-5" y="4" width="4" height="10" rx="2" fill="${bodyCol}"/><rect x="0" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5.5" y="-6" width="10" height="11" rx="4" fill="${bodyCol}"/><line x1="-11" y1="-15" x2="4" y2="12" stroke="${propDark}" stroke-width="1.8"/><line x1="0" y1="14" x2="8" y2="10" stroke="${propGreen}" stroke-width="2.2" stroke-linecap="round"/><polygon points="-16,-12 -6,-17 -9,-22 -18,-18" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M -4,-4 Q -9,-3 -6,0" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><path d="M 3,-3 Q 0,3 -2,4" fill="none" stroke="${shadeCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-13" r="7.2" fill="${bodyCol}"/><circle cx="-3" cy="-14" r="1" fill="${darkGreen}"/><circle cx="2" cy="-13" r="1" fill="${darkGreen}"/><line x1="-2" y1="-10" x2="1" y2="-9.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 2) { figure = `<path d="M -2,4 L -6,13" stroke="${bodyCol}" stroke-width="4" stroke-linecap="round"/><path d="M 2,4 L 7,10 L 9,7" fill="none" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><rect x="-3" y="-6" width="8" height="11" rx="3.5" fill="${bodyCol}"/><rect x="-12" y="-3" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-10" width="8" height="7" fill="#80ed99" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-17" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M 2,-2 Q -4,0 -7,-1" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="3" cy="-13" r="7" fill="${bodyCol}"/><circle cx="1" cy="-15" r="1" fill="${darkGreen}"/><circle cx="5" cy="-13" r="1" fill="${darkGreen}"/><line x1="1" y1="-11" x2="4" y2="-10" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 3) { figure = `<ellipse cx="3" cy="6" rx="7" ry="4" fill="${bodyCol}"/><path d="M 8,5 L 13,0" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 6,7 L 10,2" stroke="${bodyCol}" stroke-width="3.5" stroke-linecap="round"/><polygon points="-13,3 -2,0 4,3 -7,6" fill="#80ed99" stroke="${propDark}" stroke-width="0.9"/><polygon points="-13,3 -7,6 -7,14 -13,11" fill="${propGreen}" stroke="${propDark}" stroke-width="0.9"/><polygon points="-7,6 4,3 4,11 -7,14" fill="${propDark}" stroke="${propDark}" stroke-width="0.9"/><circle cx="2" cy="6" r="2.2" fill="${bodyCol}"/><circle cx="0" cy="-3" r="7.2" fill="${bodyCol}"/><circle cx="-2.5" cy="-3" r="1" fill="${darkGreen}"/><circle cx="2.5" cy="-2" r="1" fill="${darkGreen}"/><line x1="-1.5" y1="0.8" x2="1.5" y2="1.2" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 4) { figure = `<ellipse cx="-3" cy="6" rx="4" ry="6" fill="${shadeCol}"/><ellipse cx="3" cy="6" rx="4" ry="6" fill="${bodyCol}"/><ellipse cx="-3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><ellipse cx="3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><path d="M -6,2 Q 0,7 6,2" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-6" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-6" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-6" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-2.5" x2="1.8" y2="-2.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 5) { figure = `<rect x="-4" y="-3" width="8" height="10" rx="3.5" fill="${bodyCol}"/><path d="M -3,6 L -6,13 M 3,6 L 6,13" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 3,0 Q 8,-3 2,-6" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else if (poseType === 6) { figure = `<rect x="-4.5" y="4" width="4" height="9" rx="2" fill="${bodyCol}"/><rect x="0.5" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5" y="-5" width="10" height="10" rx="4" fill="${bodyCol}"/><path d="M -5,-2 L -10,-9 M 5,-2 L 10,-9" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-12" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-12" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-12" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-8.5" x2="1.8" y2="-8.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
-    else { figure = `<rect x="-4.5" y="-4" width="9" height="10" rx="4" fill="${bodyCol}"/><ellipse cx="-5" cy="8" rx="5" ry="2.5" fill="${shadeCol}"/><ellipse cx="5" cy="8" rx="5" ry="2.5" fill="${bodyCol}"/><path d="M -4,0 L -8,5 M 4,0 L 8,5" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
+    if (poseType === 0) figure = `<path d="M -4,4 L -5,12 C -5,14 -1,14 -1,12 L 0,5 Z" fill="${shadeCol}"/><path d="M 1,4 L 0,13 C 0,15 5,15 5,13 L 4,4 Z" fill="${bodyCol}"/><path d="M -6,1 C -6,6 5,6 5,1 L 4,-1 L -5,-1 Z" fill="${propGreen}"/><path d="M -5,0 C -6,-8 4,-10 5,-1 Z" fill="${bodyCol}"/><path d="M -1,-7 C -3,-2 -3,3 0,3 C 2,3 2,-2 1,-7 Z" fill="${shadeCol}"/><circle cx="3" cy="-13" r="7.5" fill="${bodyCol}"/><circle cx="1" cy="-12" r="1.1" fill="${darkGreen}"/><circle cx="6" cy="-11" r="1.1" fill="${darkGreen}"/><line x1="2" y1="-8.5" x2="5" y2="-8" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 1) figure = `<rect x="-5" y="4" width="4" height="10" rx="2" fill="${bodyCol}"/><rect x="0" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5.5" y="-6" width="10" height="11" rx="4" fill="${bodyCol}"/><line x1="-11" y1="-15" x2="4" y2="12" stroke="${propDark}" stroke-width="1.8"/><line x1="0" y1="14" x2="8" y2="10" stroke="${propGreen}" stroke-width="2.2" stroke-linecap="round"/><polygon points="-16,-12 -6,-17 -9,-22 -18,-18" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M -4,-4 Q -9,-3 -6,0" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><path d="M 3,-3 Q 0,3 -2,4" fill="none" stroke="${shadeCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-13" r="7.2" fill="${bodyCol}"/><circle cx="-3" cy="-14" r="1" fill="${darkGreen}"/><circle cx="2" cy="-13" r="1" fill="${darkGreen}"/><line x1="-2" y1="-10" x2="1" y2="-9.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 2) figure = `<path d="M -2,4 L -6,13" stroke="${bodyCol}" stroke-width="4" stroke-linecap="round"/><path d="M 2,4 L 7,10 L 9,7" fill="none" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><rect x="-3" y="-6" width="8" height="11" rx="3.5" fill="${bodyCol}"/><rect x="-12" y="-3" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-10" width="8" height="7" fill="#80ed99" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-17" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M 2,-2 Q -4,0 -7,-1" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="3" cy="-13" r="7" fill="${bodyCol}"/><circle cx="1" cy="-15" r="1" fill="${darkGreen}"/><circle cx="5" cy="-13" r="1" fill="${darkGreen}"/><line x1="1" y1="-11" x2="4" y2="-10" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 3) figure = `<ellipse cx="3" cy="6" rx="7" ry="4" fill="${bodyCol}"/><path d="M 8,5 L 13,0" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 6,7 L 10,2" stroke="${bodyCol}" stroke-width="3.5" stroke-linecap="round"/><polygon points="-13,3 -2,0 4,3 -7,6" fill="#80ed99" stroke="${propDark}" stroke-width="0.9"/><polygon points="-13,3 -7,6 -7,14 -13,11" fill="${propGreen}" stroke="${propDark}" stroke-width="0.9"/><polygon points="-7,6 4,3 4,11 -7,14" fill="${propDark}" stroke="${propDark}" stroke-width="0.9"/><circle cx="2" cy="6" r="2.2" fill="${bodyCol}"/><circle cx="0" cy="-3" r="7.2" fill="${bodyCol}"/><circle cx="-2.5" cy="-3" r="1" fill="${darkGreen}"/><circle cx="2.5" cy="-2" r="1" fill="${darkGreen}"/><line x1="-1.5" y1="0.8" x2="1.5" y2="1.2" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 4) figure = `<ellipse cx="-3" cy="6" rx="4" ry="6" fill="${shadeCol}"/><ellipse cx="3" cy="6" rx="4" ry="6" fill="${bodyCol}"/><ellipse cx="-3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><ellipse cx="3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><path d="M -6,2 Q 0,7 6,2" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-6" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-6" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-6" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-2.5" x2="1.8" y2="-2.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 5) figure = `<rect x="-4" y="-3" width="8" height="10" rx="3.5" fill="${bodyCol}"/><path d="M -3,6 L -6,13 M 3,6 L 6,13" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 3,0 Q 8,-3 2,-6" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else if (poseType === 6) figure = `<rect x="-4.5" y="4" width="4" height="9" rx="2" fill="${bodyCol}"/><rect x="0.5" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5" y="-5" width="10" height="10" rx="4" fill="${bodyCol}"/><path d="M -5,-2 L -10,-9 M 5,-2 L 10,-9" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-12" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-12" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-12" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-8.5" x2="1.8" y2="-8.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
+    else figure = `<rect x="-4.5" y="-4" width="9" height="10" rx="4" fill="${bodyCol}"/><ellipse cx="-5" cy="8" rx="5" ry="2.5" fill="${shadeCol}"/><ellipse cx="5" cy="8" rx="5" ry="2.5" fill="${bodyCol}"/><path d="M -4,0 L -8,5 M 4,0 L 8,5" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`;
     return `<svg width="${size}" height="${size}" viewBox="-18 -24 36 40" style="overflow:visible"><ellipse cx="0" cy="14" rx="9" ry="2.5" fill="rgba(67,40,24,0.16)"/>${figure}${item.prop ? `<text x="10" y="10" text-anchor="middle" font-size="9">${item.prop}</text>` : ""}</svg>`;
   }
 
@@ -437,8 +517,8 @@
     const t = todayStr();
     return {
       startDate: t, targetDate: "2027-05-11", lastResetAt: 0,
-      debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" },
-      vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" },
+      debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 100, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
+      vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "", coins: 100, inventory: [], equipped: { hat: "", outfit: "", prop: "" } },
       vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0,
       deborahSmiskiUnlocked: [], deborahPacksClaimed: 0,
       messages: [{ sender: "Vincenzo", text: "Ciao amore! Prenditi cura del tuo pinguino! 🐧💕", ts: Date.now() }],
@@ -451,6 +531,9 @@
     const merged = Object.assign({}, def, pet || {});
     if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90;
     if (typeof merged.boredom !== "number") merged.boredom = 85;
+    if (typeof merged.coins !== "number") merged.coins = 100;
+    if (!Array.isArray(merged.inventory)) merged.inventory = [];
+    if (!merged.equipped) merged.equipped = { hat: "", outfit: "", prop: "" };
     if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false };
     return merged;
   };
@@ -502,6 +585,8 @@
       window.state = window.sanitizeState(window.state);
       const v = window.state.vincenzo, d = window.state.debby, today = todayStr();
       document.getElementById("lvlBadge").textContent = "Lv. " + v.level;
+      document.getElementById("coinCount").textContent = v.coins || 0;
+      document.getElementById("shopCoinsLabel").textContent = v.coins || 0;
       document.getElementById("xpFill").style.width = Math.min(100, v.xp) + "%";
       document.getElementById("dailyCapLabel").textContent = "Oggi: " + (v.dailyLvlsGained || 0) + "/6 Lv";
       document.getElementById("valLove").textContent = v.love + "%"; document.getElementById("barLove").style.width = v.love + "%";
@@ -510,6 +595,26 @@
       document.getElementById("valBoredom").textContent = v.boredom + "%"; document.getElementById("barBoredom").style.width = v.boredom + "%";
       document.getElementById("vincenzoMoodStatus").innerHTML = "🐧 Il pinguino Vincenzo si sente: <strong>" + (MOOD_LABELS[v.feeling] || "Felice 😊") + "</strong>";
       
+      renderEquippedSvgOnPenguin(v.equipped);
+
+      // Render Guardaroba & Shop (Deborah gestisce gli abiti di Vincenzo il pinguino e può scambiarli con Vincenzo)
+      const wGrid = document.getElementById("wardrobeGrid");
+      if (wGrid) {
+        wGrid.innerHTML = SHOP_ITEMS.map(item => {
+          const owned = (v.inventory || []).includes(item.id);
+          const isEq = v.equipped && v.equipped[item.type] === item.id;
+          return `<div class="col-item ${isEq ? 'five-star' : ''}">
+            <div style="font-size:1.6rem;">${item.icon}</div>
+            <div>${item.name}</div>
+            ${!owned
+              ? `<button type="button" class="mini-btn" style="background:#fef08a;width:100%;" onclick="buyShopItem('${item.id}')">🪙 ${item.price} Compra</button>`
+              : `<button type="button" class="mini-btn" style="background:${isEq ? '#ffcad4' : '#b7e4c7'};width:100%;" onclick="toggleEquipItem('${item.id}')">${isEq ? 'Togli' : 'Indossa'}</button>
+                 <button type="button" class="mini-btn" style="background:#e0fbfc;width:100%;" onclick="tradeItemToPartner('${item.id}')">🎁 Invia a Vincenzo</button>`
+            }
+          </div>`;
+        }).join("");
+      }
+
       if (v.feeling === "malato" || v.feeling === "malata") {
         const sn = v.sickNeeds || {};
         const missing = [!sn.cuddle?"Coccole":null, !sn.food?"M&M's":null, !sn.gift?"Fumetto":null].filter(Boolean);
@@ -581,6 +686,129 @@
     clearTimeout(window._speechTimer);
     window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200);
   }
+
+  // FUNZIONI SHOP, EQUIPAGGIAMENTO E SCAMBIO
+  window.buyShopItem = function(itemId) {
+    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const v = window.state.vincenzo;
+    if (!item) return;
+    if ((v.coins || 0) < item.price) return alert("Monete insufficienti! Gioca nella Sala Giochi per guadagnare altre 🪙.");
+    v.coins -= item.price;
+    if (!v.inventory.includes(item.id)) v.inventory.push(item.id);
+    v.equipped[item.type] = item.id;
+    window.saveState(true);
+    showSpeech("Nuovo acquisto: " + item.name + "! 😍");
+  };
+
+  window.toggleEquipItem = function(itemId) {
+    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const v = window.state.vincenzo;
+    if (!item) return;
+    if (v.equipped[item.type] === item.id) v.equipped[item.type] = "";
+    else v.equipped[item.type] = item.id;
+    window.saveState(true);
+  };
+
+  window.tradeItemToPartner = function(itemId) {
+    const item = SHOP_ITEMS.find(x => x.id === itemId);
+    const v = window.state.vincenzo, d = window.state.debby;
+    if (!item) return;
+    if (d.inventory.includes(item.id)) return alert("Vincenzo possiede già questo oggetto nel suo guardaroba!");
+    v.inventory = v.inventory.filter(id => id !== item.id);
+    if (v.equipped[item.type] === item.id) v.equipped[item.type] = "";
+    d.inventory.push(item.id);
+    window.state.messages.push({ sender: "Deborah", text: "🎁 Ti ho inviato nel Guardaroba: " + item.icon + " " + item.name + "!", ts: Date.now() });
+    window.saveState(true);
+    alert("🎁 Hai inviato " + item.name + " a Vincenzo!");
+  };
+
+  // MINI-GIOCHI PER GUADAGNARE MONETE
+  let gameTimer = null, spawnTimer = null;
+  window.stopMiniGames = function() {
+    clearInterval(gameTimer);
+    clearInterval(spawnTimer);
+  };
+
+  window.startCatchHeartsGame = function() {
+    window.stopMiniGames();
+    const arena = document.getElementById("gameArena");
+    const status = document.getElementById("gameStatusLabel");
+    arena.innerHTML = "";
+    let timeLeft = 15, earned = 0;
+    status.textContent = "⏱️ Tempo: 15s | 🪙 Vinte: 0";
+
+    spawnTimer = setInterval(() => {
+      const token = document.createElement("div");
+      token.className = "falling-token";
+      const icons = ["💖","🍫","🌟","💕"];
+      token.textContent = icons[Math.floor(Math.random() * icons.length)];
+      token.style.left = (10 + Math.random() * 78) + "%";
+      token.style.top = "-30px";
+      arena.appendChild(token);
+
+      let pos = -30;
+      const fall = setInterval(() => {
+        pos += 4;
+        token.style.top = pos + "px";
+        if (pos > 220) { clearInterval(fall); token.remove(); }
+      }, 35);
+
+      token.onclick = function() {
+        clearInterval(fall);
+        token.remove();
+        earned += 4;
+        window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 4;
+        status.textContent = "⏱️ Tempo: " + timeLeft + "s | 🪙 Vinte: +" + earned;
+        window.saveState(false);
+      };
+    }, 550);
+
+    gameTimer = setInterval(() => {
+      timeLeft--;
+      status.textContent = "⏱️ Tempo: " + timeLeft + "s | 🪙 Vinte: +" + earned;
+      if (timeLeft <= 0) {
+        window.stopMiniGames();
+        arena.innerHTML = `<div style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-size:1.1rem;">🎉 Partita finita! Hai vinto +${earned} 🪙!</div>`;
+        window.saveState(true);
+      }
+    }, 1000);
+  };
+
+  window.startMemoryGame = function() {
+    window.stopMiniGames();
+    const arena = document.getElementById("gameArena");
+    const status = document.getElementById("gameStatusLabel");
+    const symbols = ["🦥","🐧","🥞","🍫","💖","🌟","🦥","🐧","🥞","🍫","💖","🌟"].sort(() => Math.random() - 0.5);
+    let flipped = [], matched = 0;
+    status.textContent = "🃏 Trova le 6 coppie per vincere +30 🪙!";
+    arena.innerHTML = `<div class="memory-grid" style="padding:12px;">` + symbols.map((s, idx) => `<div class="mem-card" id="mem_${idx}" data-sym="${s}">❓</div>`).join("") + `</div>`;
+
+    symbols.forEach((s, idx) => {
+      const card = document.getElementById("mem_" + idx);
+      card.onclick = function() {
+        if (flipped.length >= 2 || card.classList.contains("flipped")) return;
+        card.classList.add("flipped");
+        card.textContent = s;
+        flipped.push(card);
+        if (flipped.length === 2) {
+          if (flipped[0].dataset.sym === flipped[1].dataset.sym) {
+            matched++;
+            flipped = [];
+            if (matched === 6) {
+              window.state.vincenzo.coins = (window.state.vincenzo.coins || 0) + 30;
+              status.textContent = "🎉 Complimenti! Hai vinto +30 🪙!";
+              window.saveState(true);
+            }
+          } else {
+            setTimeout(() => {
+              flipped.forEach(c => { c.classList.remove("flipped"); c.textContent = "❓"; });
+              flipped = [];
+            }, 650);
+          }
+        }
+      };
+    });
+  };
 
   window.sendMyMood = function(moodKey) {
     const d = window.state.debby;
@@ -677,28 +905,27 @@
     reader.readAsDataURL(file);
   };
   
-  // MOVIMENTO AUTONOMO DEL PINGUINO SUL PAVIMENTO
+  // MOVIMENTO AUTONOMO AMPLIATO DEL PINGUINO NELLA STANZA PIÙ GRANDE
   const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup");
-  let petX = 200, petY = 330;
+  let petX = 200, petY = 334;
   function stepRoam() {
-    const tgts = [{x:200,y:330}, {x:156,y:322}, {x:244,y:322}, {x:178,y:345}, {x:224,y:345}];
+    const tgts = [{x:200,y:334}, {x:135,y:320}, {x:265,y:320}, {x:165,y:358}, {x:235,y:358}, {x:195,y:305}];
     const n = tgts[Math.floor(Math.random() * tgts.length)];
     const dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
     if (d > 4) {
       if (dx > 2) petFlipEl.setAttribute("transform", "scale(-1, 1)");
       else if (dx < -2) petFlipEl.setAttribute("transform", "scale(1, 1)");
       petEl.classList.add("walking");
-      petEl.style.transition = "transform " + Math.max(1.2, d / 22) + "s linear";
+      petEl.style.transition = "transform " + Math.max(1.2, d / 24) + "s linear";
       petX = n.x; petY = n.y;
       petEl.setAttribute("transform", "translate(" + petX + ", " + petY + ")");
-      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d / 22) * 1000));
+      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d / 24) * 1000));
     }
   }
   setTimeout(stepRoam, 600);
   setInterval(stepRoam, 3800);
   setInterval(() => window.saveState(false), 60000);
 
-  // METEO REALE E GIORNO/NOTTE LIVE (Putignano, Italia)
   function updateWindowScene(isDay, weatherCode, temp) {
     const s1 = document.getElementById("bgStop1"), s2 = document.getElementById("bgStop2"), sun = document.getElementById("bgSun"), moon = document.getElementById("bgMoon"), stars = document.getElementById("bgStars"), hills = document.getElementById("bgLandscape"), wl = document.getElementById("bgWeatherLayer"), bdg = document.getElementById("dayNightHudBadge");
     isItalyNight = !isDay;
