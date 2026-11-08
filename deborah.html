@@ -38,14 +38,14 @@
     .room-stage { position: relative; width: 100%; aspect-ratio: 1 / 1.02; background: #fffdf9; border: 4px solid #432818; border-radius: 28px; box-shadow: 0 8px 0 #432818; overflow: hidden; }
     .room-svg { width: 100%; height: 100%; display: block; }
 
-    /* ANIMAZIONI OGGETTI CLICCABILI (SOSTITUISCONO I BOTTONI TESTUALI) */
+    /* ANIMAZIONI OGGETTI CLICCABILI */
     @keyframes floatProp { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3px); } }
-    .interactive-prop { cursor: pointer; animation: floatProp 2.5s ease-in-out infinite; transform-origin: center; transition: filter 0.2s; }
+    .interactive-prop { cursor: pointer; pointer-events: all; animation: floatProp 2.5s ease-in-out infinite; transform-origin: center; transition: filter 0.2s; }
     .interactive-prop:hover { filter: drop-shadow(0px 0px 6px rgba(255,255,255,0.7)) brightness(1.1); }
     
     /* STELLA DEI DESIDERI */
     @keyframes starTwinkle { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 10px #fef08a); } }
-    .magic-star { cursor: pointer; animation: starTwinkle 2s infinite ease-in-out; transform-origin: center; display: none; }
+    .magic-star { cursor: pointer; pointer-events: all; animation: starTwinkle 2s infinite ease-in-out; transform-origin: center; display: none; }
     .magic-star:hover { filter: drop-shadow(0 0 12px #fef08a) brightness(1.2); }
 
     .speech-bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid #432818; border-radius: 18px; padding: 6px 14px; font-family: 'Fredoka', sans-serif; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 0 #432818; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap; }
@@ -107,7 +107,6 @@
 <body>
 
 <div class="app-shell">
-  <!-- TOP HUD -->
   <div class="hud-card">
     <div class="hud-top">
       <div class="pet-title"><span>🐧 Vincenzo (Putignano 🇮🇹)</span><span class="lvl-badge" id="lvlBadge">Lv. 1</span></div>
@@ -126,18 +125,15 @@
       <div class="stat-box"><div class="stat-label"><span>🎲 Anti-Noia</span><span id="valBoredom">85%</span></div><div class="stat-progress"><div class="stat-fill" id="barBoredom" style="background:#a855f7;"></div></div></div>
     </div>
 
-    <!-- METEO & NOTTE -->
     <div class="sub-hud-bar">
       <span id="weatherHudText">☀️ Meteo Putignano (Italia): caricamento...</span>
       <span id="dayNightHudBadge">☀️ Giorno</span>
     </div>
 
-    <!-- PARTNER MOOD -->
     <div class="partner-mood-banner">
       <span id="vincenzoMoodStatus">🐧 Il pinguino Vincenzo si sente: <strong>Felice 😊</strong></span>
       <span id="sickCureHint" style="font-size:0.68rem; color:#9d0208;"></span>
     </div>
-
     <div class="neglect-alert" id="neglectAlert">⚠️ Non ti sei presa cura del tuo pinguino ieri!</div>
   </div>
 
@@ -162,7 +158,6 @@
 
     <svg class="room-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- PAESAGGIO ESTERNO GLOBALE -->
         <linearGradient id="mainSky" x1="0" y1="0" x2="0" y2="1">
           <stop id="bgStop1" offset="0%" stop-color="#90e0ef"/>
           <stop id="bgStop2" offset="100%" stop-color="#fff3b0"/>
@@ -189,19 +184,18 @@
         <g id="bgSun" opacity="1" style="transition:opacity 0.6s">
           <circle cx="340" cy="55" r="22" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
         </g>
-        <!-- STELLA DEI DESIDERI (COMPARE SOLO DI NOTTE) -->
+        <!-- STELLA DEI DESIDERI CON HITBOX INVISIBILE GIGANTE -->
         <g id="magicStarBtn" class="magic-star" transform="translate(70, 60)" onclick="openModal('nightWishModal')">
+          <circle cx="0" cy="0" r="35" fill="rgba(0,0,0,0)" />
           <path d="M 0,-15 L 4,-5 L 15,-5 L 6,2 L 9,13 L 0,6 L -9,13 L -6,2 L -15,-5 L -4,-5 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
         </g>
       </g>
 
       <!-- COLLINE PUGLIESI ESTERNE -->
       <path id="bgLandscape" d="M 0,160 Q 120,110 240,160 T 400,140 L 400,420 L 0,420 Z" fill="#74c69d"/>
-      
-      <!-- METEO GLOBALE ESTERNO (Nuvole/Pioggia/Neve) -->
       <g id="bgWeatherLayer"></g>
 
-      <!-- STRUTTURA DELLA CASA IN PRIMO PIANO -->
+      <!-- STRUTTURA DELLA CASA -->
       <polygon points="200,14 20,118 200,208 380,118" fill="#f4a261" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <polygon points="26,120 200,32 200,224 26,310" fill="#ffedd8" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
       <polygon points="200,32 374,120 374,310 200,224" fill="#f8edeb" stroke="#432818" stroke-width="4" stroke-linejoin="round"/>
@@ -219,7 +213,7 @@
       <circle cx="290" cy="86" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
       <circle cx="328" cy="108" r="4" fill="#ffe66d" stroke="#432818" stroke-width="1.5"/>
 
-      <!-- FINESTRA A OBLÒ -->
+      <!-- FINESTRA A OBLÒ TRASPARENTE -->
       <g transform="translate(122, 132) skewY(-26)">
         <circle cx="0" cy="0" r="32" fill="url(#mainSky)" stroke="#432818" stroke-width="3.5"/>
         <g clip-path="url(#portholeClip)">
@@ -236,9 +230,10 @@
         <circle cx="0" cy="0" r="32" fill="none" stroke="#432818" stroke-width="3"/>
       </g>
 
-      <!-- CALENDARIO CLICCABILE (Animato) -->
+      <!-- CALENDARIO CLICCABILE CON HITBOX GIGANTE INVISIBILE -->
       <g transform="translate(58, 168) skewY(-26)" onclick="openModal('calendarModal')">
         <g class="interactive-prop">
+          <rect x="-30" y="-30" width="60" height="60" fill="rgba(0,0,0,0)" />
           <rect x="-24" y="-26" width="48" height="52" rx="7" fill="#fff" stroke="#432818" stroke-width="2.8"/>
           <rect x="-24" y="-26" width="48" height="14" rx="5" fill="#00b4d8" stroke="#432818" stroke-width="2.5"/>
           <circle cx="-12" cy="-19" r="2" fill="#fff"/>
@@ -270,18 +265,20 @@
         <ellipse cx="10" cy="-6" rx="9" ry="5" fill="#ffb703" stroke="#432818" stroke-width="2"/>
       </g>
 
-      <!-- CASSETTA POSTA CLICCABILE (Animata) -->
+      <!-- CASSETTA POSTA CON HITBOX GIGANTE -->
       <g transform="translate(54, 282)" onclick="openModal('mailModal')">
         <g class="interactive-prop">
+          <rect x="-25" y="-30" width="50" height="70" fill="rgba(0,0,0,0)" />
           <rect x="-4" y="0" width="8" height="28" fill="#bc6c25" stroke="#432818" stroke-width="2.5"/>
           <rect x="-18" y="-22" width="36" height="24" rx="10" fill="#00b4d8" stroke="#432818" stroke-width="2.8"/>
           <rect x="-10" y="-14" width="20" height="5" rx="2" fill="#fff" stroke="#432818" stroke-width="2"/>
         </g>
       </g>
 
-      <!-- MENSOLA SMISKI CLICCABILE (Animata) -->
+      <!-- MENSOLA SMISKI CON HITBOX GIGANTE -->
       <g transform="translate(294, 146)" onclick="openModal('smiskiModal')">
         <g class="interactive-prop">
+          <polygon points="-70,-20 70,50 70,80 -70,10" fill="rgba(0,0,0,0)" />
           <g transform="translate(0, -6)">
             <polygon points="-60,-16 60,42 60,50 -60,-8" fill="#d4a373" stroke="#432818" stroke-width="2.5" stroke-linejoin="round"/>
             <line x1="-44" y1="-8" x2="-44" y2="4" stroke="#432818" stroke-width="3"/>
@@ -304,9 +301,10 @@
         <ellipse cx="8" cy="-4" rx="14" ry="7" fill="#fff" stroke="#432818" stroke-width="2.2"/>
       </g>
 
-      <!-- TAVOLINO ALBUM CLICCABILE (Animato) -->
+      <!-- TAVOLINO ALBUM CON HITBOX GIGANTE -->
       <g transform="translate(336, 288)" onclick="openModal('albumModal')">
         <g class="interactive-prop">
+          <circle cx="0" cy="0" r="35" fill="rgba(0,0,0,0)" />
           <ellipse cx="0" cy="4" rx="26" ry="14" fill="#d4a373" stroke="#432818" stroke-width="2.8"/>
           <rect x="-18" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
           <rect x="13" y="14" width="5" height="16" fill="#bc6c25" stroke="#432818" stroke-width="2"/>
@@ -318,8 +316,8 @@
         </g>
       </g>
 
-      <ellipse cx="200" cy="328" rx="64" ry="30" fill="#ffcad4" stroke="#432818" stroke-width="2.8"/>
-      <ellipse cx="200" cy="328" rx="48" ry="20" fill="#ffe5ec" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
+      <ellipse cx="200" cy="328" rx="64" ry="30" fill="#bde0fe" stroke="#432818" stroke-width="2.8"/>
+      <ellipse cx="200" cy="328" rx="48" ry="20" fill="#e2ece9" stroke="#432818" stroke-width="2" stroke-dasharray="5 4"/>
 
       <!-- VINCENZO THE PENGUIN -->
       <g id="petCharacter" transform="translate(200, 330)">
@@ -347,11 +345,11 @@
     <button class="care-btn gift" onclick="performCare('gift')"><span>🎮</span><span>Fumetto</span></button>
   </div>
   <div class="bottom-tools">
-    <button class="tool-btn" onclick="openModal('smiskiModal')">✨ Smiski Full-Body</button>
+    <button class="tool-btn" onclick="openModal('adminModal')">⚙️ Admin</button>
   </div>
 </div>
 
-<!-- MODAL NIGHT WISHES (NOTTE STELLATA) -->
+<!-- MODALS -->
 <div class="modal-backdrop" id="nightWishModal">
   <div class="modal-box" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%); border-color: #e2e8f0; color:#fff;">
     <div class="modal-head" style="background: transparent; border-bottom: 2px solid rgba(255,255,255,0.2); color:#fff;">
@@ -368,15 +366,11 @@
     </div>
   </div>
 </div>
-
-<!-- CALENDAR -->
 <div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario</span><button class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
-<!-- MAIL -->
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Vincenzo)</span><button class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
-<!-- ALBUM -->
 <div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
-<!-- SMISKI COLLECTION -->
 <div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ I <strong>5 Stelle (5★)</strong> poggiano sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
+<div class="modal-backdrop" id="adminModal"><div class="modal-box"><div class="modal-head" style="background:#bde0fe;"><span>⚙️ Admin</span><button class="close-btn" onclick="closeModal('adminModal')">✕</button></div><div class="modal-body"><div id="adminLockBox"><p style="font-size:0.85rem; font-weight:700; margin-bottom:8px;">Password amministratore:</p><div class="input-row"><input type="password" id="adminPassInput" class="text-input" placeholder="Password..." /><button class="action-pill" onclick="unlockAdmin()">Sblocca 🔓</button></div></div><div id="adminControlsBox" style="display:none; flex-direction:column; gap:12px;"><div style="background:#d8f3dc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="font-weight:700; font-size:0.86rem; margin-bottom:8px;">⭐ Livelli & XP</div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🦥 Debby</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminDebbyLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminDebbyXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('debby', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('debby', 10)">+10 Lv</button></div></div><div style="background:#fff; border:2px solid #432818; border-radius:10px; padding:8px; margin-bottom:8px;"><div style="font-size:0.78rem; font-weight:700; margin-bottom:5px;">🐧 Vincenzo</div><div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;"><label style="font-size:0.72rem; font-weight:700;">Lv:</label><input type="number" id="adminVincenzoLvl" min="1" class="text-input" style="padding:5px; width:65px;" /><label style="font-size:0.72rem; font-weight:700;">XP:</label><input type="number" id="adminVincenzoXp" min="0" max="99" class="text-input" style="padding:5px; width:60px;" /></div><div style="display:flex; gap:5px;"><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 1)">+1 Lv</button><button class="mini-btn" onclick="quickAdjustLevel('vincenzo', 10)">+10 Lv</button></div></div><div style="display:flex; gap:6px;"><button class="action-pill" style="flex:1; background:#52b788; color:#fff;" onclick="saveAdminLevels()">💾 Salva</button><button class="action-pill" style="flex:1; background:#ffb703;" onclick="resetDailyLevelCap()">🔓 Azzera Limiti</button></div></div><div style="background:#fefae0; border:2.5px solid #432818; border-radius:14px; padding:10px;"><label style="font-size:0.75rem; font-weight:700;">Data Inizio:</label><input type="date" id="adminStartDate" class="text-input" style="width:100%; margin-bottom:6px;"/><label style="font-size:0.75rem; font-weight:700;">Data Fine:</label><input type="date" id="adminTargetDate" class="text-input" style="width:100%; margin-bottom:8px;"/><button class="action-pill" style="width:100%;" onclick="saveAdminDates()">💾 Salva Date</button></div><div style="background:#e0fbfc; border:2.5px solid #432818; border-radius:14px; padding:10px;"><div style="display:flex; gap:8px;"><button class="action-pill" style="flex:1;" onclick="exportBackup()">⬇️ Esporta Backup</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)"/><button class="action-pill" style="flex:1;" onclick="document.getElementById('importFile').click()">⬆️ Importa</button></div></div><div style="background:#ffe5ec; border:2.5px solid #432818; border-radius:14px; padding:10px;"><button class="action-pill" style="width:100%; background:#ef233c; color:#fff;" onclick="triggerOfficialReset()">🔄 Resetta Inizio a Ora</button></div></div></div></div></div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
@@ -437,7 +431,8 @@
     document.getElementById("neglectAlert").style.display = (v.neglectWarningDate === today) ? "block" : "none";
     document.getElementById("packCountBadge").textContent = Math.max(0, Math.floor(v.level / 10) - (state.deborahPacksClaimed || 0)); document.getElementById("packModalCount").textContent = Math.max(0, Math.floor(v.level / 10) - (state.deborahPacksClaimed || 0));
 
-    // POSIZIONAMENTO CORRETTO SULLA MENSOLA DI DESTRA IN PROSPETTIVA ISOMETRICA
+    const debLvlInp = document.getElementById("adminDebbyLvl"); if (debLvlInp && document.activeElement !== debLvlInp) { debLvlInp.value = d.level; document.getElementById("adminDebbyXp").value = d.xp; document.getElementById("adminVincenzoLvl").value = v.level; document.getElementById("adminVincenzoXp").value = v.xp; }
+
     const shelfGroup = document.getElementById("shelfFiveStarGroup"); shelfGroup.innerHTML = "";
     const unlockedIds = state.deborahSmiskiUnlocked || []; const fiveStarUnlocked = SMISKI_CATALOG.filter(s => unlockedIds.includes(s.id) && s.stars === 5);
     fiveStarUnlocked.slice(0, 12).forEach((smiski, idx) => {
@@ -473,7 +468,15 @@
   window.sendChatMessage = function() { const i = document.getElementById("chatInput"); if (!i.value.trim()) return; state.messages.push({ sender: "Deborah", text: i.value.trim(), ts: Date.now() }); i.value = ""; saveState(true); };
   window.sendWish = function() { const i = document.getElementById("wishInput"); if (!i.value.trim()) return; state.wishes.push({ sender: "Deborah", text: i.value.trim(), ts: Date.now() }); i.value = ""; saveState(true); };
   window.handlePhotoUpload = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement("canvas"); const scale = Math.min(1, 480 / img.width); canvas.width = img.width * scale; canvas.height = img.height * scale; canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() }); document.getElementById("photoCaption").value = ""; saveState(true); }; img.src = ev.target.result; }; reader.readAsDataURL(file); };
-  
+  window.unlockAdmin = function() { const p = document.getElementById("adminPassInput").value.trim(); if (p === "admin123" || p === "pocketcare2026") { document.getElementById("adminLockBox").style.display = "none"; document.getElementById("adminControlsBox").style.display = "flex"; document.getElementById("adminDebbyLvl").value = state.debby.level || 1; document.getElementById("adminDebbyXp").value = state.debby.xp || 0; document.getElementById("adminVincenzoLvl").value = state.vincenzo.level || 1; document.getElementById("adminVincenzoXp").value = state.vincenzo.xp || 0; document.getElementById("adminStartDate").value = state.startDate || todayStr(); document.getElementById("adminTargetDate").value = state.targetDate || "2027-05-11"; } else alert("Password errata!"); };
+  window.quickAdjustLevel = function(who, delta) { const inp = document.getElementById(who === "debby" ? "adminDebbyLvl" : "adminVincenzoLvl"); inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) + delta); };
+  window.saveAdminLevels = function() { state.debby.level = Math.max(1, parseInt(document.getElementById("adminDebbyLvl").value, 10) || 1); state.debby.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminDebbyXp").value, 10) || 0)); state.vincenzo.level = Math.max(1, parseInt(document.getElementById("adminVincenzoLvl").value, 10) || 1); state.vincenzo.xp = Math.min(99, Math.max(0, parseInt(document.getElementById("adminVincenzoXp").value, 10) || 0)); if ((state.vincenzoPacksClaimed || 0) > Math.floor(state.debby.level / 10)) state.vincenzoPacksClaimed = Math.floor(state.debby.level / 10); if ((state.deborahPacksClaimed || 0) > Math.floor(state.vincenzo.level / 10)) state.deborahPacksClaimed = Math.floor(state.vincenzo.level / 10); saveState(true); alert("✅ Livelli salvati!"); };
+  window.resetDailyLevelCap = function() { state.debby.dailyLvlsGained = 0; state.vincenzo.dailyLvlsGained = 0; saveState(true); alert("🔓 Limiti azzerati!"); };
+  window.saveAdminDates = function() { state.startDate = document.getElementById("adminStartDate").value; state.targetDate = document.getElementById("adminTargetDate").value; saveState(true); alert("✅ Date salvate!"); };
+  window.exportBackup = function() { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: "application/json" })); a.download = `tamalove_backup.json`; a.click(); };
+  window.importBackup = function(e) { const r = new FileReader(); r.onload = function(ev) { try { state = { ...getDefaultState(), ...JSON.parse(ev.target.result) }; saveState(true); alert("✅ Backup ripristinato!"); } catch (err) { alert("File non valido."); } }; r.readAsText(e.target.files[0]); };
+  let rcs = 0; window.triggerOfficialReset = function() { if (rcs === 0) { rcs = 1; alert("⚠️ Conferma reset totale entro 10 sec."); setTimeout(() => rcs = 0, 10000); return; } state = getDefaultState(); state.lastResetAt = Date.now(); saveState(true); alert("🎉 Partita resettata!"); };
+
   const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup"); let petX = 200, petY = 330;
   setInterval(() => {
     const tgts = [{x:200,y:330}, {x:158,y:322}, {x:242,y:322}, {x:180,y:344}, {x:222,y:344}], n = tgts[Math.floor(Math.random()*tgts.length)], dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
@@ -481,13 +484,32 @@
   }, 4200); setInterval(() => saveState(false), 60000);
 
   function updateWindowScene(isDay, weatherCode, temp) {
-    const s1 = document.getElementById("skyStop1"), s2 = document.getElementById("skyStop2"), sun = document.getElementById("winSunGroup"), moon = document.getElementById("winMoonGroup"), stars = document.getElementById("winStarsGroup"), hills = document.getElementById("winHills"), wl = document.getElementById("bgWeatherLayer"), wlL = document.getElementById("winWeatherLayer"), bdg = document.getElementById("dayNightHudBadge");
+    const s1 = document.getElementById("bgStop1"), s2 = document.getElementById("bgStop2"), sun = document.getElementById("bgSun"), moon = document.getElementById("bgMoon"), stars = document.getElementById("bgStars"), hills = document.getElementById("bgLandscape"), wl = document.getElementById("bgWeatherLayer"), wlL = document.getElementById("winWeatherLayer"), bdg = document.getElementById("dayNightHudBadge");
+    
+    const winSun = document.getElementById("winSunGroup"), winMoon = document.getElementById("winMoonGroup"), winStars = document.getElementById("winStarsGroup"), winHills = document.getElementById("winHills"), winWl = document.getElementById("winWeatherLayer");
+
     isItalyNight = !isDay;
-    if (isDay) { s1.setAttribute("stop-color", "#48cae4"); s2.setAttribute("stop-color", "#fff3b0"); sun.setAttribute("opacity", "1"); moon.setAttribute("opacity", "0"); stars.setAttribute("opacity", "0"); hills.setAttribute("fill", "#74c69d"); bdg.textContent = "☀️ Giorno (Live)"; } else { s1.setAttribute("stop-color", "#0f172a"); s2.setAttribute("stop-color", "#1e3a8a"); sun.setAttribute("opacity", "0"); moon.setAttribute("opacity", "1"); stars.setAttribute("opacity", "1"); hills.setAttribute("fill", "#1b4332"); bdg.textContent = "🌙 Notte (Live)"; }
+    if (isDay) { 
+      s1.setAttribute("stop-color", "#48cae4"); s2.setAttribute("stop-color", "#fff3b0"); 
+      sun.setAttribute("opacity", "1"); moon.setAttribute("opacity", "0"); stars.setAttribute("opacity", "0"); 
+      hills.setAttribute("fill", "#74c69d"); bdg.textContent = "☀️ Giorno (Live)"; 
+      
+      winSun.setAttribute("opacity", "1"); winMoon.setAttribute("opacity", "0"); winStars.setAttribute("opacity", "0"); winHills.setAttribute("fill", "#74c69d");
+    } else { 
+      s1.setAttribute("stop-color", "#0f172a"); s2.setAttribute("stop-color", "#1e3a8a"); 
+      sun.setAttribute("opacity", "0"); moon.setAttribute("opacity", "1"); stars.setAttribute("opacity", "1"); 
+      hills.setAttribute("fill", "#1b4332"); bdg.textContent = "🌙 Notte (Live)"; 
+
+      winSun.setAttribute("opacity", "0"); winMoon.setAttribute("opacity", "1"); winStars.setAttribute("opacity", "1"); winHills.setAttribute("fill", "#1b4332");
+    }
+
     let svg = "", desc = "Sereno", icn = isDay ? "☀️" : "🌙";
     if (weatherCode >= 1 && weatherCode <= 3) { desc = "Nuvoloso"; icn = isDay ? "⛅" : "☁️"; const cCol = isDay ? "#ffffff" : "#94a3b8"; svg = `<g opacity="0.85"><ellipse cx="80" cy="40" rx="45" ry="20" fill="${cCol}"/><ellipse cx="320" cy="50" rx="55" ry="25" fill="${cCol}"/></g>`; } else if (weatherCode >= 45 && weatherCode <= 67) { desc = "Pioggia"; icn = "🌧️"; svg = `<g stroke="#38bdf8" stroke-width="1.5" opacity="0.6"><line x1="50" y1="0" x2="30" y2="100"/><line x1="150" y1="0" x2="130" y2="120"/><line x1="250" y1="0" x2="230" y2="110"/><line x1="350" y1="0" x2="330" y2="90"/><line x1="90" y1="50" x2="70" y2="150"/><line x1="290" y1="40" x2="270" y2="140"/></g>`; } else if (weatherCode >= 71) { desc = "Neve"; icn = "❄️"; svg = `<g fill="#fff" opacity="0.8"><circle cx="60" cy="30" r="3"/><circle cx="140" cy="70" r="2.5"/><circle cx="260" cy="40" r="3.5"/><circle cx="340" cy="80" r="2"/><circle cx="90" cy="110" r="2"/><circle cx="310" cy="120" r="3"/></g>`; }
-    wl.innerHTML = svg; wlL.innerHTML = svg; document.getElementById("weatherHudText").textContent = `${icn} Meteo Putignano (Italia): ${temp}°C • ${desc}`;
-    renderAll();
+    
+    wl.innerHTML = svg; 
+    winWl.innerHTML = svg; 
+    document.getElementById("weatherHudText").textContent = `${icn} Meteo Putignano (Italia): ${temp}°C • ${desc}`;
+    renderAll(); 
   }
   async function fetchLiveWeather() {
     try {
