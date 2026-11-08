@@ -378,4 +378,249 @@
 
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Vincenzo)</span><button class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
 
-<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none"
+<div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
+
+<div class="modal-backdrop" id="smiskiModal"><div class="modal-box"><div class="modal-head"><span>✨ 60 Smiski Full-Body</span><button class="close-btn" onclick="closeModal('smiskiModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Gli Smiski a <strong>5 Stelle (5★)</strong> compaiono appoggiati sulla mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
+
+<!-- MOTORE PRINCIPALE IMMEDIATO (Indipendente dalla rete, garantisce che clic e camminata del pinguino funzionino sempre!) -->
+<script>
+  window.openModal = function(id) { var el = document.getElementById(id); if (el) el.classList.add("open"); };
+  window.closeModal = function(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); };
+
+  const UNIQUE_SMISKI_LIST = [{ name: "Smiski Curioso (Mutandina)", prop: "" }, { name: "Smiski Lampada", prop: "" }, { name: "Smiski Trasloco 3 Scatole", prop: "" }, { name: "Smiski Sdraiato Fragile", prop: "" }, { name: "Smiski Pensatore Seduto", prop: "💭" }, { name: "Smiski Abbraccia Ginocchia", prop: "🌿" }, { name: "Smiski Yoga Loto", prop: "🧘" }, { name: "Smiski Peso Bilanciere", prop: "🏋️" }, { name: "Smiski Lettore Libro", prop: "📗" }, { name: "Smiski Dormiglione", prop: "💤" }, { name: "Smiski Hula Hoop", prop: "⭕" }, { name: "Smiski Skateboarder", prop: "🛹" }, { name: "Smiski Pittore", prop: "🖌️" }, { name: "Smiski Piantina", prop: "🌱" }, { name: "Smiski Gatto Spalla", prop: "🐱" }, { name: "Smiski Tamburello", prop: "🥁" }, { name: "Smiski Flauto", prop: "🪈" }, { name: "Smiski Chitarra", prop: "🎸" }, { name: "Smiski Cuffie", prop: "🎧" }, { name: "Smiski Aereoplanino", prop: "✈️" }, { name: "Smiski Scatola Segreta", prop: "📦" }, { name: "Smiski Spazzolino", prop: "🪥" }, { name: "Smiski Specchietto", prop: "🪞" }, { name: "Smiski Sapone Bolle", prop: "🫧" }, { name: "Smiski Turbante", prop: "🧖" }, { name: "Smiski Paperella", prop: "🦆" }, { name: "Smiski Caffè", prop: "☕" }, { name: "Smiski Laptop", prop: "💻" }, { name: "Smiski Telefono", prop: "📞" }, { name: "Smiski Matita", prop: "✏️" }, { name: "Smiski Lampadina", prop: "💡" }, { name: "Smiski Sveglia", prop: "⏰" }, { name: "Smiski Chiave", prop: "🔑" }, { name: "Smiski Lente", prop: "🔍" }, { name: "Smiski Zainetto", prop: "🎒" }, { name: "Smiski Fotocamera", prop: "📷" }, { name: "Smiski Binocolo", prop: "🔭" }, { name: "Smiski Ombrello", prop: "☂️" }, { name: "Smiski Lanterna", prop: "🏮" }, { name: "Smiski Candela", prop: "🕯️" }, { name: "Smiski Stella", prop: "⭐" }, { name: "Smiski Mezzaluna", prop: "🌙" }, { name: "Smiski Sole", prop: "☀️" }, { name: "Smiski Arcobaleno", prop: "🌈" }, { name: "Smiski Fiorellino", prop: "🌼" }, { name: "Smiski Quadrifoglio", prop: "🍀" }, { name: "Smiski Funghetto", prop: "🍄" }, { name: "Smiski Cactus", prop: "🌵" }, { name: "Smiski Farfalla", prop: "🦋" }, { name: "Smiski Conchiglia", prop: "🐚" }, { name: "Smiski Salvagente", prop: "🛟" }, { name: "Smiski Surf", prop: "🏄" }, { name: "Smiski Pescatore", prop: "🎣" }, { name: "Smiski Sciatore", prop: "⛷️" }, { name: "Smiski Regalo", prop: "🎁" }, { name: "Smiski Palloncino", prop: "🎈" }, { name: "Smiski Corona", prop: "👑" }, { name: "Smiski Trofeo", prop: "🏆" }, { name: "Smiski Lettera", prop: "💌" }, { name: "Smiski Cuore Custode", prop: "💚" }];
+  
+  function renderSmiskiSvg(id, size = 34) {
+    const idx = id - 1; const item = UNIQUE_SMISKI_LIST[idx]; const poseType = idx % 8; const bodyCol = "#dfee97"; const shadeCol = "#bdd269"; const darkGreen = "#1b4332"; const propGreen = "#6a994e"; const propDark = "#4a7c59"; let figure = "";
+    if (poseType === 0) { figure = `<path d="M -4,4 L -5,12 C -5,14 -1,14 -1,12 L 0,5 Z" fill="${shadeCol}"/><path d="M 1,4 L 0,13 C 0,15 5,15 5,13 L 4,4 Z" fill="${bodyCol}"/><path d="M -6,1 C -6,6 5,6 5,1 L 4,-1 L -5,-1 Z" fill="${propGreen}"/><path d="M -5,0 C -6,-8 4,-10 5,-1 Z" fill="${bodyCol}"/><path d="M -1,-7 C -3,-2 -3,3 0,3 C 2,3 2,-2 1,-7 Z" fill="${shadeCol}"/><circle cx="3" cy="-13" r="7.5" fill="${bodyCol}"/><circle cx="1" cy="-12" r="1.1" fill="${darkGreen}"/><circle cx="6" cy="-11" r="1.1" fill="${darkGreen}"/><line x1="2" y1="-8.5" x2="5" y2="-8" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 1) { figure = `<rect x="-5" y="4" width="4" height="10" rx="2" fill="${bodyCol}"/><rect x="0" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5.5" y="-6" width="10" height="11" rx="4" fill="${bodyCol}"/><line x1="-11" y1="-15" x2="4" y2="12" stroke="${propDark}" stroke-width="1.8"/><line x1="0" y1="14" x2="8" y2="10" stroke="${propGreen}" stroke-width="2.2" stroke-linecap="round"/><polygon points="-16,-12 -6,-17 -9,-22 -18,-18" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M -4,-4 Q -9,-3 -6,0" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><path d="M 3,-3 Q 0,3 -2,4" fill="none" stroke="${shadeCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-13" r="7.2" fill="${bodyCol}"/><circle cx="-3" cy="-14" r="1" fill="${darkGreen}"/><circle cx="2" cy="-13" r="1" fill="${darkGreen}"/><line x1="-2" y1="-10" x2="1" y2="-9.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 2) { figure = `<path d="M -2,4 L -6,13" stroke="${bodyCol}" stroke-width="4" stroke-linecap="round"/><path d="M 2,4 L 7,10 L 9,7" fill="none" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><rect x="-3" y="-6" width="8" height="11" rx="3.5" fill="${bodyCol}"/><rect x="-12" y="-3" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-10" width="8" height="7" fill="#80ed99" stroke="${propDark}" stroke-width="1"/><rect x="-12" y="-17" width="8" height="7" fill="${propGreen}" stroke="${propDark}" stroke-width="1"/><path d="M 2,-2 Q -4,0 -7,-1" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="3" cy="-13" r="7" fill="${bodyCol}"/><circle cx="1" cy="-15" r="1" fill="${darkGreen}"/><circle cx="5" cy="-13" r="1" fill="${darkGreen}"/><line x1="1" y1="-11" x2="4" y2="-10" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 3) { figure = `<ellipse cx="3" cy="6" rx="7" ry="4" fill="${bodyCol}"/><path d="M 8,5 L 13,0" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 6,7 L 10,2" stroke="${bodyCol}" stroke-width="3.5" stroke-linecap="round"/><polygon points="-13,3 -2,0 4,3 -7,6" fill="#80ed99" stroke="${propDark}" stroke-width="0.9"/><polygon points="-13,3 -7,6 -7,14 -13,11" fill="${propGreen}" stroke="${propDark}" stroke-width="0.9"/><polygon points="-7,6 4,3 4,11 -7,14" fill="${propDark}" stroke="${propDark}" stroke-width="0.9"/><circle cx="2" cy="6" r="2.2" fill="${bodyCol}"/><circle cx="0" cy="-3" r="7.2" fill="${bodyCol}"/><circle cx="-2.5" cy="-3" r="1" fill="${darkGreen}"/><circle cx="2.5" cy="-2" r="1" fill="${darkGreen}"/><line x1="-1.5" y1="0.8" x2="1.5" y2="1.2" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 4) { figure = `<ellipse cx="-3" cy="6" rx="4" ry="6" fill="${shadeCol}"/><ellipse cx="3" cy="6" rx="4" ry="6" fill="${bodyCol}"/><ellipse cx="-3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><ellipse cx="3" cy="12" rx="3" ry="1.8" fill="${bodyCol}"/><path d="M -6,2 Q 0,7 6,2" fill="none" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-6" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-6" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-6" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-2.5" x2="1.8" y2="-2.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 5) { figure = `<rect x="-4" y="-3" width="8" height="10" rx="3.5" fill="${bodyCol}"/><path d="M -3,6 L -6,13 M 3,6 L 6,13" stroke="${shadeCol}" stroke-width="3.8" stroke-linecap="round"/><path d="M 3,0 Q 8,-3 2,-6" fill="none" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else if (poseType === 6) { figure = `<rect x="-4.5" y="4" width="4" height="9" rx="2" fill="${bodyCol}"/><rect x="0.5" y="4" width="4" height="9" rx="2" fill="${shadeCol}"/><rect x="-5" y="-5" width="10" height="10" rx="4" fill="${bodyCol}"/><path d="M -5,-2 L -10,-9 M 5,-2 L 10,-9" stroke="${bodyCol}" stroke-width="3.2" stroke-linecap="round"/><circle cx="0" cy="-12" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-12" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-12" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-8.5" x2="1.8" y2="-8.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; } else { figure = `<rect x="-4.5" y="-4" width="9" height="10" rx="4" fill="${bodyCol}"/><ellipse cx="-5" cy="8" rx="5" ry="2.5" fill="${shadeCol}"/><ellipse cx="5" cy="8" rx="5" ry="2.5" fill="${bodyCol}"/><path d="M -4,0 L -8,5 M 4,0 L 8,5" stroke="${bodyCol}" stroke-width="3" stroke-linecap="round"/><circle cx="0" cy="-11" r="7.2" fill="${bodyCol}"/><circle cx="-2.8" cy="-11" r="1" fill="${darkGreen}"/><circle cx="2.8" cy="-11" r="1" fill="${darkGreen}"/><line x1="-1.8" y1="-7.5" x2="1.8" y2="-7.5" stroke="${darkGreen}" stroke-width="1.2" stroke-linecap="round"/>`; }
+    return `<svg width="${size}" height="${size}" viewBox="-18 -24 36 40" style="overflow:visible"><ellipse cx="0" cy="14" rx="9" ry="2.5" fill="rgba(67,40,24,0.16)"/>${figure}${item.prop ? `<text x="10" y="10" text-anchor="middle" font-size="9">${item.prop}</text>` : ""}</svg>`;
+  }
+
+  const SMISKI_CATALOG = UNIQUE_SMISKI_LIST.map((item, i) => ({ id: i + 1, name: item.name, prop: item.prop, stars: (i % 5 === 4) ? 5 : ((i % 4) + 1) }));
+  const MOOD_LABELS = { felice: "Felice 😊", triste: "Triste 😢", affamata: "Affamata 🥞", affamato: "Affamato 🍫", malata: "Malata 🤒", malato: "Malato 🤒", annoiata: "Annoiata 🥱", annoiato: "Annoiato 🥱", mancanza: "Sento la tua mancanza 🥺" };
+  const STORAGE_KEY = "tamalove_shared_v2";
+  let isNorwayNight = false, isItalyNight = false;
+
+  function todayStr() { return new Date().toISOString().slice(0, 10); }
+  window.getDefaultState = function() { const t = todayStr(); return { startDate: t, targetDate: "2027-05-11", lastResetAt: 0, debby: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzo: { level: 1, xp: 0, love: 85, food: 80, happy: 90, boredom: 85, feeling: "felice", sickNeeds: { cuddle: false, food: false, gift: false }, dailyLvlsDate: t, dailyLvlsGained: 0, moodLogDate: t, moodLogCount: 0, lastCheckDay: t, neglectWarningDate: "" }, vincenzoPlantsUnlocked: [], vincenzoPacksClaimed: 0, deborahSmiskiUnlocked: [], deborahPacksClaimed: 0, messages: [{ sender: "Vincenzo", text: "Ciao amore! Prenditi cura del tuo pinguino! 🐧💕", ts: Date.now() }], photos: [], wishes: [] }; };
+  window.normalizePet = function(pet) { const def = window.getDefaultState().vincenzo; const merged = { ...def, ...(pet || {}) }; if (typeof merged.happy !== "number") merged.happy = typeof merged.mood === "number" ? merged.mood : 90; if (typeof merged.boredom !== "number") merged.boredom = 85; if (!merged.sickNeeds) merged.sickNeeds = { cuddle: false, food: false, gift: false }; return merged; };
+  
+  function loadLocalState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("tamalove_shared_v3");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const def = window.getDefaultState();
+        return { ...def, ...parsed, wishes: parsed.wishes || [], debby: window.normalizePet(parsed.debby), vincenzo: window.normalizePet(parsed.vincenzo) };
+      }
+    } catch (e) {}
+    return window.getDefaultState();
+  }
+
+  window.state = loadLocalState();
+
+  window.evaluateMidnightHalfCheck = function() {
+    const now = new Date(), today = todayStr(), v = window.state.vincenzo, isPastHalfMidnight = (now.getHours() > 0) || (now.getHours() === 0 && now.getMinutes() >= 30);
+    if (v.lastCheckDay !== today && isPastHalfMidnight) { if (v.love < 50 || v.food < 50 || v.happy < 50 || v.boredom < 50) v.neglectWarningDate = today; v.lastCheckDay = today; }
+    if (v.dailyLvlsDate !== today) { v.dailyLvlsDate = today; v.dailyLvlsGained = 0; }
+    if (window.state.debby.moodLogDate !== today) { window.state.debby.moodLogDate = today; window.state.debby.moodLogCount = 0; }
+  };
+
+  window.saveState = function(pushToCloud = true) {
+    window.evaluateMidnightHalfCheck();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(window.state));
+    window.renderAll();
+    if (pushToCloud && window.pushCloudState) window.pushCloudState();
+  };
+
+  window.renderAll = function() {
+    const v = window.state.vincenzo, d = window.state.debby, today = todayStr();
+    document.getElementById("lvlBadge").textContent = `Lv. ${v.level}`;
+    document.getElementById("xpFill").style.width = `${Math.min(100, v.xp)}%`;
+    document.getElementById("dailyCapLabel").textContent = `Oggi: ${v.dailyLvlsGained || 0}/6 Lv`;
+    document.getElementById("valLove").textContent = `${v.love}%`; document.getElementById("barLove").style.width = `${v.love}%`;
+    document.getElementById("valFood").textContent = `${v.food}%`; document.getElementById("barFood").style.width = `${v.food}%`;
+    document.getElementById("valHappy").textContent = `${v.happy}%`; document.getElementById("barHappy").style.width = `${v.happy}%`;
+    document.getElementById("valBoredom").textContent = `${v.boredom}%`; document.getElementById("barBoredom").style.width = `${v.boredom}%`;
+    document.getElementById("vincenzoMoodStatus").innerHTML = `🐧 Il pinguino Vincenzo si sente: <strong>${MOOD_LABELS[v.feeling] || "Felice 😊"}</strong>`;
+    
+    if (v.feeling === "malato" || v.feeling === "malata") {
+      const sn = v.sickNeeds || {};
+      const missing = [!sn.cuddle?"Coccole":null, !sn.food?"M&M's":null, !sn.gift?"Fumetto":null].filter(Boolean);
+      document.getElementById("sickCureHint").textContent = missing.length ? `Serve mix: ${missing.join(" + ")}` : "";
+    } else {
+      document.getElementById("sickCureHint").textContent = "";
+    }
+
+    document.getElementById("myMoodUses").textContent = `(${d.moodLogDate === today ? (d.moodLogCount || 0) : 0}/2 oggi)`;
+    document.getElementById("neglectAlert").style.display = (v.neglectWarningDate === today) ? "block" : "none";
+    
+    const availPacks = Math.max(0, Math.floor(v.level / 10) - (window.state.deborahPacksClaimed || 0));
+    const packModalEl = document.getElementById("packModalCount");
+    if (packModalEl) packModalEl.textContent = availPacks;
+
+    const shelfGroup = document.getElementById("shelfFiveStarGroup");
+    shelfGroup.innerHTML = "";
+    const unlockedIds = window.state.deborahSmiskiUnlocked || [];
+    const fiveStarUnlocked = SMISKI_CATALOG.filter(s => unlockedIds.includes(s.id) && s.stars === 5);
+    fiveStarUnlocked.slice(0, 12).forEach((smiski, idx) => {
+      const row = idx < 6 ? 0 : 1;
+      const col = idx % 6;
+      const xPos = -48 + (col * 19);
+      const ySurface = (row === 0 ? -18 : 14) + (xPos * 0.483);
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("transform", `translate(${xPos}, ${ySurface - 16}) scale(0.65)`);
+      g.innerHTML = renderSmiskiSvg(smiski.id, 32);
+      shelfGroup.appendChild(g);
+    });
+
+    const now = new Date(), monthsShort = ["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"];
+    document.getElementById("wallCalDay").textContent = `${String(now.getDate()).padStart(2, "0")} ${monthsShort[now.getMonth()]}`;
+    document.getElementById("wallCalYear").textContent = `${now.getFullYear()}`;
+    document.getElementById("todayDateLabel").textContent = now.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" });
+    const target = new Date(window.state.targetDate || "2027-05-11");
+    const diffDays = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+    document.getElementById("countdownBig").textContent = `${diffDays} Giorni`;
+    document.getElementById("targetDateDisplay").textContent = `Obiettivo: ${target.toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric" })}`;
+
+    const chatList = document.getElementById("chatList");
+    chatList.innerHTML = (window.state.messages || []).map(m => `<div class="chat-msg ${m.sender === 'Deborah' ? 'me' : 'partner'}"><strong>${m.sender}:</strong> ${m.text}</div>`).join("");
+    chatList.scrollTop = chatList.scrollHeight;
+    
+    const wishList = document.getElementById("wishList");
+    wishList.innerHTML = (window.state.wishes || []).map(w => `<div class="wish-msg"><span>${w.sender === 'Deborah' ? '🦥' : '🐧'}</span> ${w.text}</div>`).join("") || `<div style="text-align:center; font-size:0.8rem; color:#cbd5e1; margin-top:20px;">Ancora nessun desiderio espresso... sii la prima!</div>`;
+    wishList.scrollTop = wishList.scrollHeight;
+
+    const photoGrid = document.getElementById("photoGrid");
+    photoGrid.innerHTML = (window.state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
+    
+    const colGrid = document.getElementById("collectionGrid");
+    colGrid.innerHTML = SMISKI_CATALOG.map(s => `<div class="col-item ${unlockedIds.includes(s.id) ? '' : 'locked'} ${s.stars === 5 ? 'five-star' : ''}"><div style="height:40px;display:flex;align-items:center;justify-content:center;">${unlockedIds.includes(s.id) ? renderSmiskiSvg(s.id, 38) : '🔒'}</div><div>#${s.id} ${s.name}</div><div style="color:#d97706;">${"⭐".repeat(s.stars)}</div></div>`).join("");
+    
+    const btnNight = document.getElementById("magicStarBtn");
+    if (btnNight) btnNight.style.display = (isNorwayNight && isItalyNight) ? "block" : "none";
+  };
+
+  function showSpeech(text) { const b = document.getElementById("speechBubble"); b.textContent = text; b.classList.add("show"); clearTimeout(window._speechTimer); window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200); }
+  window.sendMyMood = function(moodKey) { const d = window.state.debby; if (d.moodLogDate !== todayStr()) { d.moodLogDate = todayStr(); d.moodLogCount = 0; } if (d.moodLogCount >= 2) return alert("Massimo 2 volte al giorno!"); d.moodLogCount++; d.feeling = moodKey; d.sickNeeds = { cuddle: false, food: false, gift: false }; if (moodKey === "felice") d.happy = Math.min(100, d.happy + 15); else if (moodKey === "triste") d.happy = Math.max(0, d.happy - 55); else if (moodKey === "affamata") d.food = 0; else if (moodKey === "mancanza") d.love = 0; else if (moodKey === "annoiata") d.boredom = 0; else if (moodKey === "malata") { d.love = 0; d.food = 0; d.happy = 0; d.boredom = 0; } window.saveState(true); showSpeech(`Hai inviato a Vincenzo: ${MOOD_LABELS[moodKey]}!`); };
+  window.performCare = function(type) { const v = window.state.vincenzo, fx = document.getElementById("petFx"); if (v.dailyLvlsDate !== todayStr()) { v.dailyLvlsDate = todayStr(); v.dailyLvlsGained = 0; } if (type === "cuddle") { v.love = Math.min(100, v.love + 25); v.happy = Math.min(100, v.happy + 14); if (v.sickNeeds) v.sickNeeds.cuddle = true; fx.textContent = "🤗💖"; showSpeech("Coccole! 💕"); } else if (type === "food") { v.food = Math.min(100, v.food + 30); v.happy = Math.min(100, v.happy + 14); if (v.sickNeeds) v.sickNeeds.food = true; fx.textContent = "🍫✨"; showSpeech("M&M's! 😋🍫"); } else if (type === "gift") { v.boredom = Math.min(100, v.boredom + 32); v.happy = Math.min(100, v.happy + 18); if (v.sickNeeds) v.sickNeeds.gift = true; fx.textContent = "🎮📚"; showSpeech("Addio noia! 😍🎮"); } if ((v.feeling === "malato" || v.feeling === "malata") && v.sickNeeds?.cuddle && v.sickNeeds?.food && v.sickNeeds?.gift) { v.love = Math.max(v.love, 75); v.food = Math.max(v.food, 75); v.happy = Math.max(v.happy, 80); v.boredom = Math.max(v.boredom, 75); v.feeling = "felice"; v.sickNeeds = { cuddle: false, food: false, gift: false }; showSpeech("Sono guarito! 🥰"); } else if (v.love >= 70 && v.food >= 70 && v.happy >= 70 && v.boredom >= 70) v.feeling = "felice"; if ((v.dailyLvlsGained || 0) < 6) { v.xp += 35; if (v.xp >= 100) { v.level++; v.xp -= 100; v.dailyLvlsGained++; showSpeech(`Lv. ${v.level}! 🎉`); if (v.dailyLvlsGained >= 6) v.xp = 0; } } else v.xp = 0; fx.style.opacity = 1; setTimeout(() => { fx.style.opacity = 0; }, 1100); window.saveState(true); };
+  window.openGiftPack = function() { const avail = Math.floor(window.state.vincenzo.level / 10) - (window.state.deborahPacksClaimed || 0); if (avail <= 0) return alert("Raggiungi il prossimo multiplo di 10 livelli!"); const lockedPool = SMISKI_CATALOG.filter(s => !(window.state.deborahSmiskiUnlocked || []).includes(s.id)); if (lockedPool.length === 0) return alert("Hai già tutti i 60 Smiski!"); const won = lockedPool[Math.floor(Math.random() * lockedPool.length)]; window.state.deborahSmiskiUnlocked.push(won.id); window.state.deborahPacksClaimed = (window.state.deborahPacksClaimed || 0) + 1; window.saveState(true); alert(`🎉 Hai sbloccato: #${won.id} ${won.name} (${won.stars}★)!`); };
+  window.sendChatMessage = function() { const i = document.getElementById("chatInput"); if (!i.value.trim()) return; window.state.messages.push({ sender: "Deborah", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
+  window.sendWish = function() { const i = document.getElementById("wishInput"); if (!i.value.trim()) return; window.state.wishes.push({ sender: "Deborah", text: i.value.trim(), ts: Date.now() }); i.value = ""; window.saveState(true); };
+  window.handlePhotoUpload = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement("canvas"); const scale = Math.min(1, 480 / img.width); canvas.width = img.width * scale; canvas.height = img.height * scale; canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); window.state.photos.unshift({ url: canvas.toDataURL("image/jpeg", 0.72), caption: document.getElementById("photoCaption").value.trim() || "Noi due 💕", ts: Date.now() }); document.getElementById("photoCaption").value = ""; window.saveState(true); }; img.src = ev.target.result; }; reader.readAsDataURL(file); };
+  
+  // MOVIMENTO AUTONOMO IMMEDIATO DEL PINGUINO SUL PAVIMENTO
+  const petEl = document.getElementById("petCharacter"), petFlipEl = document.getElementById("petFlipGroup"); let petX = 200, petY = 330;
+  function stepRoam() {
+    const tgts = [{x:200,y:330}, {x:158,y:322}, {x:242,y:322}, {x:180,y:344}, {x:222,y:344}], n = tgts[Math.floor(Math.random()*tgts.length)], dx = n.x - petX, d = Math.hypot(dx, n.y - petY);
+    if (d > 4) {
+      if (dx > 2) petFlipEl.setAttribute("transform", "scale(-1, 1)"); else if (dx < -2) petFlipEl.setAttribute("transform", "scale(1, 1)");
+      petEl.classList.add("walking"); petEl.style.transition = `transform ${Math.max(1.2, d/22)}s linear`; petX = n.x; petY = n.y; petEl.setAttribute("transform", `translate(${petX}, ${petY})`);
+      setTimeout(() => petEl.classList.remove("walking"), Math.max(1200, (d/22)*1000));
+    }
+  }
+  setTimeout(stepRoam, 900);
+  setInterval(stepRoam, 4000);
+  setInterval(() => window.saveState(false), 60000);
+
+  // METEO REALE E GIORNO/NOTTE LIVE (Putignano, Italia)
+  function updateWindowScene(isDay, weatherCode, temp) {
+    const s1 = document.getElementById("bgStop1"), s2 = document.getElementById("bgStop2"), sun = document.getElementById("bgSun"), moon = document.getElementById("bgMoon"), stars = document.getElementById("bgStars"), hills = document.getElementById("bgLandscape"), wl = document.getElementById("bgWeatherLayer"), bdg = document.getElementById("dayNightHudBadge");
+    isItalyNight = !isDay;
+    if (isDay) {
+      s1.setAttribute("stop-color", "#38bdf8"); s2.setAttribute("stop-color", "#fef08a");
+      sun.setAttribute("opacity", "1"); moon.setAttribute("opacity", "0"); stars.setAttribute("opacity", "0");
+      hills.setAttribute("fill", "#74c69d"); bdg.textContent = "☀️ Giorno (Live)";
+    } else {
+      s1.setAttribute("stop-color", "#0f172a"); s2.setAttribute("stop-color", "#1e3a8a");
+      sun.setAttribute("opacity", "0"); moon.setAttribute("opacity", "1"); stars.setAttribute("opacity", "1");
+      hills.setAttribute("fill", "#1b4332"); bdg.textContent = "🌙 Notte (Live)";
+    }
+
+    let svg = "", desc = "Sereno", icn = isDay ? "☀️" : "🌙";
+    if (weatherCode >= 1 && weatherCode <= 3) {
+      desc = "Nuvoloso"; icn = isDay ? "⛅" : "☁️"; const cCol = isDay ? "#ffffff" : "#94a3b8";
+      svg = `<g opacity="0.88"><ellipse cx="115" cy="115" rx="34" ry="14" fill="${cCol}"/><ellipse cx="136" cy="128" rx="26" ry="11" fill="${cCol}"/><ellipse cx="320" cy="52" rx="48" ry="18" fill="${cCol}"/></g>`;
+    } else if (weatherCode >= 45 && weatherCode <= 67) {
+      desc = "Pioggia"; icn = "🌧️";
+      svg = `<g><ellipse cx="118" cy="108" rx="38" ry="14" fill="#64748b"/><g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.85"><line x1="60" y1="20" x2="45" y2="140"/><line x1="112" y1="108" x2="100" y2="165"/><line x1="132" y1="110" x2="120" y2="165"/><line x1="310" y1="20" x2="295" y2="130"/><line x1="355" y1="30" x2="340" y2="140"/></g></g>`;
+    } else if (weatherCode >= 71) {
+      desc = "Neve"; icn = "❄️";
+      svg = `<g fill="#fff" opacity="0.9"><circle cx="55" cy="40" r="3"/><circle cx="112" cy="118" r="2.8"/><circle cx="130" cy="135" r="2.5"/><circle cx="105" cy="142" r="2.5"/><circle cx="290" cy="45" r="3.2"/><circle cx="345" cy="75" r="2.8"/></g>`;
+    }
+    wl.innerHTML = svg;
+    document.getElementById("weatherHudText").textContent = `${icn} Meteo Putignano (Italia): ${temp}°C • ${desc}`;
+    window.renderAll();
+  }
+
+  async function fetchLiveWeather() {
+    const romeHour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Rome", hour: "numeric", hour12: false }).format(new Date()), 10);
+    const osloHour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Oslo", hour: "numeric", hour12: false }).format(new Date()), 10);
+    const fallbackItalyDay = romeHour >= 7 && romeHour < 18;
+    isNorwayNight = !(osloHour >= 7 && osloHour < 18);
+
+    try {
+      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.85&longitude=17.12&current=temperature_2m,is_day,weather_code&timezone=Europe%2FRome");
+      const data = await res.json();
+      const cur = data.current || data.current_weather;
+      const temp = Math.round(cur.temperature_2m ?? cur.temperature ?? 16);
+      const isDay = (cur.is_day !== undefined) ? (cur.is_day === 1) : fallbackItalyDay;
+      const code = cur.weather_code ?? cur.weathercode ?? 0;
+      updateWindowScene(isDay, code, temp);
+    } catch (e) {
+      updateWindowScene(fallbackItalyDay, 0, 16);
+    }
+  }
+
+  window.evaluateMidnightHalfCheck();
+  window.renderAll();
+  fetchLiveWeather();
+  setInterval(fetchLiveWeather, 300000);
+</script>
+
+<!-- SINCRONIZZAZIONE CLOUD FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  const GITHUB_FIREBASE_CONFIG = { apiKey: "AIzaSyD_tUjI4aIwsoUIARXeXwtWzBUsAxQf118", authDomain: "tamalove.firebaseapp.com", projectId: "tamalove", storageBucket: "tamalove.firebasestorage.app", messagingSenderId: "431289196125", appId: "1:431289196125:web:65c9d9cc44b755164777b4", measurementId: "G-FJL9K3C20C" };
+  let sharedDocRef = null, isApplyingRemote = false;
+
+  window.pushCloudState = function() {
+    if (sharedDocRef && !isApplyingRemote) {
+      setDoc(sharedDocRef, window.state, { merge: true }).catch(() => {});
+    }
+  };
+
+  async function initCloud() {
+    const badge = document.getElementById("syncStatus");
+    try {
+      const app = initializeApp(GITHUB_FIREBASE_CONFIG);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      await signInAnonymously(auth);
+      sharedDocRef = doc(db, "tamalove_rooms", "vincenzo_deborah_shared");
+      badge.textContent = "☁️ Cloud Online";
+      badge.style.background = "#d8f3dc";
+      onSnapshot(sharedDocRef, (snap) => {
+        if (snap.exists()) {
+          const remote = snap.data();
+          isApplyingRemote = true;
+          window.state = { ...window.getDefaultState(), ...remote, wishes: remote.wishes || [], debby: window.normalizePet(remote.debby), vincenzo: window.normalizePet(remote.vincenzo) };
+          window.evaluateMidnightHalfCheck();
+          localStorage.setItem("tamalove_shared_v2", JSON.stringify(window.state));
+          window.renderAll();
+          isApplyingRemote = false;
+        } else {
+          setDoc(sharedDocRef, window.state, { merge: true });
+        }
+      });
+    } catch (err) {
+      badge.textContent = "📱 Locale";
+      badge.style.background = "#fef3c7";
+    }
+  }
+  initCloud();
+</script>
+</body>
+</html>
