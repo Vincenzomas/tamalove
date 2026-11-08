@@ -95,6 +95,7 @@
     .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .col-item { background: #fefae0; border: 2.5px solid #432818; border-radius: 14px; padding: 8px 4px; text-align: center; font-size: 0.7rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .col-item.locked { opacity: 0.42; filter: grayscale(1); }
+    .silhouette-black { filter: brightness(0) opacity(0.75); }
     .col-item.five-star { background: #fff3b0; border-color: #d97706; }
     
     .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -177,7 +178,7 @@
     <button type="button" class="svg-tap-zone" style="top:31%; left:3%; width:14%; height:15%;" onclick="openModal('calendarModal')" aria-label="Calendario"></button>
     <button type="button" class="svg-tap-zone" style="top:41%; left:18%; width:18%; height:25%;" onclick="openModal('wardrobeModal')" aria-label="Guardaroba"></button>
     <button type="button" class="svg-tap-zone" style="top:61%; left:2%; width:14%; height:16%;" onclick="openModal('mailModal')" aria-label="Posta"></button>
-    <button type="button" id="xmasTreeTapBtn" class="svg-tap-zone" style="top:63%; left:21%; width:19%; height:25%; display:none;" onclick="claimAdventTreeGift()" aria-label="Albero di Natale"></button>
+    <button type="button" id="xmasTreeTapBtn" class="svg-tap-zone" style="top:63%; left:21%; width:19%; height:25%; display:none;" onclick="openModal('adventModal')" aria-label="Albero di Natale"></button>
     <button type="button" class="svg-tap-zone" style="top:20%; right:4%; width:38%; height:24%;" onclick="openModal('plantsModal')" aria-label="Piante"></button>
     <button type="button" class="svg-tap-zone" style="top:63%; right:3%; width:18%; height:16%;" onclick="openModal('albumModal')" aria-label="Album"></button>
 
@@ -464,9 +465,25 @@
   </div>
 </div>
 
+<!-- MODAL CALENDARIO DELL'AVVENTO (8 - 25 DICEMBRE) -->
+<div class="modal-backdrop" id="adventModal">
+  <div class="modal-box" style="border-color:#1b4332;">
+    <div class="modal-head" style="background:linear-gradient(90deg, #d90429, #ef233c); color:#fff;">
+      <span>🎄 Calendario dell'Avvento (8–25 Dic)</span>
+      <button type="button" class="close-btn" onclick="closeModal('adventModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#fef3c7; border:2.5px solid #432818; border-radius:14px; padding:9px 12px; font-size:0.78rem; font-weight:700; text-align:center;">
+        🎁 Clicca sulla casella del giorno (dall'<strong>8 al 25 Dicembre</strong>) per sbloccare gratis i <strong>18 Regali Esclusivi di Natale</strong>! Restano per sempre nel tuo Guardaroba!
+      </div>
+      <div class="collection-grid" id="adventCalendarGrid"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ALTRI MODALS -->
 <div class="modal-backdrop" id="nightWishModal"><div class="modal-box" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%); border-color: #e2e8f0; color:#fff;"><div class="modal-head" style="background: transparent; border-bottom: 2px solid rgba(255,255,255,0.2); color:#fff;"><span>✨ Sotto lo stesso cielo</span><button type="button" class="close-btn" style="background:#334155; color:#fff; border-color:#fff;" onclick="closeModal('nightWishModal')">✕</button></div><div class="modal-body"><p style="font-size:0.85rem; font-weight:700; text-align:center;">È notte sia in Italia che in Norvegia! Scrivete qui i vostri desideri condivisi sotto le stelle 💫</p><div class="wish-list" id="wishList"></div><div class="input-row"><input type="text" id="wishInput" class="text-input" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.4);" placeholder="Esprimi un desiderio..." /><button type="button" class="action-pill" style="background:#fef08a; border-color:#ca8a04; color:#854d0e;" onclick="sendWish()">Invia 🌟</button></div></div></div></div>
-<div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button type="button" class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Prossimo Traguardo Insieme:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
+<div class="modal-backdrop" id="calendarModal"><div class="modal-box"><div class="modal-head"><span>📅 Calendario & Countdown</span><button type="button" class="close-btn" onclick="closeModal('calendarModal')">✕</button></div><div class="modal-body" style="text-align:center;"><p style="font-weight:700; font-size:0.95rem;">Data di Oggi: <span id="todayDateLabel"></span></p><div style="background:#fef3c7; border:3px solid #432818; border-radius:20px; padding:16px;"><div style="font-size:0.85rem; font-weight:700;">Di nuovo insieme tra:</div><div style="font-family:'Fredoka',sans-serif; font-size:1.75rem; color:#d97706; margin:6px 0;" id="countdownBig">-- Giorni</div><div style="font-size:0.8rem; font-weight:700;" id="targetDateDisplay">Obiettivo: 11 Maggio 2027</div></div></div></div></div>
 <div class="modal-backdrop" id="mailModal"><div class="modal-box"><div class="modal-head"><span>📮 Posta (Chat con Debby)</span><button type="button" class="close-btn" onclick="closeModal('mailModal')">✕</button></div><div class="modal-body"><div class="chat-list" id="chatList"></div><div class="input-row"><input type="text" id="chatInput" class="text-input" placeholder="Scrivi un bigliettino..." /><button type="button" class="action-pill" onclick="sendChatMessage()">Invia 💌</button></div></div></div></div>
 <div class="modal-backdrop" id="albumModal"><div class="modal-box"><div class="modal-head"><span>📸 Album Condiviso</span><button type="button" class="close-btn" onclick="closeModal('albumModal')">✕</button></div><div class="modal-body"><div class="input-row"><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"/><input type="text" id="photoCaption" class="text-input" placeholder="Didascalia..." /><button type="button" class="action-pill" onclick="document.getElementById('photoInput').click()">+ Foto 📷</button></div><div class="photo-grid" id="photoGrid"></div></div></div></div>
 <div class="modal-backdrop" id="plantsModal"><div class="modal-box"><div class="modal-head"><span>🌿 60 Piante Kawaii</span><button type="button" class="close-btn" onclick="closeModal('plantsModal')">✕</button></div><div class="modal-body"><div style="display:flex; justify-content:space-between; align-items:center; background:#d8f3dc; padding:10px 12px; border-radius:14px; border:2.5px solid #432818;"><span style="font-weight:700; font-size:0.85rem;">Pacchetti Regalo: <strong id="packModalCount">0</strong></span><button type="button" class="action-pill" style="background:#ffb703;" onclick="openGiftPack()">🎁 Apri Pacco</button></div><p style="font-size:0.75rem; font-weight:700; color:#6f4e37;">⭐ Le piante a <strong>5 Stelle (5★)</strong> poggiano sul piano 3D della mensola!</p><div class="collection-grid" id="collectionGrid"></div></div></div></div>
@@ -513,17 +530,26 @@
     { id: "xmas_prop_gift", name: "Pacco Regalo Oro", type: "prop", price: 35, emoji: "🎁" }
   ];
 
-  // 9 OGGETTI ESCLUSIVI EXTRA GRATIS CLICCANDO SULL'ALBERO DI NATALE (8 - 25 Dicembre)
+  // 18 OGGETTI ESCLUSIVI DEL CALENDARIO DELL'AVVENTO (Uno per ogni giorno dall'8 al 25 Dicembre!)
   const ADVENT_TREE_POOL = [
-    { id: "adv_hat_snowman", name: "Cilindro Pupazzo Neve", type: "hat", price: 0, emoji: "⛄" },
-    { id: "adv_hat_halo", name: "Aureola Stella Cometa", type: "hat", price: 0, emoji: "🌟" },
-    { id: "adv_hat_holly", name: "Diadema Agrifoglio", type: "hat", price: 0, emoji: "🍒" },
-    { id: "adv_out_santa_coat", name: "Cappotto Babbo Reale", type: "outfit", price: 0, emoji: "🎅" },
-    { id: "adv_out_ginger", name: "Costume Pan di Zenzero", type: "outfit", price: 0, emoji: "🍪" },
-    { id: "adv_out_velvet", name: "Mantella Velluto & Ermellino", type: "outfit", price: 0, emoji: "🧣" },
-    { id: "adv_prop_globe", name: "Palla di Neve Magica", type: "prop", price: 0, emoji: "🔮" },
-    { id: "adv_prop_cocoa", name: "Cioccolata con Marshmallow", type: "prop", price: 0, emoji: "☕" },
-    { id: "adv_prop_bell", name: "Campanella d'Oro", type: "prop", price: 0, emoji: "🔔" }
+    { id: "adv_hat_snowman", day: 8, name: "Cilindro Pupazzo Neve", type: "hat", price: 0, emoji: "⛄" },
+    { id: "adv_prop_cocoa", day: 9, name: "Cioccolata Marshmallow", type: "prop", price: 0, emoji: "☕" },
+    { id: "adv_out_ginger", day: 10, name: "Costume Pan di Zenzero", type: "outfit", price: 0, emoji: "🍪" },
+    { id: "adv_hat_holly", day: 11, name: "Diadema Agrifoglio", type: "hat", price: 0, emoji: "🍒" },
+    { id: "adv_prop_bell", day: 12, name: "Campanella d'Oro", type: "prop", price: 0, emoji: "🔔" },
+    { id: "adv_out_velvet", day: 13, name: "Mantella Ermellino", type: "outfit", price: 0, emoji: "🧣" },
+    { id: "adv_hat_earmuffs", day: 14, name: "Paraorecchie Pelo Rosa", type: "hat", price: 0, emoji: "🎧" },
+    { id: "adv_prop_cookie", day: 15, name: "Biscotto Omino Zenzero", type: "prop", price: 0, emoji: "🍪" },
+    { id: "adv_out_nutcracker", day: 16, name: "Giubba Schiaccianoci", type: "outfit", price: 0, emoji: "💂" },
+    { id: "adv_hat_tree", day: 17, name: "Cappello Alberello", type: "hat", price: 0, emoji: "🎄" },
+    { id: "adv_prop_skate", day: 18, name: "Pattino da Ghiaccio", type: "prop", price: 0, emoji: "⛸️" },
+    { id: "adv_out_snowman_suit", day: 19, name: "Pigiama Pupazzo Neve", type: "outfit", price: 0, emoji: "☃️" },
+    { id: "adv_hat_poinsettia", day: 20, name: "Corona Stella di Natale", type: "hat", price: 0, emoji: "🌺" },
+    { id: "adv_prop_stocking", day: 21, name: "Calza Piena di Dolci", type: "prop", price: 0, emoji: "🧦" },
+    { id: "adv_out_angel_robe", day: 22, name: "Tunica Angelo Dorato", type: "outfit", price: 0, emoji: "👼" },
+    { id: "adv_prop_globe", day: 23, name: "Palla di Neve Magica", type: "prop", price: 0, emoji: "🔮" },
+    { id: "adv_hat_halo", day: 24, name: "Aureola Stella Cometa", type: "hat", price: 0, emoji: "🌟" },
+    { id: "adv_out_santa_coat", day: 25, name: "Cappotto Babbo Reale", type: "outfit", price: 0, emoji: "🎅" }
   ];
 
   window.forceXmasPreview = false;
@@ -861,6 +887,72 @@
           <path d="M -6,-5 C -6,-11 6,-11 6,-5 L 9,6 L -9,6 Z" fill="#ffb703" stroke="#432818" stroke-width="2" stroke-linejoin="round"/>
           <circle cx="0" cy="7.5" r="3" fill="#fb8500" stroke="#432818" stroke-width="1.6"/>
         </g>`;
+      case "adv_hat_earmuffs":
+        return `<g>
+          <path d="M -18,12 C -19,-10 19,-10 18,12" fill="none" stroke="#ef233c" stroke-width="3.8" stroke-linecap="round"/>
+          <circle cx="-18" cy="10" r="6" fill="#ffcad4" stroke="#432818" stroke-width="2"/>
+          <circle cx="18" cy="10" r="6" fill="#ffcad4" stroke="#432818" stroke-width="2"/>
+        </g>`;
+      case "adv_hat_tree":
+        return `<g>
+          <polygon points="-15,3 0,-12 15,3" fill="#2d6a4f" stroke="#432818" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="-11,-4 0,-18 11,-4" fill="#52b788" stroke="#432818" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="0" cy="-20" r="3.2" fill="#ffb703" stroke="#432818" stroke-width="1.4"/>
+          <circle cx="-5" cy="-2" r="2" fill="#ef233c"/><circle cx="5" cy="-1" r="2" fill="#fef08a"/>
+        </g>`;
+      case "adv_hat_poinsettia":
+        return `<g>
+          <path d="M -16,2 Q 0,-5 16,2" fill="none" stroke="#2d6a4f" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(0, -2)">
+            <ellipse cx="-6" cy="0" rx="5" ry="2.5" fill="#ef233c" stroke="#432818" stroke-width="1.4"/>
+            <ellipse cx="6" cy="0" rx="5" ry="2.5" fill="#ef233c" stroke="#432818" stroke-width="1.4"/>
+            <ellipse cx="0" cy="-5" rx="2.5" ry="5" fill="#ef233c" stroke="#432818" stroke-width="1.4"/>
+            <ellipse cx="0" cy="4" rx="2.5" ry="4" fill="#ef233c" stroke="#432818" stroke-width="1.4"/>
+            <circle cx="0" cy="0" r="2.5" fill="#ffb703" stroke="#432818" stroke-width="1.2"/>
+          </g>
+        </g>`;
+      case "adv_out_nutcracker":
+        return `<g>
+          <path d="M -19,-13 L 19,-13 L 21,12 L -21,12 Z" fill="#d90429" stroke="#432818" stroke-width="2.3" stroke-linejoin="round"/>
+          <ellipse cx="-18" cy="-12" rx="5" ry="3" fill="#ffb703" stroke="#432818" stroke-width="1.6"/>
+          <ellipse cx="18" cy="-12" rx="5" ry="3" fill="#ffb703" stroke="#432818" stroke-width="1.6"/>
+          <line x1="-7" y1="-8" x2="7" y2="-8" stroke="#ffb703" stroke-width="2.4"/>
+          <line x1="-7" y1="-2" x2="7" y2="-2" stroke="#ffb703" stroke-width="2.4"/>
+          <line x1="-7" y1="4" x2="7" y2="4" stroke="#ffb703" stroke-width="2.4"/>
+        </g>`;
+      case "adv_out_snowman_suit":
+        return `<g>
+          <path d="M -19,-13 Q 0,-8 19,-13 L 22,13 C 12,17 -12,17 -22,13 Z" fill="#ffffff" stroke="#432818" stroke-width="2.3" stroke-linejoin="round"/>
+          <path d="M -16,-12 Q 0,-6 16,-12" fill="none" stroke="#ef233c" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="0" cy="-2" r="2.5" fill="#2b2d42"/>
+          <circle cx="0" cy="5" r="2.5" fill="#2b2d42"/>
+        </g>`;
+      case "adv_out_angel_robe":
+        return `<g>
+          <path d="M -18,-13 Q 0,-8 18,-13 L 24,13 C 12,17 -12,17 -24,13 Z" fill="#fffdf9" stroke="#432818" stroke-width="2.3" stroke-linejoin="round"/>
+          <path d="M -18,-11 Q 0,-5 18,-11" fill="none" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+          <path d="M -21,9 Q 0,14 21,9" fill="none" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="0,-5 2,-1 6,-1 3,1 4,5 0,3 -4,5 -3,1 -6,-1 -2,-1" fill="#ffb703" stroke="#432818" stroke-width="1.2"/>
+        </g>`;
+      case "adv_prop_cookie":
+        return `<g>
+          <circle cx="0" cy="-5" r="4.5" fill="#bc6c25" stroke="#432818" stroke-width="1.8"/>
+          <path d="M -8,0 L 8,0 M 0,-1 L 0,9 M -5,10 L 0,7 L 5,10" stroke="#bc6c25" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M -8,0 L 8,0 M 0,-1 L 0,9 M -5,10 L 0,7 L 5,10" stroke="#432818" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="0" cy="2" r="1.4" fill="#ef233c"/><circle cx="0" cy="5.5" r="1.4" fill="#52b788"/>
+        </g>`;
+      case "adv_prop_skate":
+        return `<g>
+          <path d="M -6,-6 L 2,-6 L 2,3 L 8,5 C 10,6 9,9 6,9 L -6,9 Z" fill="#ffffff" stroke="#432818" stroke-width="2" stroke-linejoin="round"/>
+          <line x1="-8" y1="12" x2="10" y2="12" stroke="#adb5bd" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M 10,12 Q 13,10 11,8" fill="none" stroke="#adb5bd" stroke-width="2.2" stroke-linecap="round"/>
+        </g>`;
+      case "adv_prop_stocking":
+        return `<g>
+          <path d="M -5,-5 L 5,-5 L 5,4 C 5,8 10,8 10,12 C 10,15 2,15 -4,12 L -5,4 Z" fill="#ef233c" stroke="#432818" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="-6" y="-8" width="12" height="4.5" rx="2" fill="#ffffff" stroke="#432818" stroke-width="1.8"/>
+          <circle cx="2" cy="-9" r="2.5" fill="#ffb703" stroke="#432818" stroke-width="1.2"/>
+        </g>`;
       default:
         return "";
     }
@@ -938,7 +1030,7 @@
       </g>
 
       <!-- 6. GRANDE ALBERO DI NATALE INTERATTIVO (Distanziato dalla cassetta della posta, cliccabile dall'8 al 25 Dic!) -->
-      <g transform="translate(118, 344) scale(1.25)" onclick="claimAdventTreeGift()" style="cursor:pointer;">
+      <g transform="translate(118, 344) scale(1.25)" onclick="openModal('adventModal')" style="cursor:pointer;">
         <g class="interactive-prop">
           <ellipse cx="0" cy="18" rx="25" ry="10" fill="rgba(67,40,24,0.24)"/>
           <!-- Base e tronco -->
@@ -1203,7 +1295,30 @@
       photoGrid.innerHTML = (window.state.photos || []).map(p => `<div class="polaroid"><img src="${p.url}" alt="Ricordo"/><p>${p.caption || "Ricordo 💕"}</p></div>`).join("") || `<p style="grid-column:1/-1;text-align:center;font-size:0.82rem;">Nessuna foto ancora.</p>`;
       
       const colGrid = document.getElementById("collectionGrid");
-      colGrid.innerHTML = PLANTS_CATALOG.map(p => `<div class="col-item ${unlockedIds.includes(p.id) ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}"><div style="height:32px;display:flex;align-items:center;justify-content:center;">${unlockedIds.includes(p.id) ? renderPlantSvg(p.id, 30) : '🔒'}</div><div>#${p.id} ${p.name}</div><div style="color:#d97706;">${"⭐".repeat(p.stars)}</div></div>`).join("");
+      colGrid.innerHTML = PLANTS_CATALOG.map(p => `<div class="col-item ${unlockedIds.includes(p.id) ? '' : 'locked'} ${p.stars === 5 ? 'five-star' : ''}"><div style="height:32px;display:flex;align-items:center;justify-content:center;" class="${unlockedIds.includes(p.id) ? '' : 'silhouette-black'}">${renderPlantSvg(p.id, 30)}</div><div>#${p.id} ${unlockedIds.includes(p.id) ? p.name : '???'}</div><div style="color:#d97706;">${"⭐".repeat(p.stars)}</div></div>`).join("");
+
+      const advGrid = document.getElementById("adventCalendarGrid");
+      if (advGrid) {
+        const nowD = new Date();
+        const isDec = nowD.getMonth() === 11;
+        const curDay = nowD.getDate();
+        advGrid.innerHTML = ADVENT_TREE_POOL.map(item => {
+          const owned = (d.inventory || []).includes(item.id);
+          const canUnlock = window.forceXmasPreview || (isDec && curDay >= item.day) || (nowD.getMonth() === 0 && curDay <= 6);
+          return `<div class="col-item ${owned ? 'five-star' : (canUnlock ? '' : 'locked')}" style="position:relative;">
+            <div style="font-family:'Fredoka',sans-serif;font-size:0.72rem;background:#d90429;color:#fff;padding:1px 7px;border-radius:999px;border:1.5px solid #432818;">📅 ${item.day} Dic</div>
+            <div style="height:40px;display:flex;align-items:center;justify-content:center;" class="${owned ? '' : 'silhouette-black'}">${renderWardrobeCardIcon(item.id, 36)}</div>
+            <div>${owned ? item.name : 'Regalo Segreto'}</div>
+            ${owned
+              ? `<span style="color:#2d6a4f;font-size:0.68rem;">✅ Sbloccato</span>`
+              : (canUnlock
+                  ? `<button type="button" class="mini-btn" style="background:#ffb703;width:100%;" onclick="claimAdventBox(${item.day})">🎁 Apri Casella</button>`
+                  : `<span style="color:#6f4e37;font-size:0.65rem;">🔒 Dal ${item.day} Dic</span>`
+                )
+            }
+          </div>`;
+        }).join("");
+      }
       
       const showNightStar = (isNorwayNight && isItalyNight);
       const btnNight = document.getElementById("magicStarBtn");
@@ -1224,28 +1339,21 @@
     window._speechTimer = setTimeout(() => b.classList.remove("show"), 3200);
   }
 
-  window.claimAdventTreeGift = function() {
-    if (!isChristmasEvent()) return;
-    if (!isAdventTreeGiftPeriod()) {
-      return alert("🎄 I regali gratuiti sotto l'Albero di Natale si aprono dall'8 al 25 Dicembre!");
+  window.claimAdventBox = function(dayNum) {
+    const item = ADVENT_TREE_POOL.find(x => x.day === dayNum);
+    if (!item) return;
+    const nowD = new Date();
+    const canUnlock = window.forceXmasPreview || (nowD.getMonth() === 11 && nowD.getDate() >= item.day) || (nowD.getMonth() === 0 && nowD.getDate() <= 6);
+    if (!canUnlock) {
+      return alert("🔒 Questa casella si sbloccherà il " + item.day + " Dicembre!");
     }
     const d = window.state.debby;
     d.inventory = d.inventory || [];
-    const today = todayStr();
-    if (!window.forceXmasPreview && d.lastAdventClaimDate === today) {
-      return alert("🎄 Hai già scartato il regalo gratuito di oggi sotto l'Albero! Torna domani per un nuovo oggetto esclusivo natalizio!");
-    }
-    const unownedAdvent = ADVENT_TREE_POOL.filter(item => !d.inventory.includes(item.id));
-    if (unownedAdvent.length === 0) {
-      return alert("🎄✨ Hai già collezionato tutti i 9 regali esclusivi dell'Albero di Natale! Li trovi tutti nel tuo Guardaroba!");
-    }
-    const won = unownedAdvent[Math.floor(Math.random() * unownedAdvent.length)];
-    d.inventory.push(won.id);
-    d.equipped[won.type] = won.id;
-    d.lastAdventClaimDate = today;
+    if (!d.inventory.includes(item.id)) d.inventory.push(item.id);
+    d.equipped[item.type] = item.id;
     window.saveState(true);
-    showSpeech("Regalo dall'Albero: " + won.name + "! 🎄🎁");
-    alert("🎄🎁 Sorpresa sotto l'Albero di Natale!\nHai ricevuto GRATIS l'oggetto esclusivo:\n✨ " + won.name + " (" + won.emoji + ")!\nResterà per sempre nel tuo Guardaroba!");
+    showSpeech("Casella " + item.day + " Dic: " + item.name + "! 🎄🎁");
+    alert("🎄🎁 Casella del " + item.day + " Dicembre aperta!\nHai sbloccato e indossato GRATIS:\n✨ " + item.name + "!");
   };
 
   window.buyShopItem = function(itemId) {
